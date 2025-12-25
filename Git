@@ -1,3 +1,9 @@
 Git Commands from beginners to advance.
 
+sudo apt install git-all
+
+git --version
+git init
+git status
+
 
