@@ -3,7 +3,135 @@ Git Commands from beginners to advance.
 sudo apt install git-all
 
 git --version
-git init
-git status
+
+git init --> This initiate communication between folder and git
+
+git status --> checks the status of Git
+
+git add . or git add Git Python Linux. --> stage the file to the  repository. You can add them individually or as a group
+
+"git rm --cached <File name>.." to make a file unstaged (to remove it from the repository)
+
+git commit -m "My first commit adding Git Python Linux".
+
+git remote add origin <URL to Repository >
+
+git push origin master
+
+git clone <Repository Path> (Before using this command, make sure you create a directory and then go inside the directory to clone it.
+
+
+git pull origin master --> to pull the latest codes.
+
+
+The below commands are used when multiple developers are working  on the same project or repository.
+
+git branch <name-of-new-branch>  --> Creates a branch
+
+git branch -a --> lists all the available branches (when a developers completes the work on the command1 branches, then they can merge the command1 branch to the master branch) 
+
+--> any new changes that are made inside the command1 branch does not be replicated to the master branch automatically and vice versa. 
+
+--> branches do not interfer with each other
+
+git checkout command1 --> to go inside a branch
+
+once you finish working on that brand and wants to push the file to the publish you type:
+
+git push origin Command1 
+
+
+git branch -d <branch name> --> Deletes a branch
+
+git log --> shows you the history of what it has been done on the branch (Command1)
+
+git log --graph --> 
+
+git log --graph --pretty -->
+
+git log --graph --pretty=oneline  -->
+
+
+git stash --> This hide the working files so that it is not visible in our branches
+
+git stash pop --> This makes it visible to other branches.
+
+git stash -u
+
+git revert <commit-id> -->  Undoing the changes that has been made on that particular file.
+
+
+git diff <commit-id of version x> commit-id of version y> --> Shows the different changes between two files.
+
+git diff HEAD .?????????? 
+
+
+
+git checkout <commit id> --> will show you more details on that particular file.
+
+
+Merging Branches
+
+Git Merge --> should always be used on the remote branches (github web site) to merge the remote branches
+
+git merge <bBranch Name>
+
+Git Rebase --> you use this to merge something to the local branch, you use Git Rebase.
+
+git rebase <Branch Name>
+
+
+Merge Conflicts
+
+How to resolve Merge Conflicts
+
+git mergetool --> 
+ 
+
+
+cat Python --> Displays the content of the Python file  
+
+
+
+git get revert
+
+
+
+
+
+
+
+git config --global user.name "Hanza Ali"  -----> the quotation is used because it has space in the name.
+
+git config --global user.email hanzaali745@gmail.com
+
+
+
+https://www.youtube.com/watch?v=8JJ101D3knE
+
+Git Tutorial for Beginners: Learn Git in 1 Hour
+
+
+Set up Git + Github
+
+Install dkpg dependencies
+
+Install VS Code + Chrome using dpkg
+
+
+
+
+
+
+
+sudo apt install openssh-server
+
+sudo systemctl start ssh
+
+sudo systemctl enable ssh
+
+sudo systemctl status ssh
+
+ip -a
 
 
