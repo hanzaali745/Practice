@@ -1,0 +1,13 @@
+# Lab 5 — copy to /etc/systemd/system/backup.timer, then:
+#   sudo systemctl daemon-reload && sudo systemctl enable --now backup.timer
+[Unit]
+Description=Run backup.service daily at 02:30
+
+[Timer]
+OnCalendar=*-*-* 02:30:00
+# Run a missed job at next boot if the machine was off at 02:30
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

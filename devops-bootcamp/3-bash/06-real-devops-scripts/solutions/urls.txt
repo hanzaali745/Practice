@@ -1,0 +1,4 @@
+# URLs to check, one per line
+https://example.com
+https://www.google.com
+http://localhost:9/should-fail

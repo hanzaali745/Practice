@@ -1,0 +1,4 @@
+username,group,shell
+alice,platform,/bin/bash
+bob,data,/bin/bash
+carol,platform,/bin/zsh

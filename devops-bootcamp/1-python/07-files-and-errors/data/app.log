@@ -1,0 +1,10 @@
+2024-05-01 10:00:01 INFO web-01 Service started
+2024-05-01 10:00:05 INFO web-02 Service started
+2024-05-01 10:01:12 WARN db-01 Slow query took 2300ms
+2024-05-01 10:02:30 ERROR web-01 Upstream timeout from api-01
+2024-05-01 10:02:31 ERROR web-01 Upstream timeout from api-01
+2024-05-01 10:03:00 INFO web-02 Health check passed
+2024-05-01 10:04:45 ERROR db-01 Connection refused
+2024-05-01 10:05:10 CRITICAL db-01 Replication lag 600s
+2024-05-01 10:06:00 INFO web-01 Health check passed
+2024-05-01 10:07:22 WARN web-02 Memory usage 85%

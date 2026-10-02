@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "devopskit"
+version = "0.2.0"
+description = "Small DevOps helpers (bootcamp Python Module 14, Lab 5)"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+devopskit = "devopskit.cli:main"

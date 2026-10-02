@@ -1,0 +1,14 @@
+# Lab 5 — copy to .github/workflows/shell-ci.yml in your own repo
+name: shell-ci
+on: [push, pull_request]
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ShellCheck
+        run: shellcheck -x $(git ls-files '*.sh')
+      - name: Bats
+        run: |
+          sudo apt-get update && sudo apt-get install -y bats
+          bats $(git ls-files '*.bats')

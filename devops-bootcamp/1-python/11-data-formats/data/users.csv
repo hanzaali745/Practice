@@ -1,0 +1,5 @@
+username,team,shell,sudo
+alice,platform,/bin/bash,yes
+bob,data,/bin/zsh,no
+carol,platform,/bin/bash,yes
+dave,security,/bin/bash,no

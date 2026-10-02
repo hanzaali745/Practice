@@ -1,0 +1,13 @@
+targets:
+  - name: example-site
+    type: http
+    url: https://example.com
+    expect_status: 200
+  - name: local-ssh
+    type: tcp
+    host: localhost
+    port: 22
+  - name: root-disk
+    type: disk
+    path: /
+    max_percent: 90

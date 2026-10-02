@@ -1,0 +1,6 @@
+# Practice fleet — every entry is your own machine except the last
+localhost
+127.0.0.1
+lab
+# unreachable on purpose (non-routable address) → shows a failure
+10.255.255.1
