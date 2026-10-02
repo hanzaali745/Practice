@@ -1,0 +1,7 @@
+# Development settings — merged automatically by `docker compose up`
+services:
+  app:
+    volumes:
+      - ./app/app.py:/app/app.py:ro     # edit code without rebuilding (restart the service to reload)
+    environment:
+      APP_MESSAGE: "Hello from DEV"

@@ -1,0 +1,50 @@
+# Docker Module 05 — reference stack: nginx → 3× demo-app → Redis
+name: demo
+
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  app:
+    build:
+      context: ./app
+      args:
+        VERSION: ${APP_VERSION:-dev}
+    image: demo-app:${APP_VERSION:-dev}
+    environment:
+      REDIS_HOST: redis
+      APP_VERSION: ${APP_VERSION:-dev}
+      APP_MESSAGE: ${APP_MESSAGE:-Hello from Compose}
+    depends_on:
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    deploy:
+      replicas: 3          # same as `--scale app=3`
+    # no `ports:` — only the proxy is reachable from outside
+
+  proxy:
+    image: nginx:1.27-alpine
+    ports:
+      - "127.0.0.1:${PROXY_PORT:-8080}:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      app:
+        condition: service_healthy
+
+volumes:
+  redisdata:

@@ -1,0 +1,4 @@
+# Extra Python packages for Phases 4-7. Install inside your venv:
+#   pip install -r requirements-devops.txt
+ansible==10.5.0
+ansible-lint==24.9.2
