@@ -1,0 +1,47 @@
+# Lab 2 — a ServiceAccount that may only READ pods and logs in namespace dev
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: viewer
+  namespace: dev
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+  namespace: dev
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: viewer-reads-pods
+  namespace: dev
+subjects:
+  - kind: ServiceAccount
+    name: viewer
+    namespace: dev
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubectl-as-viewer
+  namespace: dev
+spec:
+  serviceAccountName: viewer
+  containers:
+    - name: kubectl
+      image: alpine/k8s:1.31.2        # small image with a shell + kubectl
+      command: ["sleep", "3600"]

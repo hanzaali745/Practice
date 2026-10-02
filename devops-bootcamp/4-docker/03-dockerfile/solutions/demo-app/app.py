@@ -5,6 +5,7 @@ Endpoints:
   GET /         hello message with hostname (so you can SEE which container answered)
   GET /health   {"status": "ok"} — for health checks and probes
   GET /visits   visit counter: stored in Redis if REDIS_HOST is set, else in memory
+  GET /work?ms=N  burn CPU for N milliseconds (default 50, max 2000) — for autoscaling labs
 
 Configuration (environment variables):
   PORT         port to listen on (default 8000)
@@ -20,7 +21,9 @@ import signal
 import socket
 import sys
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import parse_qs, urlparse
 
 PORT = int(os.environ.get("PORT", "8000"))
 VERSION = os.environ.get("APP_VERSION", "1.0.0")
@@ -42,6 +45,15 @@ def redis_incr(key: str) -> int:
     return int(reply[1:].strip())
 
 
+def burn_cpu(ms: int) -> int:
+    """Busy-loop for `ms` milliseconds (makes the CPU work, unlike sleep). Returns loop count."""
+    deadline = time.perf_counter() + ms / 1000
+    loops = 0
+    while time.perf_counter() < deadline:
+        loops += 1
+    return loops
+
+
 def count_visit() -> tuple[int, str]:
     global _memory_visits
     if REDIS_HOST:
@@ -61,7 +73,16 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self) -> None:  # noqa: N802 (name required by BaseHTTPRequestHandler)
-        if self.path == "/":
+        url = urlparse(self.path)
+        if url.path == "/work":
+            try:
+                ms = min(int(parse_qs(url.query).get("ms", ["50"])[0]), 2000)
+            except ValueError:
+                self._send(400, {"error": "ms must be an integer"})
+                return
+            loops = burn_cpu(max(ms, 0))
+            self._send(200, {"worked_ms": ms, "loops": loops, "hostname": socket.gethostname()})
+        elif self.path == "/":
             self._send(200, {"message": MESSAGE, "version": VERSION, "hostname": socket.gethostname()})
         elif self.path == "/health":
             self._send(200, {"status": "ok"})

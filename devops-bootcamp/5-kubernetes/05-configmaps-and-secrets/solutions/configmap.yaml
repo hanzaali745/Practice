@@ -1,0 +1,12 @@
+# Labs 1-2 — configuration for demo-app
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-config
+data:
+  APP_MESSAGE: "Hello from a ConfigMap"
+  LOG_LEVEL: "info"
+  settings.ini: |
+    [server]
+    timeout = 30
+    workers = 4

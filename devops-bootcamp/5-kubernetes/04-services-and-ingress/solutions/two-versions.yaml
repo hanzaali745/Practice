@@ -1,0 +1,74 @@
+# Lab 3 — demo-app 1.0.0 and 2.0.0 side by side on different hostnames
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: demo-preview, version: v1 }
+  template:
+    metadata:
+      labels: { app: demo-preview, version: v1 }
+    spec:
+      containers:
+        - name: app
+          image: demo-app:1.0.0
+          imagePullPolicy: IfNotPresent
+          env: [{ name: APP_VERSION, value: "1.0.0" }]
+          ports: [{ containerPort: 8000 }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: demo-preview, version: v2 }
+  template:
+    metadata:
+      labels: { app: demo-preview, version: v2 }
+    spec:
+      containers:
+        - name: app
+          image: demo-app:2.0.0
+          imagePullPolicy: IfNotPresent
+          env: [{ name: APP_VERSION, value: "2.0.0" }]
+          ports: [{ containerPort: 8000 }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-v1
+spec:
+  selector: { app: demo-preview, version: v1 }
+  ports: [{ port: 80, targetPort: 8000 }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-v2
+spec:
+  selector: { app: demo-preview, version: v2 }
+  ports: [{ port: 80, targetPort: 8000 }]
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-versions
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: v1.localtest.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: demo-v1, port: { number: 80 } } }
+    - host: v2.localtest.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend: { service: { name: demo-v2, port: { number: 80 } } }

@@ -1,0 +1,40 @@
+# Lab 2 — three broken pods to practise debugging
+---
+# (a) ErrImagePull → ImagePullBackOff: the tag doesn't exist
+apiVersion: v1
+kind: Pod
+metadata:
+  name: broken-image
+  labels: { lab: broken }
+spec:
+  containers:
+    - name: app
+      image: demo-app:does-not-exist
+      imagePullPolicy: IfNotPresent
+---
+# (b) CrashLoopBackOff: the container exits with an error, Kubernetes keeps restarting it
+apiVersion: v1
+kind: Pod
+metadata:
+  name: broken-crash
+  labels: { lab: broken }
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "echo 'starting...'; echo 'fatal: config missing' >&2; exit 1"]
+---
+# (c) Pending: no node has 64 CPUs free → FailedScheduling event
+apiVersion: v1
+kind: Pod
+metadata:
+  name: broken-pending
+  labels: { lab: broken }
+spec:
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sleep", "3600"]
+      resources:
+        requests:
+          cpu: "64"

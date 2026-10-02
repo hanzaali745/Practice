@@ -1,0 +1,33 @@
+# Default values for demo-app. Override with -f values-prod.yaml or --set key=value.
+replicaCount: 2
+
+image:
+  repository: demo-app
+  tag: ""                 # empty → uses .Chart.AppVersion
+  pullPolicy: IfNotPresent
+
+app:
+  message: "Hello from Helm"
+  redisHost: ""           # set to a Redis service name to persist /visits
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: traefik
+  host: demo.localtest.me
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 60
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 64Mi
+  limits:
+    memory: 128Mi

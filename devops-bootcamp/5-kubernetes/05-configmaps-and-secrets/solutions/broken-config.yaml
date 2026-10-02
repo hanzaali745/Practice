@@ -1,0 +1,17 @@
+# Lab 4 — this pod references a ConfigMap key that doesn't exist.
+# Expected: STATUS CreateContainerConfigError, event: couldn't find key APP_GREETING in ConfigMap
+apiVersion: v1
+kind: Pod
+metadata:
+  name: broken-config
+spec:
+  containers:
+    - name: app
+      image: demo-app:1.0.0
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: APP_MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: demo-config
+              key: APP_GREETING      # ← typo: the key is APP_MESSAGE

@@ -61,6 +61,13 @@ def test_visits_count_in_memory(server):
     assert body["visits"] == 2 and body["backend"] == "memory"
 
 
+def test_work_burns_cpu_and_validates_input(server):
+    base, _ = server
+    code, body = get(base + "/work?ms=20")
+    assert code == 200 and body["worked_ms"] == 20 and body["loops"] > 0
+    assert get(base + "/work?ms=abc")[0] == 400
+
+
 def test_unknown_path_is_404(server):
     base, _ = server
     assert get(base + "/nope")[0] == 404

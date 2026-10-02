@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prod
+resources:
+  - ../../base
+images:
+  - name: demo-app
+    newTag: 2.0.0
+replicas:
+  - name: demo
+    count: 3
+configMapGenerator:
+  - name: demo-config
+    behavior: merge
+    literals:
+      - APP_MESSAGE=Hello from PROD
+patches:
+  - target:
+      kind: Deployment
+      name: demo
+    patch: |-
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 256Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/cpu
+        value: 250m

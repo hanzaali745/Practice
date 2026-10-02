@@ -1,0 +1,24 @@
+# Lab 3 — app + log-shipper sidecar sharing an emptyDir volume
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sidecar-demo
+  labels:
+    app: sidecar-demo
+spec:
+  volumes:
+    - name: logs
+      emptyDir: {}
+  containers:
+    - name: app
+      image: busybox:1.36
+      command: ["sh", "-c", "while true; do echo \"$(date) request served\" >> /logs/app.log; sleep 2; done"]
+      volumeMounts:
+        - name: logs
+          mountPath: /logs
+    - name: log-shipper
+      image: busybox:1.36
+      command: ["sh", "-c", "touch /logs/app.log; tail -F /logs/app.log"]
+      volumeMounts:
+        - name: logs
+          mountPath: /logs

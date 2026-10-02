@@ -1,0 +1,20 @@
+# Lab 4 — a CronJob that runs every minute
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: report
+spec:
+  schedule: "* * * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  concurrencyPolicy: Forbid          # never run two at once (like flock)
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: report
+              image: busybox:1.36
+              command: ["sh", "-c", "echo \"report generated at $(date)\""]

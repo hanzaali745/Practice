@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: demo-dev
+resources:
+  - namespace.yaml
+  - ../../base
+configMapGenerator:
+  - name: demo-config
+    behavior: merge
+    literals:
+      - APP_MESSAGE=Hello from DEV
+patches:
+  - target: { kind: Ingress, name: demo }
+    patch: |-
+      - op: replace
+        path: /spec/rules/0/host
+        value: demo-dev.localtest.me
+  - target: { kind: HorizontalPodAutoscaler, name: demo }
+    patch: |-
+      - op: replace
+        path: /spec/minReplicas
+        value: 1
+      - op: replace
+        path: /spec/maxReplicas
+        value: 3
