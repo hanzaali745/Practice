@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+#
+# opsctl — a small ops toolkit (Bash capstone reference solution)
+# Usage: opsctl <command> [options]
+#
+set -euo pipefail
+
+readonly OPSCTL_VERSION="1.0.0"
+OPSCTL_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+readonly OPSCTL_DIR
+
+# shellcheck source=lib/common.sh
+source "$OPSCTL_DIR/lib/common.sh"
+# shellcheck source=lib/health.sh
+source "$OPSCTL_DIR/lib/health.sh"
+# shellcheck source=lib/logs.sh
+source "$OPSCTL_DIR/lib/logs.sh"
+# shellcheck source=lib/backup.sh
+source "$OPSCTL_DIR/lib/backup.sh"
+# shellcheck source=lib/cleanup.sh
+source "$OPSCTL_DIR/lib/cleanup.sh"
+
+usage() {
+    cat <<EOF
+opsctl $OPSCTL_VERSION — ops toolkit
+
+Usage: opsctl <command> [options]
+
+Commands:
+  health       [-d DISK_MAX] [-m MEM_MAX] [-s PROCESS]...   system health checks
+  logs-report  ACCESS_LOG                                   nginx/apache access log summary
+  backup       [-n] [-k KEEP] SOURCE DEST                   tar.gz backup with retention
+  cleanup      [-n] [-d DAYS] [-p PATTERN] DIR              delete old files
+  version                                                   print version
+  help                                                      show this help
+
+Global environment:
+  OPSCTL_LOG_FILE   also append log lines to this file
+EOF
+}
+
+main() {
+    local cmd="${1:-help}"
+    [[ $# -gt 0 ]] && shift
+    case "$cmd" in
+        health)       cmd_health "$@" ;;
+        logs-report)  cmd_logs_report "$@" ;;
+        backup)       cmd_backup "$@" ;;
+        cleanup)      cmd_cleanup "$@" ;;
+        version)      echo "opsctl $OPSCTL_VERSION" ;;
+        help|-h|--help) usage ;;
+        *)            error "unknown command: $cmd"; usage >&2; exit 2 ;;
+    esac
+}
+
+main "$@"

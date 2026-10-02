@@ -28,6 +28,6 @@ def count_levels(path: Path) -> dict[str, int]:
 def service_is_active(name: str) -> bool:
     """Return True if `systemctl is-active NAME` reports 'active'."""
     result = subprocess.run(
-        ["systemctl", "is-active", name], capture_output=True, text=True, timeout=10
+        ["systemctl", "is-active", name], capture_output=True, text=True, timeout=10, check=False
     )
     return result.returncode == 0 and result.stdout.strip() == "active"
