@@ -5,7 +5,7 @@ A small ops toolkit in Bash: health checks, access-log reports, backups and clea
 ```bash
 ./opsctl help
 ./opsctl health -s sshd
-./opsctl logs-report ../../../08-text-processing/data/access.log
+./opsctl logs-report ../../../../2-shell-scripting/07-pipes-and-text-processing/data/access.log
 ./opsctl backup -k 5 /etc/hosts /tmp/backups
 ./opsctl cleanup -n -d 7 -p '*.log' /tmp
 bats tests/          # run the test suite

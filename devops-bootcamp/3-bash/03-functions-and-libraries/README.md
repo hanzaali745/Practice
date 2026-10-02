@@ -1,8 +1,12 @@
-# Module 06 — Functions 🟡
+# Bash Module 03 — Functions & Libraries 🟡
+
+> 🔁 **Builds on [Shell Module 06](../../2-shell-scripting/06-functions/README.md).** Lessons 3.1–3.2 are a
+> quick recap. The new Bash-only parts are **`local`** (3.3), **coloured logging** (3.5),
+> **`BASH_SOURCE`** for libraries (3.6) and **`${var^^}`/`${var,,}`** in the labs.
 
 ## 🎯 Objectives
-- Define and call functions
-- Pass arguments (`$1`, `$@`) and use `local` variables
+- Recap: define and call functions with arguments
+- Use **`local`** variables (Bash) instead of the POSIX workarounds
 - "Return" data via stdout and status via `return`
 - Build a reusable **library** file and `source` it
 - Write logging helpers you'll use in every script
@@ -14,7 +18,7 @@ whole team can `source`.
 
 ---
 
-## 📖 Lesson 6.1 — Defining & calling
+## 📖 Lesson 3.1 — Defining & calling
 
 ```bash
 greet() {
@@ -26,7 +30,7 @@ greet            # call it — no parentheses!
 
 Functions must be **defined before** they're called (that's why we put `main "$@"` at the bottom).
 
-## 📖 Lesson 6.2 — Arguments
+## 📖 Lesson 3.2 — Arguments
 
 Inside a function, `$1`, `$2`, `$#`, `$@` refer to the **function's** arguments.
 
@@ -41,7 +45,7 @@ deploy api prod
 deploy web
 ```
 
-## 📖 Lesson 6.3 — `local` variables
+## 📖 Lesson 3.3 — `local` variables
 
 Without `local`, variables are **global** and leak out of the function:
 
@@ -56,7 +60,7 @@ echo "${count:-unset} $total"   # unset 10
 
 > 🧠 Rule: **every variable inside a function is `local`** unless you deliberately need a global.
 
-## 📖 Lesson 6.4 — Returning values
+## 📖 Lesson 3.4 — Returning values
 
 Bash functions have two outputs:
 1. **Exit status** with `return N` (0–255) → for success/failure
@@ -82,7 +86,7 @@ echo "Root disk at ${usage}%"
 
 > ⚠️ `return "hello"` doesn't work — `return` is only for numbers. Echo data instead.
 
-## 📖 Lesson 6.5 — Logging helpers (copy these into every script!)
+## 📖 Lesson 3.5 — Logging helpers (copy these into every script!)
 
 ```bash
 readonly RED=$'\e[31m' GREEN=$'\e[32m' YELLOW=$'\e[33m' RESET=$'\e[0m'
@@ -98,7 +102,7 @@ warn "Disk at 85%"
 [[ -d /data ]] || die "/data does not exist"
 ```
 
-## 📖 Lesson 6.6 — Function libraries with `source`
+## 📖 Lesson 3.6 — Function libraries with `source`
 
 `lib/common.sh`:
 ```bash
@@ -119,7 +123,7 @@ log "All good"
 
 `SCRIPT_DIR` trick = the folder the script lives in. Essential for scripts that use relative files.
 
-## 📖 Lesson 6.7 — The `main` pattern
+## 📖 Lesson 3.7 — The `main` pattern
 
 ```bash
 #!/usr/bin/env bash
@@ -182,4 +186,4 @@ non-zero if any failed.
 - [ ] I return data with `echo` + `$(...)`, status with `return`
 - [ ] I can `source` a library relative to the script's own directory
 
-👉 Next: [Module 07 — Arrays & String Manipulation](../07-arrays-and-strings/README.md)
+👉 Next: [Module 04 — Strict Mode & Debugging](../04-strict-mode-and-debugging/README.md)

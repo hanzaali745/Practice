@@ -1,4 +1,4 @@
-# Module 07 — Files & Error Handling 🟡
+# Python Module 07 — Files & Error Handling 🟡
 
 ## 🎯 Objectives
 - Read and write text files safely with `with open(...)`

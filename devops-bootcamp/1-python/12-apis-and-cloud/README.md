@@ -1,4 +1,4 @@
-# Module 12 — APIs & Cloud 🔴
+# Python Module 12 — APIs & Cloud 🔴
 
 ## 🎯 Objectives
 - Understand REST APIs: methods, status codes, headers, JSON bodies
@@ -35,6 +35,7 @@ Slack, PagerDuty, Grafana, Jenkins. Calling APIs from Python is how you automate
 ```bash
 pip install requests
 ```
+> 🐧 **Ubuntu:** run `pip` only inside your venv (`source ~/venvs/devops/bin/activate`). If you did Step 0, this is already installed.
 
 ```python
 import requests

@@ -1,4 +1,4 @@
-# Module 11 — Real DevOps Scripts 🔴
+# Bash Module 05 — Real DevOps Scripts 🔴
 
 ## 🎯 Objectives
 Combine everything so far to build the scripts DevOps teams actually run:
@@ -15,7 +15,7 @@ skeleton, so once you've learned it you can produce reliable tools quickly.
 
 ---
 
-## 📖 Lesson 11.1 — The professional script skeleton
+## 📖 Lesson 5.1 — The professional script skeleton
 
 ```bash
 #!/usr/bin/env bash
@@ -52,7 +52,7 @@ Key ideas:
 4. **Validate inputs first**, then act
 5. **Idempotent**: running it twice must be safe (`mkdir -p`, check-before-create)
 
-## 📖 Lesson 11.2 — Backups
+## 📖 Lesson 5.2 — Backups
 
 ```bash
 stamp=$(date +%Y%m%d-%H%M%S)
@@ -68,7 +68,7 @@ ls -1t /var/backups/etc-*.tar.gz | tail -n +8 | xargs -r rm -f
 Database dumps follow the same pattern:
 `pg_dump mydb | gzip > db-$stamp.sql.gz` · `mysqldump --single-transaction mydb | gzip > ...`
 
-## 📖 Lesson 11.3 — Log rotation
+## 📖 Lesson 5.3 — Log rotation
 
 ```bash
 find /var/log/myapp -name "*.log" -mtime +1 -exec gzip {} \;      # compress older than 1 day
@@ -77,7 +77,7 @@ find /var/log/myapp -name "*.log.gz" -mtime +30 -delete           # delete older
 On real servers use **logrotate** (`/etc/logrotate.d/myapp`) — but understanding the script version
 helps you debug it.
 
-## 📖 Lesson 11.4 — HTTP checks with curl
+## 📖 Lesson 5.4 — HTTP checks with curl
 
 ```bash
 code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 https://example.com)
@@ -91,7 +91,7 @@ curl -s -X POST -H 'Content-Type: application/json' \
      -d "{\"text\": \"🚨 $service is DOWN\"}" "$SLACK_WEBHOOK_URL"
 ```
 
-## 📖 Lesson 11.5 — Release folders + symlink deploys
+## 📖 Lesson 5.5 — Release folders + symlink deploys
 
 ```
 /opt/myapp/
@@ -108,7 +108,7 @@ ln -sfn "/opt/myapp/releases/$new" /opt/myapp/current     # switch is (almost) a
 Rollback = point the symlink back to the previous release. That's how Capistrano, Deployer and
 many in-house tools work.
 
-## 📖 Lesson 11.6 — Idempotent server bootstrap
+## 📖 Lesson 5.6 — Idempotent server bootstrap
 
 ```bash
 id deploy &>/dev/null || useradd -m -s /bin/bash deploy        # only if missing
@@ -157,4 +157,4 @@ keep the 5 newest releases, and `rollback` to the previous one.
 - [ ] My scripts are idempotent (safe to run twice)
 - [ ] I can explain symlink-based deploys and rollback
 
-👉 Next: [Module 12 — Pro Bash](../12-pro-bash/README.md)
+👉 Next: [Module 06 — Pro Bash](../06-pro-bash/README.md)

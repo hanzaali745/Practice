@@ -1,4 +1,4 @@
-# Module 11 — Data Formats & Regex 🔴
+# Python Module 11 — Data Formats & Regex 🔴
 
 ## 🎯 Objectives
 - Read/write **JSON** (APIs, AWS, Terraform output)
@@ -50,6 +50,8 @@ containers = [json.loads(line) for line in out.splitlines()]
 ## 📖 Lesson 11.2 — YAML
 
 YAML needs a library: `pip install pyyaml`.
+
+> 🐧 **Ubuntu:** run `pip` only inside your venv (`source ~/venvs/devops/bin/activate`). If you did Step 0, this is already installed.
 
 ```python
 import yaml

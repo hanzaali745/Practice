@@ -1,4 +1,4 @@
-# Module 03 — Strings 🟢
+# Python Module 03 — Strings 🟢
 
 ## 🎯 Objectives
 - Create strings, use escape characters and multi-line strings

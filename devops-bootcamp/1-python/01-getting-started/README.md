@@ -1,4 +1,4 @@
-# Module 01 — Getting Started with Python 🟢
+# Python Module 01 — Getting Started with Python 🟢
 
 ## 🎯 Objectives
 By the end of this module you can:
@@ -17,16 +17,17 @@ containers. Knowing how Python is installed and executed on Linux saves hours of
 
 ## 📖 Lesson 1.1 — Install & verify
 
+Ubuntu already includes Python 3. If you followed [Step 0 — Ubuntu setup](../../00-ubuntu-setup/README.md),
+you're ready. Otherwise:
+
 ```bash
-# Ubuntu / Debian / WSL
 sudo apt update && sudo apt install -y python3 python3-pip python3-venv
+```
 
-# macOS
-brew install python
-
-# Verify
-python3 --version     # Python 3.10+ is good
-which python3         # where is it installed?
+Verify:
+```bash
+python3 --version     # Ubuntu 24.04 → Python 3.12, Ubuntu 22.04 → Python 3.10. Both are fine.
+which python3         # /usr/bin/python3 (or ~/venvs/devops/bin/python3 if your venv is active)
 ```
 
 > ⚠️ On Linux, use `python3` — `python` may not exist or may point to old Python 2.

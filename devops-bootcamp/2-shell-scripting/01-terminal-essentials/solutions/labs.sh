@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Module 01 lab solutions — run each section by hand in a terminal to learn it.
+# Module 01 lab solutions — type each section by hand in your terminal to learn it.
+# This file is Bash (not sh) because {a,b} brace expansion is a feature of your Bash terminal.
 
 # Lab 1 — Project skeleton
 mkdir -p myapp/{bin,config/{dev,prod},logs,scripts}

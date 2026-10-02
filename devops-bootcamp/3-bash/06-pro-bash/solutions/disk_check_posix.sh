@@ -1,5 +1,5 @@
 #!/bin/sh
-# Lab 3 — POSIX sh port of Module 04's disk_check.sh (runs in dash / Alpine ash / BusyBox)
+# Lab 3 — POSIX sh port of Bash Module 01's disk_check.sh (runs in dash / Alpine ash / BusyBox)
 # Usage: disk_check_posix.sh [mount] [warn] [crit]
 # Exit codes: 0 OK, 1 WARNING, 2 CRITICAL, 3 UNKNOWN
 set -eu

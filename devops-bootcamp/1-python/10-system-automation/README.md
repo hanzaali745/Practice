@@ -1,4 +1,4 @@
-# Module 10 — System Automation 🔴
+# Python Module 10 — System Automation 🔴
 
 ## 🎯 Objectives
 - Work with paths and files using `pathlib`, `os` and `shutil`

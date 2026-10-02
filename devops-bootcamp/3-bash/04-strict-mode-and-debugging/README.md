@@ -1,4 +1,8 @@
-# Module 09 — Error Handling & Debugging 🟡
+# Bash Module 04 — Strict Mode, Error Handling & Debugging 🔴
+
+> 🔁 **Builds on [Shell Module 08](../../2-shell-scripting/08-exit-codes-and-errors/README.md).**
+> New in Bash: **`pipefail`** (fails on errors anywhere in a pipeline), **`trap ... ERR`** with
+> `$LINENO`, the `set -e` gotchas specific to Bash, and **`PS4`** for better tracing.
 
 ## 🎯 Objectives
 - Use **strict mode**: `set -euo pipefail` — and know its traps
@@ -14,7 +18,7 @@ separate a hobby script from something you trust in production at 3 a.m.
 
 ---
 
-## 📖 Lesson 9.1 — The danger of default Bash
+## 📖 Lesson 4.1 — The danger of default Bash
 
 ```bash
 #!/usr/bin/env bash
@@ -23,7 +27,7 @@ rm -rf ./*                     # ...so this runs in WHATEVER directory you're in
 echo "cleanup done"            # and it reports success
 ```
 
-## 📖 Lesson 9.2 — Strict mode
+## 📖 Lesson 4.2 — Strict mode
 
 ```bash
 #!/usr/bin/env bash
@@ -60,7 +64,7 @@ local out=$(failing_cmd)   # ❌ `local` hides the failure
 local out; out=$(failing_cmd)   # ✅ declare first, then assign
 ```
 
-## 📖 Lesson 9.3 — Exit codes in your own scripts
+## 📖 Lesson 4.3 — Exit codes in your own scripts
 
 | Code | Convention |
 |------|-----------|
@@ -86,7 +90,7 @@ some_command || status=$?
 if (( status != 0 )); then echo "failed with $status"; fi
 ```
 
-## 📖 Lesson 9.4 — `trap`: cleanup no matter what
+## 📖 Lesson 4.4 — `trap`: cleanup no matter what
 
 ```bash
 #!/usr/bin/env bash
@@ -118,7 +122,7 @@ Report **where** an error happened:
 trap 'echo "ERROR on line $LINENO: $BASH_COMMAND (exit $?)" >&2' ERR
 ```
 
-## 📖 Lesson 9.5 — Debugging
+## 📖 Lesson 4.5 — Debugging
 
 ```bash
 bash -n script.sh          # syntax check only (doesn't run)
@@ -147,7 +151,7 @@ Treat its warnings like compiler errors. If you *really* must ignore one:
 # shellcheck disable=SC2086
 ```
 
-## 📖 Lesson 9.6 — Locking: only one instance at a time
+## 📖 Lesson 4.6 — Locking: only one instance at a time
 
 Cron jobs can overlap if a run takes longer than its interval. Prevent it:
 
@@ -160,7 +164,7 @@ fi
 # ... rest of script; lock is released automatically on exit
 ```
 
-## 📖 Lesson 9.7 — Retry helper (production pattern)
+## 📖 Lesson 4.7 — Retry helper (production pattern)
 
 ```bash
 retry() {
@@ -219,4 +223,4 @@ Run two copies at the same time to prove the lock works.
 - [ ] I clean up temp files with `trap ... EXIT`
 - [ ] I can debug with `bash -x` and I run ShellCheck on everything
 
-👉 Next: [Module 10 — Processes & Scheduling](../10-processes-and-scheduling/README.md)
+👉 Next: [Module 05 — Real DevOps Scripts](../05-real-devops-scripts/README.md)

@@ -1,4 +1,4 @@
-# Module 14 — Python Capstone Projects 🏆
+# Python Module 14 — Python Capstone Projects 🏆
 
 > **CEO note:** This is your portfolio. Build each project in its own folder (or repo),
 > with a README, `requirements.txt`, tests, and a CI workflow. In interviews, you'll
@@ -95,4 +95,4 @@ Build a CLI that:
 ## 🎓 You've finished Python!
 You can now automate files, processes, APIs and the cloud, and write tested, production-grade tools.
 
-👉 Next phase: [Shell Script & Bash](../../bash/README.md)
+👉 Next phase: [Phase 2 — Shell Scripting](../../2-shell-scripting/README.md)

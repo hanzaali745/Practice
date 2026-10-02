@@ -66,6 +66,10 @@ rmdir emptydir
 ln -s /opt/app/current /usr/local/app # symbolic link (shortcut)
 ```
 
+> 💡 `{config,logs,scripts}` is **brace expansion**: your terminal turns it into 3 names. It's a Bash
+> feature (your Ubuntu terminal is Bash), so it won't work inside `#!/bin/sh` scripts — there you
+> list the names: `mkdir -p app/config app/logs app/scripts`.
+
 > ⚠️ `rm -rf` is permanent. Double-check paths. Never run `rm -rf /` or `rm -rf $VAR/` without checking `$VAR` is set!
 
 ## 📖 Lesson 1.4 — Viewing files

@@ -1,4 +1,4 @@
-# Module 09 — Object-Oriented Python 🟡
+# Python Module 09 — Object-Oriented Python 🟡
 
 ## 🎯 Objectives
 - Understand **classes** (blueprints) and **objects** (instances)

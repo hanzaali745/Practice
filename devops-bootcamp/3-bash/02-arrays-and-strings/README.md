@@ -1,4 +1,4 @@
-# Module 07 — Arrays & String Manipulation 🟡
+# Bash Module 02 — Arrays & String Manipulation 🟡
 
 ## 🎯 Objectives
 - Use **indexed arrays** (lists) and **associative arrays** (dictionaries)
@@ -15,7 +15,7 @@ fast, without calling `sed`/`cut`/`basename` thousands of times.
 
 ---
 
-## 📖 Lesson 7.1 — Indexed arrays
+## 📖 Lesson 2.1 — Indexed arrays
 
 ```bash
 servers=("web-01" "web-02" "db-01")
@@ -48,7 +48,7 @@ args=(-av --delete)
 rsync "${args[@]}" src/ dest/
 ```
 
-## 📖 Lesson 7.2 — Associative arrays (dictionaries)
+## 📖 Lesson 2.2 — Associative arrays (dictionaries)
 
 ```bash
 declare -A ports=(
@@ -76,7 +76,7 @@ done
 for k in "${!count[@]}"; do echo "$k=${count[$k]}"; done
 ```
 
-## 📖 Lesson 7.3 — String length, substring, case
+## 📖 Lesson 2.3 — String length, substring, case
 
 ```bash
 s="production"
@@ -89,7 +89,7 @@ echo "${s^}"          # Production
 v="WEB"; echo "${v,,}" # web
 ```
 
-## 📖 Lesson 7.4 — Remove prefix/suffix (super useful!)
+## 📖 Lesson 2.4 — Remove prefix/suffix (super useful!)
 
 | Syntax | Removes | Mnemonic |
 |--------|---------|----------|
@@ -112,7 +112,7 @@ echo "${image##*:}"       # v2.3.1    (tag)
 echo "${image%:*}"        # registry.example.com/team/api
 ```
 
-## 📖 Lesson 7.5 — Search & replace
+## 📖 Lesson 2.5 — Search & replace
 
 ```bash
 s="web_server_01"
@@ -123,7 +123,7 @@ echo "${s/%01/02}"        # web_server_02   (only at end)
 echo "${s//[0-9]/}"       # web_server_     (delete digits)
 ```
 
-## 📖 Lesson 7.6 — Splitting strings into arrays
+## 📖 Lesson 2.6 — Splitting strings into arrays
 
 ```bash
 csv="web-01,web-02,db-01"
@@ -137,7 +137,7 @@ echo "major=$major minor=$minor patch=$patch"
 joined=$(IFS=,; echo "${hosts[*]}")   # join array with a delimiter
 ```
 
-## 📖 Lesson 7.7 — Reading a file into an array
+## 📖 Lesson 2.7 — Reading a file into an array
 
 ```bash
 mapfile -t lines < /etc/hosts         # -t strips newlines (also called readarray)
@@ -176,7 +176,7 @@ using **only parameter expansion**.
 `minor` → `1.5.0`; `major` → `2.0.0`. Validate the input format with a regex.
 
 ### Lab 5 ⭐⭐⭐ — Log level counter
-Count occurrences of each level in `../../python/07-files-and-errors/data/app.log` using an
+Count occurrences of each level in `../../1-python/07-files-and-errors/data/app.log` using an
 associative array and `while read`, then print levels sorted by count (pipe into `sort -k2 -nr`).
 
 ---
@@ -186,4 +186,4 @@ associative array and `while read`, then print levels sorted by count (pipe into
 - [ ] I can use `declare -A` for key/value data
 - [ ] I can do basename/dirname/extension/replace with `#`, `%`, `/`, `//`
 
-👉 Next: [Module 08 — Text Processing](../08-text-processing/README.md)
+👉 Next: [Module 03 — Functions & Libraries](../03-functions-and-libraries/README.md)

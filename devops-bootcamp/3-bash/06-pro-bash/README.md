@@ -1,4 +1,4 @@
-# Module 12 — Pro Bash: getopts, ShellCheck, Portability, Testing & Style 🔴
+# Bash Module 06 — Pro Bash: getopts, ShellCheck, Portability, Testing & Style 🔴
 
 ## 🎯 Objectives
 - Parse options like real Unix tools with `getopts` (and long options manually)
@@ -13,7 +13,7 @@ Senior-level shell means: scripts that behave like proper CLI tools, run in **Al
 
 ---
 
-## 📖 Lesson 12.1 — `getopts` (short options)
+## 📖 Lesson 6.1 — `getopts` (short options)
 
 ```bash
 #!/usr/bin/env bash
@@ -54,7 +54,7 @@ app="$1"
 ./deploy.sh -e prod -r 3 -nv api       # combined flags work: -nv
 ```
 
-## 📖 Lesson 12.2 — Long options (`--env prod`)
+## 📖 Lesson 6.2 — Long options (`--env prod`)
 
 `getopts` only supports short options. For long ones, use a `while/case` loop:
 
@@ -72,7 +72,7 @@ while [[ $# -gt 0 ]]; do
 done
 ```
 
-## 📖 Lesson 12.3 — POSIX `sh` vs Bash
+## 📖 Lesson 6.3 — POSIX `sh` vs Bash
 
 `#!/bin/sh` is **not** Bash. On Debian/Ubuntu it's `dash`; in Alpine it's BusyBox `ash`.
 
@@ -104,7 +104,7 @@ docker run --rm -v "$PWD:/w" alpine sh /w/script.sh    # run where it matters
 > Write POSIX `sh` for Docker `ENTRYPOINT`s in minimal images, installers (`curl | sh`), and git hooks
 > shared across platforms.
 
-## 📖 Lesson 12.4 — ShellCheck & shfmt everywhere
+## 📖 Lesson 6.4 — ShellCheck & shfmt everywhere
 
 ```bash
 shellcheck -x script.sh           # -x follows `source`d files
@@ -115,7 +115,7 @@ shfmt -d *.sh                     # show diff only (CI check)
 
 Install the ShellCheck extension in VS Code — it underlines problems as you type.
 
-## 📖 Lesson 12.5 — Testing with Bats
+## 📖 Lesson 6.5 — Testing with Bats
 
 [Bats](https://github.com/bats-core/bats-core) = Bash Automated Testing System.
 
@@ -160,7 +160,7 @@ fi
 ```
 Then tests can `source script.sh` and call individual functions. (Same idea as Python's `__main__`.)
 
-## 📖 Lesson 12.6 — CI for shell scripts
+## 📖 Lesson 6.6 — CI for shell scripts
 
 `.github/workflows/shell-ci.yml`:
 ```yaml
@@ -179,7 +179,7 @@ jobs:
           bats $(git ls-files '*.bats')
 ```
 
-## 📖 Lesson 12.7 — Team style guide (summary of Google's Shell Style Guide + experience)
+## 📖 Lesson 6.7 — Team style guide (summary of Google's Shell Style Guide + experience)
 
 1. `#!/usr/bin/env bash` + `set -euo pipefail` at the top
 2. Header comment: purpose + usage
@@ -194,7 +194,7 @@ jobs:
 11. ShellCheck clean, `shfmt` formatted, Bats tests for logic
 12. **Over ~150 lines, complex data, JSON, or API calls → use Python.**
 
-## 📖 Lesson 12.8 — Handy pro snippets
+## 📖 Lesson 6.8 — Handy pro snippets
 
 ```bash
 # Script's own directory
@@ -231,11 +231,11 @@ is a positive integer, then prints the plan. Support `-h`.
 Rewrite Lab 1 to also accept `--env prod`, `--env=prod`, `--replicas 3`, `--dry-run`, `--help`, `--`.
 
 ### Lab 3 ⭐⭐⭐ — Port to POSIX
-Port `disk_check.sh` from Module 04 to POSIX `sh` so it passes `dash -n`, `shellcheck -s sh`
+Port your Bash `disk_check.sh` (Bash Module 01, Lab 1) back to POSIX `sh` so it passes `dash -n`, `shellcheck -s sh`
 and runs under `dash`. (No `[[ ]]`, no `(( ))`.)
 
 ### Lab 4 ⭐⭐⭐ — Bats tests
-Write Bats tests for `bump.sh` (Module 07) and for `validators` functions (source the library
+Write Bats tests for `bump.sh` (Bash Module 02) and for `validators` functions (source the library
 and test `is_valid_ip` directly). Run them with `bats`.
 
 ### Lab 5 ⭐⭐⭐ — Lint the whole course
@@ -249,4 +249,4 @@ Add the GitHub Actions workflow above to your repo.
 - [ ] I know the main bashisms and can write POSIX `sh` when needed
 - [ ] I lint with ShellCheck and test with Bats, in CI
 
-👉 Next: [Module 13 — Capstone Projects](../13-capstone/README.md)
+👉 Next: [Module 07 — Bash Capstone](../07-capstone/README.md)

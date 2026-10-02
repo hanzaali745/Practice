@@ -1,4 +1,4 @@
-# Module 08 — Modules, Packages, venv & pip 🟡
+# Python Module 08 — Modules, Packages, venv & pip 🟡
 
 ## 🎯 Objectives
 - Import from the standard library and your own files
@@ -95,12 +95,29 @@ A venv is an **isolated folder** with its own Python + packages, per project.
 ```bash
 cd myproject
 python3 -m venv .venv              # create
-source .venv/bin/activate          # activate (Linux/macOS)
-# .venv\Scripts\activate           # (Windows)
+source .venv/bin/activate          # activate — your prompt now starts with (.venv)
 which python                        # → myproject/.venv/bin/python
 pip install requests                # installs ONLY into this venv
 deactivate                          # leave
 ```
+
+### 🐧 Why Ubuntu forces you to use a venv
+
+On Ubuntu 23.04+ (including 24.04), installing outside a venv fails on purpose:
+
+```text
+$ pip install requests
+error: externally-managed-environment
+× This environment is externally managed
+```
+
+Ubuntu's own tools (like `apt`) are written in Python. If `pip` changed the system's packages,
+it could break your operating system. So Ubuntu says: **use a venv** (or `sudo apt install python3-<name>`
+for the few libraries Ubuntu packages).
+
+> ❌ Don't "fix" it with `pip install --break-system-packages`. Use a venv — that's what professionals do.
+> In Step 0 you created one venv for the whole course at `~/venvs/devops`. For your own real
+> projects, create one venv per project as shown above.
 
 > Add `.venv/` to `.gitignore` — never commit it.
 

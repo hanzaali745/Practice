@@ -1,4 +1,4 @@
-# Module 06 — Functions 🟡
+# Python Module 06 — Functions 🟡
 
 ## 🎯 Objectives
 - Define functions with parameters and return values

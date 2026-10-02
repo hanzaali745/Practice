@@ -1,165 +1,171 @@
-# 🚀 DevOps Scripting Bootcamp: Python → Shell → Bash
+# 🚀 DevOps Scripting Bootcamp: Python → Shell Scripting → Bash
 
 > **From your CEO / Senior DevOps Engineer:**
-> Welcome to the team. In DevOps, we automate *everything*: servers, deployments,
-> backups, monitoring, cloud resources. The two tools you'll use **every single day**
-> are **Python** (for powerful automation, APIs, cloud) and **Shell/Bash** (for gluing
-> Linux systems together). This bootcamp takes you from zero to the level I expect
-> from engineers on my team.
+> Welcome to the team. In DevOps we automate *everything*: servers, deployments, backups,
+> monitoring, cloud. You'll use three scripting tools **every day**:
 >
-> My rules: **Read → Type the examples yourself (no copy-paste!) → Do the labs → Only then check the solution.**
+> - **Python** — powerful automation, APIs, cloud, data
+> - **Shell scripting (POSIX `sh`)** — the universal language of every Linux/Unix system and Docker image
+> - **Bash** — the most popular shell, with extra power for serious server automation
+>
+> This bootcamp takes you from zero to the level I expect from engineers on my team.
+> Everything is designed and tested for **Ubuntu**.
+>
+> **My rules:** Read → type every example yourself (no copy-paste) → do the labs →
+> only then look at the solution.
 
 ---
 
-## 🗺️ The Roadmap
+## 🗺️ The Roadmap — follow it in order
 
 ```
- PHASE 1: PYTHON (weeks 1-7)                PHASE 2: SHELL & BASH (weeks 8-12)
- ┌──────────────────────────────┐           ┌──────────────────────────────┐
- │ 🟢 Beginner   Modules 01-05   │           │ 🟢 Beginner   Modules 01-05   │
- │ 🟡 Intermediate Modules 06-09 │   ───►    │ 🟡 Intermediate Modules 06-09 │
- │ 🔴 Pro (DevOps) Modules 10-13 │           │ 🔴 Pro (DevOps) Modules 10-12 │
- │ 🏆 Capstone   Module 14       │           │ 🏆 Capstone   Module 13       │
- └──────────────────────────────┘           └──────────────────────────────┘
+ STEP 0           PHASE 1              PHASE 2                  PHASE 3
+ ┌─────────┐      ┌──────────────┐     ┌──────────────────┐     ┌──────────────┐
+ │ Ubuntu  │ ───► │   PYTHON     │ ──► │ SHELL SCRIPTING  │ ──► │    BASH      │
+ │ setup   │      │ 14 modules   │     │ (POSIX sh)       │     │  7 modules   │
+ │ 30 min  │      │ weeks 1–7    │     │ 10 modules       │     │ weeks 11–13  │
+ └─────────┘      └──────────────┘     │ weeks 8–10       │     └──────────────┘
+                                       └──────────────────┘
 ```
 
-### Phase 1 — Python 🐍 → [`python/`](python/README.md)
+| Step | Track | What it covers |
+|------|-------|----------------|
+| **0** | [🐧 Ubuntu Setup](00-ubuntu-setup/README.md) | Install tools, Python venv, editor, Git, check script |
+| **1** | [🐍 Python](1-python/README.md) | 14 modules: basics → automation → APIs/cloud → testing → capstone |
+| **2** | [🐚 Shell Scripting (POSIX sh)](2-shell-scripting/README.md) | 10 modules: terminal → scripts → loops → grep/sed/awk → errors → cron → capstone |
+| **3** | [💪 Bash](3-bash/README.md) | 7 modules: Bash features → arrays → strict mode → real DevOps scripts → pro → capstone |
 
-| # | Module | Level | What you'll be able to do |
-|---|--------|-------|---------------------------|
-| 01 | [Getting Started](python/01-getting-started/README.md) | 🟢 | Install Python, run scripts, use the REPL |
-| 02 | [Variables, Types & Operators](python/02-variables-and-types/README.md) | 🟢 | Store and calculate data, read user input |
-| 03 | [Strings](python/03-strings/README.md) | 🟢 | Format, slice, clean text (log lines!) |
-| 04 | [Control Flow](python/04-control-flow/README.md) | 🟢 | Make decisions, loop over things |
-| 05 | [Data Structures](python/05-data-structures/README.md) | 🟢 | Lists, tuples, dicts, sets — inventories & configs |
-| 06 | [Functions](python/06-functions/README.md) | 🟡 | Write reusable, clean code |
-| 07 | [Files & Error Handling](python/07-files-and-errors/README.md) | 🟡 | Read/write files, handle failures safely |
-| 08 | [Modules, venv & pip](python/08-modules-venv-pip/README.md) | 🟡 | Organise code, manage dependencies |
-| 09 | [Object-Oriented Python](python/09-oop/README.md) | 🟡 | Model servers, services and deployments as classes |
-| 10 | [System Automation](python/10-system-automation/README.md) | 🔴 | `os`, `pathlib`, `subprocess`, `argparse`, `logging` |
-| 11 | [Data Formats & Regex](python/11-data-formats/README.md) | 🔴 | JSON, YAML, CSV, regular expressions |
-| 12 | [APIs & Cloud](python/12-apis-and-cloud/README.md) | 🔴 | REST APIs, `requests`, intro to AWS `boto3` |
-| 13 | [Testing & Code Quality](python/13-testing-and-quality/README.md) | 🔴 | `pytest`, type hints, linting |
-| 14 | [Capstone Projects](python/14-capstone/README.md) | 🏆 | Build real DevOps tools end-to-end |
+### Shell scripting vs Bash — why are they separate?
 
-### Phase 2 — Shell Script & Bash 🐚 → [`bash/`](bash/README.md)
+- **Shell scripting (POSIX `sh`)** is the **standard** core every shell understands. Scripts start with
+  `#!/bin/sh` and run anywhere — including tiny Alpine Docker images that don't have Bash.
+  On Ubuntu, `sh` is `dash`.
+- **Bash** understands everything in POSIX `sh` **plus** many extras (`[[ ]]`, arrays, `(( ))`,
+  `pipefail`, `trap ERR`...). Scripts start with `#!/usr/bin/env bash`.
 
-| # | Module | Level | What you'll be able to do |
-|---|--------|-------|---------------------------|
-| 01 | [Linux Terminal Essentials](bash/01-terminal-essentials/README.md) | 🟢 | Navigate, manage files, permissions |
-| 02 | [Your First Script](bash/02-first-script/README.md) | 🟢 | Shebang, `chmod +x`, running scripts |
-| 03 | [Variables, Input & Arguments](bash/03-variables-input-args/README.md) | 🟢 | `$1`, `$@`, `read`, quoting |
-| 04 | [Conditionals](bash/04-conditionals/README.md) | 🟢 | `if`, `[[ ]]`, `case`, file tests |
-| 05 | [Loops](bash/05-loops/README.md) | 🟢 | `for`, `while`, `until`, reading files |
-| 06 | [Functions](bash/06-functions/README.md) | 🟡 | Reusable functions, `local`, return values |
-| 07 | [Arrays & String Manipulation](bash/07-arrays-and-strings/README.md) | 🟡 | Indexed/associative arrays, `${var//x/y}` |
-| 08 | [Text Processing](bash/08-text-processing/README.md) | 🟡 | Pipes, redirection, `grep`, `sed`, `awk` |
-| 09 | [Error Handling & Debugging](bash/09-error-handling/README.md) | 🟡 | Exit codes, `set -euo pipefail`, `trap` |
-| 10 | [Processes & Scheduling](bash/10-processes-and-scheduling/README.md) | 🔴 | Jobs, signals, `cron`, `systemd` timers |
-| 11 | [Real DevOps Scripts](bash/11-devops-scripts/README.md) | 🔴 | Backups, health checks, log rotation, deploys |
-| 12 | [Pro Bash](bash/12-pro-bash/README.md) | 🔴 | `getopts`, ShellCheck, portability, style guide |
-| 13 | [Capstone Projects](bash/13-capstone/README.md) | 🏆 | Production-grade automation toolkit |
+Learn the core first (Phase 2), then the extras (Phase 3). You'll always know **which** features
+are portable and which aren't — that's a senior-engineer skill.
 
 ---
 
-## 📚 How every module is structured
+## 🐍 Phase 1 — Python → [`1-python/`](1-python/README.md)
 
-Each module folder looks the same, so you always know where you are:
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [Getting Started](1-python/01-getting-started/README.md) | 🟢 |
+| 02 | [Variables, Types & Operators](1-python/02-variables-and-types/README.md) | 🟢 |
+| 03 | [Strings](1-python/03-strings/README.md) | 🟢 |
+| 04 | [Control Flow](1-python/04-control-flow/README.md) | 🟢 |
+| 05 | [Data Structures](1-python/05-data-structures/README.md) | 🟢 |
+| 06 | [Functions](1-python/06-functions/README.md) | 🟡 |
+| 07 | [Files & Error Handling](1-python/07-files-and-errors/README.md) | 🟡 |
+| 08 | [Modules, venv & pip](1-python/08-modules-venv-pip/README.md) | 🟡 |
+| 09 | [Object-Oriented Python](1-python/09-oop/README.md) | 🟡 |
+| 10 | [System Automation](1-python/10-system-automation/README.md) | 🔴 |
+| 11 | [Data Formats & Regex](1-python/11-data-formats/README.md) | 🔴 |
+| 12 | [APIs & Cloud](1-python/12-apis-and-cloud/README.md) | 🔴 |
+| 13 | [Testing & Code Quality](1-python/13-testing-and-quality/README.md) | 🔴 |
+| 14 | [Capstone Projects](1-python/14-capstone/README.md) | 🏆 |
+
+## 🐚 Phase 2 — Shell Scripting (POSIX sh) → [`2-shell-scripting/`](2-shell-scripting/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [Linux Terminal Essentials](2-shell-scripting/01-terminal-essentials/README.md) | 🟢 |
+| 02 | [Your First Shell Script](2-shell-scripting/02-first-script/README.md) | 🟢 |
+| 03 | [Variables, Input & Arguments](2-shell-scripting/03-variables-input-args/README.md) | 🟢 |
+| 04 | [Conditionals](2-shell-scripting/04-conditionals/README.md) | 🟢 |
+| 05 | [Loops](2-shell-scripting/05-loops/README.md) | 🟢 |
+| 06 | [Functions](2-shell-scripting/06-functions/README.md) | 🟡 |
+| 07 | [Pipes & Text Processing](2-shell-scripting/07-pipes-and-text-processing/README.md) | 🟡 |
+| 08 | [Exit Codes & Errors](2-shell-scripting/08-exit-codes-and-errors/README.md) | 🟡 |
+| 09 | [Processes & Scheduling](2-shell-scripting/09-processes-and-scheduling/README.md) | 🔴 |
+| 10 | [Shell Capstone](2-shell-scripting/10-capstone/README.md) | 🏆 |
+
+## 💪 Phase 3 — Bash → [`3-bash/`](3-bash/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [From sh to Bash](3-bash/01-from-sh-to-bash/README.md) | 🟡 |
+| 02 | [Arrays & String Manipulation](3-bash/02-arrays-and-strings/README.md) | 🟡 |
+| 03 | [Functions & Libraries](3-bash/03-functions-and-libraries/README.md) | 🟡 |
+| 04 | [Strict Mode & Debugging](3-bash/04-strict-mode-and-debugging/README.md) | 🔴 |
+| 05 | [Real DevOps Scripts](3-bash/05-real-devops-scripts/README.md) | 🔴 |
+| 06 | [Pro Bash](3-bash/06-pro-bash/README.md) | 🔴 |
+| 07 | [Bash Capstone](3-bash/07-capstone/README.md) | 🏆 |
+
+---
+
+## 📚 Every module has the same structure
 
 ```
 NN-module-name/
-├── README.md      ← 1. Concepts explained simply  2. Worked examples  3. Labs
-└── solutions/     ← Reference solutions (open ONLY after you've tried!)
+├── README.md      ← the lesson + labs
+├── data/          ← sample files for the labs (some modules)
+└── solutions/     ← reference answers — open ONLY after you've tried!
 ```
 
-Inside each `README.md`:
+Inside each `README.md`, in this order:
 
-1. **🎯 Objectives** — what you'll know by the end
+1. **🎯 Objectives** — what you'll be able to do
 2. **🧠 Why DevOps engineers care** — the real-world reason
-3. **📖 Lessons** — concepts + examples you type and run
-4. **⚠️ Common mistakes** — the things that bite juniors
-5. **🧪 Labs** — hands-on practice, from easy (⭐) to hard (⭐⭐⭐)
-6. **✅ Checkpoint** — a self-check before you move on
+3. **📖 Lessons** — short explanations + examples you type and run
+4. **⚠️ Common mistakes** — what trips up beginners
+5. **🧪 Labs** — practice from ⭐ easy to ⭐⭐⭐ hard
+6. **✅ Checkpoint** — tick every box before moving on
 
----
+## 🔁 Your daily study routine (step by step)
 
-## 🛠️ Your Lab Environment
+1. Open the terminal and go to the course: `cd ~/Practice/devops-bootcamp`
+2. Make sure your Python venv is on (prompt starts with `(devops)`) — see [Step 0](00-ubuntu-setup/README.md#step-5--create-a-python-virtual-environment-important-on-ubuntu)
+3. Open today's module `README.md` and read it once, top to bottom
+4. Type every example yourself in the terminal
+5. Do the labs in `my-work/python`, `my-work/shell` or `my-work/bash`
+6. Compare with `solutions/` only after a real attempt
+7. Tick the ✅ Checkpoint, then `git add`, `git commit`, `git push`
 
-You need a Linux-like terminal. Pick **one**:
+## 📅 Suggested schedule (1–2 hours a day)
 
-| Your computer | Best option |
-|---------------|-------------|
-| Linux | You're ready. Open a terminal. |
-| macOS | Terminal app works. Install Homebrew + `brew install bash python` |
-| Windows | Install **WSL2** (`wsl --install` in PowerShell as Admin) → Ubuntu |
-| Any (no install) | A free cloud VM (AWS/GCP/Azure free tier) or GitHub Codespaces |
-
-Check your tools:
-
-```bash
-python3 --version   # want 3.10+
-bash --version      # want 4.0+  (macOS ships 3.2 — upgrade with brew)
-git --version
-```
-
-Clone this repo and work inside it:
-
-```bash
-git clone <this-repo-url>
-cd Practice/devops-bootcamp
-mkdir -p my-work          # ← do your lab work here
-```
-
-> 💡 **Tip:** Commit your lab work to Git every day. Your GitHub history becomes
-> your DevOps portfolio. Recruiters look at it.
-
----
-
-## 📅 Suggested Schedule (1–2 hours/day)
-
-| Week | Focus |
-|------|-------|
+| Week | Do |
+|------|----|
+| 0 | Step 0 — Ubuntu setup |
 | 1 | Python 01–03 |
 | 2 | Python 04–05 |
 | 3 | Python 06–07 |
 | 4 | Python 08–09 |
 | 5 | Python 10–11 |
 | 6 | Python 12–13 |
-| 7 | Python 14 (Capstone) |
-| 8 | Bash 01–03 |
-| 9 | Bash 04–06 |
-| 10 | Bash 07–09 |
-| 11 | Bash 10–12 |
-| 12 | Bash 13 (Capstone) |
+| 7 | Python 14 (capstone) |
+| 8 | Shell 01–04 |
+| 9 | Shell 05–08 |
+| 10 | Shell 09–10 (capstone) |
+| 11 | Bash 01–03 |
+| 12 | Bash 04–05 |
+| 13 | Bash 06–07 (capstone) |
+
+## ✅ Progress tracker (copy into your notes)
+
+**Step 0:** - [ ] Ubuntu setup done, `check_setup.sh` all ✅
+
+**Python:** - [ ] 01 - [ ] 02 - [ ] 03 - [ ] 04 - [ ] 05 - [ ] 06 - [ ] 07 - [ ] 08 - [ ] 09 - [ ] 10 - [ ] 11 - [ ] 12 - [ ] 13 - [ ] 14
+
+**Shell:** - [ ] 01 - [ ] 02 - [ ] 03 - [ ] 04 - [ ] 05 - [ ] 06 - [ ] 07 - [ ] 08 - [ ] 09 - [ ] 10
+
+**Bash:** - [ ] 01 - [ ] 02 - [ ] 03 - [ ] 04 - [ ] 05 - [ ] 06 - [ ] 07
+
+**Expert checklists:** - [ ] [Python](1-python/README.md#-python-expert-checklist) - [ ] [Shell](2-shell-scripting/README.md#-shell-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes) - [ ] [Bash](3-bash/README.md#-bash-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes)
 
 ---
 
-## ✅ Progress Tracker
+## 🧭 Which one do I use at work?
 
-Copy this into your notes and tick as you go:
+| Use **POSIX sh** when… | Use **Bash** when… | Use **Python** when… |
+|------------------------|--------------------|----------------------|
+| Docker entrypoints (Alpine) | Server automation scripts | Logic gets complex (> ~150 lines) |
+| Installers (`curl ... \| sh`) | CI/CD pipeline steps | Talking to APIs (AWS, GitHub, Slack) |
+| Must run on any Unix | Gluing Linux commands with arrays/strict mode | Parsing JSON/YAML seriously |
+| Git hooks shared by a team | Cron jobs, deploy scripts | You need tests, classes, libraries |
 
-**Python**
-- [ ] 01 Getting Started  - [ ] 02 Variables  - [ ] 03 Strings  - [ ] 04 Control Flow
-- [ ] 05 Data Structures  - [ ] 06 Functions  - [ ] 07 Files & Errors
-- [ ] 08 Modules & venv  - [ ] 09 OOP  - [ ] 10 System Automation
-- [ ] 11 Data Formats  - [ ] 12 APIs & Cloud  - [ ] 13 Testing  - [ ] 14 Capstone
+A senior engineer knows **all three** and picks the right one.
 
-**Shell / Bash**
-- [ ] 01 Terminal  - [ ] 02 First Script  - [ ] 03 Variables & Args  - [ ] 04 Conditionals
-- [ ] 05 Loops  - [ ] 06 Functions  - [ ] 07 Arrays & Strings  - [ ] 08 Text Processing
-- [ ] 09 Error Handling  - [ ] 10 Processes & Cron  - [ ] 11 DevOps Scripts
-- [ ] 12 Pro Bash  - [ ] 13 Capstone
-
----
-
-## 🧭 Python vs Bash — when do I use which?
-
-| Use **Bash** when… | Use **Python** when… |
-|--------------------|----------------------|
-| Gluing Linux commands together | Logic gets complex (> ~100 lines) |
-| Quick server setup / bootstrap | Talking to APIs (AWS, GitHub, Slack) |
-| CI/CD pipeline steps | Parsing JSON/YAML seriously |
-| Cron jobs, small wrappers | You need tests, classes, libraries |
-| Inside Dockerfiles | Building a reusable CLI tool |
-
-A senior engineer knows **both** and picks the right one. Let's begin. 👉 [Start Python Module 01](python/01-getting-started/README.md)
+👉 **Start now:** [Step 0 — Set up your Ubuntu lab](00-ubuntu-setup/README.md)

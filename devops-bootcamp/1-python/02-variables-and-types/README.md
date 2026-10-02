@@ -1,4 +1,4 @@
-# Module 02 — Variables, Types & Operators 🟢
+# Python Module 02 — Variables, Types & Operators 🟢
 
 ## 🎯 Objectives
 - Create variables and follow naming rules

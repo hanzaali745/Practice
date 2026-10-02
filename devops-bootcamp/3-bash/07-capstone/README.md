@@ -1,4 +1,4 @@
-# Module 13 — Bash Capstone Projects 🏆
+# Bash Module 07 — Bash Capstone Projects 🏆
 
 > **CEO note:** Same deal as the Python capstone: put each project in your GitHub with a README,
 > ShellCheck-clean code, Bats tests and a CI workflow. These are what you show in interviews.

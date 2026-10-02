@@ -1,5 +1,8 @@
 # 🐍 Phase 1: Python for DevOps
 
+> **Before you start:** finish [Step 0 — Ubuntu setup](../00-ubuntu-setup/README.md) and make sure your
+> venv is active (`source ~/venvs/devops/bin/activate` — your prompt starts with `(devops)`).
+
 > Python is the #1 language for DevOps automation. Ansible is written in Python.
 > AWS CLI is written in Python. Most internal DevOps tools are Python.
 
@@ -25,7 +28,7 @@
 ## How to run any solution
 
 ```bash
-cd devops-bootcamp/python/03-strings/solutions
+cd ~/Practice/devops-bootcamp/1-python/03-strings/solutions
 python3 lab1_log_parser.py
 ```
 
@@ -65,3 +68,20 @@ except FileNotFoundError as e: ...
 import subprocess
 subprocess.run(["ls", "-l"], check=True, capture_output=True, text=True)
 ```
+
+## 🏅 Python expert checklist
+
+You're "expert level" for DevOps when you can do all of these **without notes**:
+
+- [ ] Choose the right data structure (list / dict / set / tuple / dataclass) and explain why
+- [ ] Write small, typed functions with docstrings, and a `main()` with `if __name__ == "__main__":`
+- [ ] Read huge log files line by line, and handle errors with specific exceptions
+- [ ] Return correct exit codes and write errors to stderr
+- [ ] Create a venv, pin dependencies in `requirements.txt`, and explain Ubuntu's `externally-managed-environment` error
+- [ ] Run commands safely with `subprocess.run([...], check=True, timeout=...)` — and explain why not `shell=True`
+- [ ] Build a CLI with `argparse` (subcommands, `--dry-run`, `-v`) and `logging`
+- [ ] Load/transform JSON, YAML (`safe_load`!) and CSV; parse logs with named-group regex
+- [ ] Call REST APIs with timeouts, retries, auth from env vars, and pagination
+- [ ] Test with pytest (parametrize, fixtures, `tmp_path`, mocks) and run ruff + mypy + pytest in CI
+
+👉 When you finish: [Phase 2 — Shell Scripting](../2-shell-scripting/README.md)

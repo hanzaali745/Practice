@@ -1,4 +1,4 @@
-# Module 13 — Testing & Code Quality 🔴
+# Python Module 13 — Testing & Code Quality 🔴
 
 ## 🎯 Objectives
 - Write unit tests with **pytest**
@@ -19,6 +19,7 @@ CI runs them on every commit. "Shift left" = catch problems before they reach pr
 ```bash
 pip install pytest
 ```
+> 🐧 **Ubuntu:** run `pip` only inside your venv (`source ~/venvs/devops/bin/activate`). If you did Step 0, this is already installed.
 
 `calc.py`:
 ```python
