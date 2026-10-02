@@ -1,0 +1,9 @@
+{
+  "generated": "2024-05-01T10:00:00Z",
+  "servers": [
+    {"name": "web-01", "ip": "10.0.1.10", "env": "prod", "role": "web", "cpu": 45, "tags": ["frontend"]},
+    {"name": "web-02", "ip": "10.0.1.11", "env": "prod", "role": "web", "cpu": 91, "tags": ["frontend"]},
+    {"name": "db-01", "ip": "10.0.2.10", "env": "prod", "role": "db", "cpu": 66, "tags": ["postgres", "primary"]},
+    {"name": "web-03", "ip": "10.1.1.10", "env": "staging", "role": "web", "cpu": 20, "tags": []}
+  ]
+}
