@@ -1,0 +1,13 @@
+# Lab 5 — copy to /etc/systemd/system/backup.service
+[Unit]
+Description=Nightly backup job
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/scripts/backup.sh /etc /var/backups
+# Run as an unprivileged user if the job allows it:
+# User=backup
+Nice=10
+IOSchedulingClass=idle

@@ -1,0 +1,9 @@
+name,ip,env,role
+web-01,10.0.1.10,prod,web
+web-02,10.0.1.11,prod,web
+db-01,10.0.2.10,prod,db
+# staging below
+web-03,10.1.1.10,staging,web
+
+db-02,10.1.2.10,staging,db
+dev-01,10.2.1.10,dev,web
