@@ -1,0 +1,8 @@
+# Python libraries used in the bootcamp. Install inside your venv:
+#   pip install -r requirements.txt
+requests==2.32.3
+PyYAML==6.0.2
+pytest==8.3.3
+ruff==0.6.9
+mypy==1.11.2
+boto3==1.35.36

@@ -1,0 +1,4 @@
+# Rendered by docker-entrypoint.sh — do not edit inside the container
+environment = ${APP_ENV}
+database    = ${DB_HOST}:${DB_PORT}
+log_level   = ${LOG_LEVEL}

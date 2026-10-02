@@ -1,0 +1,14 @@
+# Lab 4 — install with: crontab crontab.example   (replaces your crontab!)
+# or add lines with:    crontab -e
+SHELL=/bin/sh
+PATH=/usr/local/bin:/usr/bin:/bin
+MAILTO=""
+
+# every minute: monitor
+* * * * * /opt/scripts/monitor.sh >> /tmp/monitor.log 2>&1
+
+# 02:30 daily: backup, never two at once
+30 2 * * * flock -n /tmp/backup.lock /opt/scripts/backup.sh >> /var/log/backup.log 2>&1
+
+# Sundays 04:00: delete app logs older than 14 days
+0 4 * * 0 find /var/log/myapp -name "*.log" -mtime +14 -delete
