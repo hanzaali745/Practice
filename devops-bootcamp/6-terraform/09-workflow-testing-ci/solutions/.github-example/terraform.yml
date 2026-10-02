@@ -1,0 +1,73 @@
+# Lab 4 — copy to .github/workflows/terraform.yml. Adjust working-directory, role ARNs and region.
+name: terraform
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: live/dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: Format
+        run: terraform fmt -recursive -check
+      - name: Validate
+        run: terraform init -backend=false -input=false && terraform validate
+      - name: Test
+        run: terraform test
+
+  plan:
+    needs: checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write        # OIDC → short-lived AWS credentials, no stored keys
+    defaults:
+      run:
+        working-directory: live/dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/terraform-plan
+          aws-region: eu-west-1
+      - run: terraform init -input=false
+      - run: terraform plan -input=false -lock-timeout=5m -out=tfplan
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tfplan
+          path: live/dev/tfplan
+
+  apply:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: dev          # add required reviewers to the environment for prod
+    permissions:
+      contents: read
+      id-token: write
+    defaults:
+      run:
+        working-directory: live/dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/terraform-apply
+          aws-region: eu-west-1
+      - uses: actions/download-artifact@v4
+        with:
+          name: tfplan
+          path: live/dev
+      - run: terraform init -input=false
+      - run: terraform apply -input=false -lock-timeout=5m tfplan

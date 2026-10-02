@@ -1,0 +1,12 @@
+# Lab 4 — step 2: the same file, now created by the module — and a moved block so nothing is destroyed
+module "web" {
+  source      = "../modules/webapp"
+  name        = "shop"
+  environment = "dev"
+  out_dir     = "${path.root}/out"
+}
+
+moved {
+  from = local_file.config
+  to   = module.web.local_file.config
+}

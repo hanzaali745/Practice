@@ -1,0 +1,12 @@
+# Terraform working files
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+!example.tfvars
+!*.auto.tfvars.example
+
+# NOTE: in YOUR OWN projects, DO commit .terraform.lock.hcl (it pins provider versions for the team).
+# The course solutions don't ship lock files so that `terraform init` creates fresh ones for your machine.
+.terraform.lock.hcl
