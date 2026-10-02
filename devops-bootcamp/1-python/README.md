@@ -23,7 +23,8 @@
 | 11 | [Data Formats & Regex](11-data-formats/README.md) | 🔴 Pro |
 | 12 | [APIs & Cloud](12-apis-and-cloud/README.md) | 🔴 Pro |
 | 13 | [Testing & Code Quality](13-testing-and-quality/README.md) | 🔴 Pro |
-| 14 | [Capstone Projects](14-capstone/README.md) | 🏆 Capstone |
+| 14 | [Advanced Python](14-advanced-python/README.md) | 🔴 Pro |
+| 15 | [Capstone Projects](15-capstone/README.md) | 🏆 Capstone |
 
 ## How to run any solution
 
@@ -82,6 +83,8 @@ You're "expert level" for DevOps when you can do all of these **without notes**:
 - [ ] Build a CLI with `argparse` (subcommands, `--dry-run`, `-v`) and `logging`
 - [ ] Load/transform JSON, YAML (`safe_load`!) and CSV; parse logs with named-group regex
 - [ ] Call REST APIs with timeouts, retries, auth from env vars, and pagination
+- [ ] Stream huge files with generators; write decorators and context managers
+- [ ] Run I/O work concurrently with threads/asyncio, and package a tool with `pyproject.toml`
 - [ ] Test with pytest (parametrize, fixtures, `tmp_path`, mocks) and run ruff + mypy + pytest in CI
 
 👉 When you finish: [Phase 2 — Shell Scripting](../2-shell-scripting/README.md)

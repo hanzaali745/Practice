@@ -1,4 +1,4 @@
-# Python Module 14 — Python Capstone Projects 🏆
+# Python Module 15 — Python Capstone Projects 🏆
 
 > **CEO note:** This is your portfolio. Build each project in its own folder (or repo),
 > with a README, `requirements.txt`, tests, and a CI workflow. In interviews, you'll

@@ -16,24 +16,37 @@
 
 ---
 
+## 📅 Learn every day: the Daily Plan
+
+The whole course is laid out as **96 days** of 60–90 minutes, in [**DAILY-PLAN.md**](DAILY-PLAN.md).
+Every day = 🔁 10-min warm-up on older material + 📖 lessons + 🧪 labs + 💾 commit.
+Every 7th day is a review day. Your terminal tells you what to do today:
+
+```bash
+cd ~/Practice/devops-bootcamp
+sh today.sh          # today's task
+sh today.sh done     # mark it complete → see tomorrow
+sh today.sh status   # progress bar
+```
+
 ## 🗺️ The Roadmap — follow it in order
 
 ```
  STEP 0           PHASE 1              PHASE 2                  PHASE 3
  ┌─────────┐      ┌──────────────┐     ┌──────────────────┐     ┌──────────────┐
  │ Ubuntu  │ ───► │   PYTHON     │ ──► │ SHELL SCRIPTING  │ ──► │    BASH      │
- │ setup   │      │ 14 modules   │     │ (POSIX sh)       │     │  7 modules   │
- │ 30 min  │      │ weeks 1–7    │     │ 10 modules       │     │ weeks 11–13  │
- └─────────┘      └──────────────┘     │ weeks 8–10       │     └──────────────┘
+ │ setup   │      │ 15 modules   │     │ (POSIX sh)       │     │  8 modules   │
+ │ Day 1   │      │ Days 2–44    │     │ 10 modules       │     │ Days 71–96   │
+ └─────────┘      └──────────────┘     │ Days 45–70       │     └──────────────┘
                                        └──────────────────┘
 ```
 
 | Step | Track | What it covers |
 |------|-------|----------------|
 | **0** | [🐧 Ubuntu Setup](00-ubuntu-setup/README.md) | Install tools, Python venv, editor, Git, check script |
-| **1** | [🐍 Python](1-python/README.md) | 14 modules: basics → automation → APIs/cloud → testing → capstone |
+| **1** | [🐍 Python](1-python/README.md) | 15 modules: basics → automation → APIs/cloud → testing → advanced → capstone |
 | **2** | [🐚 Shell Scripting (POSIX sh)](2-shell-scripting/README.md) | 10 modules: terminal → scripts → loops → grep/sed/awk → errors → cron → capstone |
-| **3** | [💪 Bash](3-bash/README.md) | 7 modules: Bash features → arrays → strict mode → real DevOps scripts → pro → capstone |
+| **3** | [💪 Bash](3-bash/README.md) | 8 modules: Bash features → arrays → strict mode → SSH & fleets → real DevOps scripts → pro → capstone |
 
 ### Shell scripting vs Bash — why are they separate?
 
@@ -65,7 +78,8 @@ are portable and which aren't — that's a senior-engineer skill.
 | 11 | [Data Formats & Regex](1-python/11-data-formats/README.md) | 🔴 |
 | 12 | [APIs & Cloud](1-python/12-apis-and-cloud/README.md) | 🔴 |
 | 13 | [Testing & Code Quality](1-python/13-testing-and-quality/README.md) | 🔴 |
-| 14 | [Capstone Projects](1-python/14-capstone/README.md) | 🏆 |
+| 14 | [Advanced Python](1-python/14-advanced-python/README.md) | 🔴 |
+| 15 | [Capstone Projects](1-python/15-capstone/README.md) | 🏆 |
 
 ## 🐚 Phase 2 — Shell Scripting (POSIX sh) → [`2-shell-scripting/`](2-shell-scripting/README.md)
 
@@ -90,9 +104,10 @@ are portable and which aren't — that's a senior-engineer skill.
 | 02 | [Arrays & String Manipulation](3-bash/02-arrays-and-strings/README.md) | 🟡 |
 | 03 | [Functions & Libraries](3-bash/03-functions-and-libraries/README.md) | 🟡 |
 | 04 | [Strict Mode & Debugging](3-bash/04-strict-mode-and-debugging/README.md) | 🔴 |
-| 05 | [Real DevOps Scripts](3-bash/05-real-devops-scripts/README.md) | 🔴 |
-| 06 | [Pro Bash](3-bash/06-pro-bash/README.md) | 🔴 |
-| 07 | [Bash Capstone](3-bash/07-capstone/README.md) | 🏆 |
+| 05 | [Remote Servers: SSH, scp & rsync](3-bash/05-remote-servers-ssh/README.md) | 🔴 |
+| 06 | [Real DevOps Scripts](3-bash/06-real-devops-scripts/README.md) | 🔴 |
+| 07 | [Pro Bash](3-bash/07-pro-bash/README.md) | 🔴 |
+| 08 | [Bash Capstone](3-bash/08-capstone/README.md) | 🏆 |
 
 ---
 
@@ -116,44 +131,16 @@ Inside each `README.md`, in this order:
 
 ## 🔁 Your daily study routine (step by step)
 
-1. Open the terminal and go to the course: `cd ~/Practice/devops-bootcamp`
+1. Open the terminal: `cd ~/Practice/devops-bootcamp`
 2. Make sure your Python venv is on (prompt starts with `(devops)`) — see [Step 0](00-ubuntu-setup/README.md#step-5--create-a-python-virtual-environment-important-on-ubuntu)
-3. Open today's module `README.md` and read it once, top to bottom
-4. Type every example yourself in the terminal
-5. Do the labs in `my-work/python`, `my-work/shell` or `my-work/bash`
-6. Compare with `solutions/` only after a real attempt
-7. Tick the ✅ Checkpoint, then `git add`, `git commit`, `git push`
+3. Run `sh today.sh` and follow the 4 steps it shows (warm-up → learn → practice → save)
+4. Run `sh today.sh done`, then `git add -A && git commit -m "Day N" && git push`
 
-## 📅 Suggested schedule (1–2 hours a day)
+Missed a day? Continue where you stopped — never skip ahead.
 
-| Week | Do |
-|------|----|
-| 0 | Step 0 — Ubuntu setup |
-| 1 | Python 01–03 |
-| 2 | Python 04–05 |
-| 3 | Python 06–07 |
-| 4 | Python 08–09 |
-| 5 | Python 10–11 |
-| 6 | Python 12–13 |
-| 7 | Python 14 (capstone) |
-| 8 | Shell 01–04 |
-| 9 | Shell 05–08 |
-| 10 | Shell 09–10 (capstone) |
-| 11 | Bash 01–03 |
-| 12 | Bash 04–05 |
-| 13 | Bash 06–07 (capstone) |
-
-## ✅ Progress tracker (copy into your notes)
-
-**Step 0:** - [ ] Ubuntu setup done, `check_setup.sh` all ✅
-
-**Python:** - [ ] 01 - [ ] 02 - [ ] 03 - [ ] 04 - [ ] 05 - [ ] 06 - [ ] 07 - [ ] 08 - [ ] 09 - [ ] 10 - [ ] 11 - [ ] 12 - [ ] 13 - [ ] 14
-
-**Shell:** - [ ] 01 - [ ] 02 - [ ] 03 - [ ] 04 - [ ] 05 - [ ] 06 - [ ] 07 - [ ] 08 - [ ] 09 - [ ] 10
-
-**Bash:** - [ ] 01 - [ ] 02 - [ ] 03 - [ ] 04 - [ ] 05 - [ ] 06 - [ ] 07
-
-**Expert checklists:** - [ ] [Python](1-python/README.md#-python-expert-checklist) - [ ] [Shell](2-shell-scripting/README.md#-shell-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes) - [ ] [Bash](3-bash/README.md#-bash-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes)
+**Expert checklists** (your final exams): [Python](1-python/README.md#-python-expert-checklist) ·
+[Shell](2-shell-scripting/README.md#-shell-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes) ·
+[Bash](3-bash/README.md#-bash-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes)
 
 ---
 

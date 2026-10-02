@@ -223,4 +223,4 @@ Run two copies at the same time to prove the lock works.
 - [ ] I clean up temp files with `trap ... EXIT`
 - [ ] I can debug with `bash -x` and I run ShellCheck on everything
 
-👉 Next: [Module 05 — Real DevOps Scripts](../05-real-devops-scripts/README.md)
+👉 Next: [Module 05 — Remote Servers: SSH, scp & rsync](../05-remote-servers-ssh/README.md)

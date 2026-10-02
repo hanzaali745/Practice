@@ -180,4 +180,4 @@ cd solutions && pytest -v
 - [ ] I mock subprocess/API calls in unit tests
 - [ ] I can set up lint + type-check + tests in CI
 
-👉 Next: [Module 14 — Capstone Projects](../14-capstone/README.md)
+👉 Next: [Python Module 14 — Advanced Python](../14-advanced-python/README.md)

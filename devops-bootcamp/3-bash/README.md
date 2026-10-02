@@ -29,9 +29,10 @@ and are checked with `shellcheck script.sh`.
 | 02 | [Arrays & String Manipulation](02-arrays-and-strings/README.md) | 🟡 | lists, dictionaries, `${var//x/y}` |
 | 03 | [Functions & Libraries](03-functions-and-libraries/README.md) | 🟡 | `local`, logging libraries, `BASH_SOURCE` |
 | 04 | [Strict Mode & Debugging](04-strict-mode-and-debugging/README.md) | 🔴 | `set -euo pipefail`, `trap ERR`, `PS4` tracing |
-| 05 | [Real DevOps Scripts](05-real-devops-scripts/README.md) | 🔴 | backups, deploys with rollback, provisioning |
-| 06 | [Pro Bash](06-pro-bash/README.md) | 🔴 | `getopts`, long options, Bats tests, CI, style guide |
-| 07 | [Bash Capstone](07-capstone/README.md) | 🏆 | `opsctl` — a multi-command ops toolkit |
+| 05 | [Remote Servers: SSH, scp & rsync](05-remote-servers-ssh/README.md) | 🔴 | SSH keys, `~/.ssh/config`, fleet commands in parallel |
+| 06 | [Real DevOps Scripts](06-real-devops-scripts/README.md) | 🔴 | backups, deploys with rollback, provisioning |
+| 07 | [Pro Bash](07-pro-bash/README.md) | 🔴 | `getopts`, long options, Bats tests, CI, style guide |
+| 08 | [Bash Capstone](08-capstone/README.md) | 🏆 | `opsctl` — a multi-command ops toolkit |
 
 ## How to run the solutions
 
@@ -73,6 +74,7 @@ trap 'echo "error on line $LINENO"' ERR
 - [ ] Explain the `set -e` gotchas: `(( i++ ))` when i=0, `local x=$(cmd)`, `cmd | while read`
 - [ ] Use `set -euo pipefail`, `trap ... EXIT` and `trap ... ERR` with line numbers
 - [ ] Parse options with `getopts` and with a long-option `while/case` loop
+- [ ] Log in with SSH keys, use `~/.ssh/config`, `rsync` safely, and run a command across a fleet in parallel
 - [ ] Write a deploy script with release folders, an atomic symlink switch and rollback
 - [ ] Make scripts idempotent and give them a `--dry-run`
 - [ ] Unit test functions with Bats, and run ShellCheck + Bats in CI

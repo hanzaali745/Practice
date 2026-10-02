@@ -134,6 +134,20 @@ git push
 
 ---
 
+## 📅 Step 10 — Meet your daily plan
+
+The course is a **96-day plan** ([DAILY-PLAN.md](../DAILY-PLAN.md)). Each day your terminal tells you what to do:
+
+```bash
+cd ~/Practice/devops-bootcamp
+sh today.sh          # shows today's task (Day 1 = this setup guide!)
+sh today.sh done     # when you finish a day
+sh today.sh status   # your progress bar
+```
+
+Your progress is saved in `my-work/progress.log`, so commit it with your labs.
+Mark Day 1 done now: `sh today.sh done` 🎉
+
 ## 🔁 Your study routine for EVERY module (follow this exactly)
 
 1. **Read** the module `README.md` from top to bottom once.
@@ -147,4 +161,4 @@ git push
 > 💡 Stuck for more than 30 minutes? Read the error message bottom-up, search it,
 > then peek at only the *first few lines* of the solution and try again.
 
-👉 Ready? Go to [Phase 1 — Python](../1-python/README.md)
+👉 Ready? Run `sh today.sh` — Day 2 is [Python Module 01](../1-python/01-getting-started/README.md).

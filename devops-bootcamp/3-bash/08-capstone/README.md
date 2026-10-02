@@ -1,4 +1,4 @@
-# Bash Module 07 — Bash Capstone Projects 🏆
+# Bash Module 08 — Bash Capstone Projects 🏆
 
 > **CEO note:** Same deal as the Python capstone: put each project in your GitHub with a README,
 > ShellCheck-clean code, Bats tests and a CI workflow. These are what you show in interviews.
@@ -76,7 +76,7 @@ Check a Linux server and produce a Markdown report:
 
 ## Project 5 ⭐⭐⭐⭐ — Combine Python + Bash
 Write a Bash **wrapper** that bootstraps a venv, installs requirements and runs your Python
-`healthmon` (Python Module 14) on a schedule via a systemd timer — with logs in `journalctl`.
+`healthmon` (Python Module 15) on a schedule via a systemd timer — with logs in `journalctl`.
 This is exactly how many real internal tools are shipped.
 
 ---
