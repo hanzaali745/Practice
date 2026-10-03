@@ -1,0 +1,28 @@
+---
+# Module 06 — Redis on db1 with a vaulted password, demo-app on web counting visits in it
+- name: Database tier
+  hosts: db
+  become: true
+  roles:
+    - role: redis
+
+- name: Web tier
+  hosts: web
+  become: true
+  roles:
+    - role: demo_app
+    - role: nginx_proxy
+      vars:
+        nginx_proxy_upstream_ports: "{{ demo_app_ports }}"
+
+  post_tasks:
+    - name: Visits are stored in Redis
+      ansible.builtin.uri:
+        url: http://localhost/visits
+        return_content: true
+      register: visits
+      until: visits.status == 200
+      retries: 10
+      delay: 1
+      failed_when: visits.json.backend != "redis"
+      when: not ansible_check_mode

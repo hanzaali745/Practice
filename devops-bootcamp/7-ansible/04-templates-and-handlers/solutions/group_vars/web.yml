@@ -1,0 +1,5 @@
+---
+app_ports: [8001, 8002]
+app_message: "Hello from Ansible-managed demo-app"
+app_version: "1.0.0"
+enable_status_page: true

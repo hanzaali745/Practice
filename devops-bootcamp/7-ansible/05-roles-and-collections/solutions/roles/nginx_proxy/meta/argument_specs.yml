@@ -1,0 +1,13 @@
+---
+argument_specs:
+  main:
+    short_description: nginx reverse proxy
+    options:
+      nginx_proxy_upstream_ports:
+        type: list
+        elements: int
+        required: true
+      nginx_proxy_server_name:
+        type: str
+      nginx_proxy_status_page:
+        type: bool

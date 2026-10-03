@@ -1,0 +1,39 @@
+---
+# Lab 3 — per-host fact reports and a combined summary, written on the CONTROL node
+- name: Fact reports
+  hosts: fleet
+  gather_facts: true
+
+  tasks:
+    - name: Create the local reports folder
+      ansible.builtin.file:
+        path: reports
+        state: directory
+        mode: "0755"
+      delegate_to: localhost
+      run_once: true  # noqa: run-once[task] -- we use the default "linear" strategy
+
+    - name: Write one report per host
+      ansible.builtin.copy:
+        dest: "reports/{{ inventory_hostname }}.txt"
+        mode: "0644"
+        content: |
+          host:    {{ inventory_hostname }}
+          os:      {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}
+          kernel:  {{ ansible_facts['kernel'] }}
+          vcpus:   {{ ansible_facts['processor_vcpus'] }}
+          ram_mb:  {{ ansible_facts['memtotal_mb'] }}
+          groups:  {{ group_names | join(', ') }}
+      delegate_to: localhost
+
+    - name: Write a combined summary from hostvars
+      ansible.builtin.copy:
+        dest: reports/summary.txt
+        mode: "0644"
+        content: |
+          {% for host in groups['fleet'] | sort %}
+          {% set f = hostvars[host]['ansible_facts'] %}
+          {{ '%-6s' | format(host) }} {{ f['distribution_version'] }}  {{ f['memtotal_mb'] }} MB  [{{ hostvars[host]['group_names'] | join(',') }}]
+          {% endfor %}
+      delegate_to: localhost
+      run_once: true  # noqa: run-once[task]

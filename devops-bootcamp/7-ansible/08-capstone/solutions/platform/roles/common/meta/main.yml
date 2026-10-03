@@ -1,0 +1,10 @@
+---
+galaxy_info:
+  author: devops-bootcamp
+  description: Baseline for every server — packages, admin users, sudo, SSH hardening, motd
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: Ubuntu
+      versions: [noble]
+dependencies: []

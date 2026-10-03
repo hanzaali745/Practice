@@ -1,0 +1,8 @@
+---
+- name: Restart demo-app
+  ansible.builtin.systemd_service:
+    name: "demo-app@{{ item }}"
+    state: restarted
+    daemon_reload: true
+  loop: "{{ demo_app_ports }}"
+  ignore_errors: "{{ ansible_check_mode }}"   # a first dry run has no unit file yet

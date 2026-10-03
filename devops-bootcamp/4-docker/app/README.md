@@ -14,5 +14,6 @@ python3 -m pytest -q                   # tests
 | `APP_VERSION` | `1.0.0` | reported version |
 | `APP_MESSAGE` | `Hello from demo-app` | greeting |
 | `REDIS_HOST` / `REDIS_PORT` | unset / `6379` | store `/visits` in Redis |
+| `REDIS_PASSWORD` | unset | Redis password (sent with `AUTH`) — used by the Ansible track |
 
 Extra endpoint for autoscaling labs: `GET /work?ms=200` keeps a CPU busy for 200 ms (max 2000).

@@ -1,0 +1,12 @@
+---
+- name: Check the nginx configuration
+  ansible.builtin.command: nginx -t
+  changed_when: false
+  listen: Reload nginx
+
+- name: Reload the nginx service
+  ansible.builtin.service:
+    name: nginx
+    state: reloaded
+  listen: Reload nginx
+  ignore_errors: "{{ ansible_check_mode }}"   # not installed yet during a first dry run

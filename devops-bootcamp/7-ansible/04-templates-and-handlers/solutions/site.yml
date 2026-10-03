@@ -1,0 +1,106 @@
+---
+# Labs 2-4 — demo-app as systemd services behind an nginx reverse proxy, with handlers
+- name: Deploy demo-app behind nginx
+  hosts: web
+  become: true
+
+  tasks:
+    - name: Install nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Create the demoapp system user
+      ansible.builtin.user:
+        name: demoapp
+        system: true
+        shell: /usr/sbin/nologin
+        create_home: false
+
+    - name: Create app folders
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop: [/opt/demo-app, /etc/demo-app]
+
+    - name: Deploy the application code
+      ansible.builtin.copy:
+        src: app.py
+        dest: /opt/demo-app/app.py
+        mode: "0644"
+      notify: Restart demo-app
+
+    - name: Write the app environment file
+      ansible.builtin.template:
+        src: demo-app.env.j2
+        dest: /etc/demo-app/demo-app.env
+        mode: "0644"
+      notify: Restart demo-app
+
+    - name: Install the systemd template unit
+      ansible.builtin.template:
+        src: demo-app@.service.j2
+        dest: /etc/systemd/system/demo-app@.service
+        mode: "0644"
+      notify: Restart demo-app
+
+    - name: Start one app instance per port
+      ansible.builtin.systemd_service:
+        name: "demo-app@{{ item }}"
+        state: started
+        enabled: true
+        daemon_reload: true
+      loop: "{{ app_ports }}"
+      ignore_errors: "{{ ansible_check_mode }}"   # a first dry run has no unit file yet
+
+    - name: Configure the nginx site
+      ansible.builtin.template:
+        src: site.conf.j2
+        dest: /etc/nginx/sites-available/default
+        mode: "0644"
+      notify: Reload nginx
+
+    - name: Make sure nginx is running
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+      ignore_errors: "{{ ansible_check_mode }}"   # not installed yet during a first dry run
+
+  handlers:
+    - name: Restart demo-app
+      ansible.builtin.systemd_service:
+        name: "demo-app@{{ item }}"
+        state: restarted
+        daemon_reload: true
+      loop: "{{ app_ports }}"
+      ignore_errors: "{{ ansible_check_mode }}"   # a first dry run has no unit file yet
+
+    # Two handlers listen to the same topic and run in the order they are defined:
+    # check the config first, so a broken template never reaches a reload.
+    - name: Check the nginx configuration
+      ansible.builtin.command: nginx -t
+      changed_when: false
+      listen: Reload nginx
+
+    - name: Reload the nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      listen: Reload nginx
+      ignore_errors: "{{ ansible_check_mode }}"   # not installed yet during a first dry run
+
+  post_tasks:
+    - name: The site answers through nginx
+      ansible.builtin.uri:
+        url: http://localhost/
+        return_content: true
+      register: page
+      until: page.status == 200
+      retries: 10
+      delay: 1
+      # compare the parsed JSON, not the raw text: JSON escapes quotes in the message
+      failed_when: page.json.message != app_message

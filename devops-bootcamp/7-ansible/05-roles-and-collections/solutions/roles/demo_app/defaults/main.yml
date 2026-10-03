@@ -1,0 +1,9 @@
+---
+demo_app_ports: [8001]
+demo_app_message: "Hello from demo-app"
+demo_app_version: "1.0.0"
+demo_app_user: demoapp
+demo_app_dir: /opt/demo-app
+demo_app_redis_host: ""          # empty = count visits in memory
+demo_app_redis_port: 6379
+demo_app_redis_password: ""      # put the real value in Ansible Vault (Module 06)

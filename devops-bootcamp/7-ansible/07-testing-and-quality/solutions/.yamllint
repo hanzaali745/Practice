@@ -1,0 +1,20 @@
+---
+# yamllint settings that agree with ansible-lint
+extends: default
+ignore: |
+  .ansible/
+rules:
+  line-length:
+    max: 160
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: false
+  document-start: disable
+  braces:
+    max-spaces-inside: 1
+  truthy:
+    allowed-values: ["true", "false"]
+    check-keys: false
+  octal-values:
+    forbid-implicit-octal: true      # mode: 0644 → a number, not a permission!
+    forbid-explicit-octal: true

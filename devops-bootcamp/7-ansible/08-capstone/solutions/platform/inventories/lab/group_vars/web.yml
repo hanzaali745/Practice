@@ -1,0 +1,9 @@
+---
+demo_app_ports: [8001, 8002]
+demo_app_message: "Hello from the demo platform"
+demo_app_version: "2.0.0"
+demo_app_redis_host: "{{ groups['db'] | first }}"     # db1 — node names resolve on the fleet network
+demo_app_redis_password: "{{ redis_password }}"
+
+nginx_proxy_upstream_ports: "{{ demo_app_ports }}"
+nginx_proxy_status_page: true

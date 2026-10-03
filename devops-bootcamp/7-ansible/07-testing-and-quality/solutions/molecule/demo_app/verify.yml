@@ -1,0 +1,36 @@
+---
+# Assertions about the END STATE — what a user of the role relies on
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Every instance is active
+      ansible.builtin.command: systemctl is-active demo-app@{{ item }}
+      loop: "{{ demo_app_ports }}"
+      changed_when: false
+
+    - name: Every instance answers with the configured message
+      ansible.builtin.uri:
+        url: "http://127.0.0.1:{{ item }}/"
+        return_content: true
+      register: page
+      failed_when: page.json.message != demo_app_message
+      loop: "{{ demo_app_ports }}"
+
+    - name: Read the env file's permissions
+      ansible.builtin.stat:
+        path: /etc/demo-app/demo-app.env
+      register: env_file
+
+    - name: The env file is not world-readable
+      ansible.builtin.assert:
+        that:
+          - env_file.stat.mode == "0640"
+          - env_file.stat.gr_name == "demoapp"
+
+    - name: The app does not run as root
+      ansible.builtin.command: ps -o user= -C python3
+      register: users
+      changed_when: false
+      failed_when: "'root' in users.stdout_lines"

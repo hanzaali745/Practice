@@ -1,0 +1,7 @@
+---
+# Overrides for role defaults (group_vars beat role defaults)
+common_admin_users:
+  - name: alice
+    pubkey_file: "{{ inventory_dir }}/.ssh/id_ed25519.pub"   # the lab key, so you can `ssh alice@...`
+  - name: bob
+    pubkey_file: "{{ inventory_dir }}/.ssh/id_ed25519.pub"

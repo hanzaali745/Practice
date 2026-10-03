@@ -2,3 +2,5 @@
 #   pip install -r requirements-devops.txt
 ansible==10.5.0
 ansible-lint==24.9.2
+molecule==24.9.0
+molecule-plugins[docker]==23.5.3

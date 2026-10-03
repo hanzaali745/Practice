@@ -1,0 +1,3 @@
+.vault-pass*
+.ansible/
+.check-step.log

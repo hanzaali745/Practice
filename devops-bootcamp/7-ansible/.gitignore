@@ -1,0 +1,4 @@
+# Created by ansible-lint / ansible-galaxy
+.ansible/
+# Vault password files never go into Git
+.vault-pass*

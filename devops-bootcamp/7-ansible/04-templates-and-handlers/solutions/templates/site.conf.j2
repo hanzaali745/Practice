@@ -1,0 +1,25 @@
+# {{ ansible_managed }}
+upstream demo_app {
+{% for port in app_ports %}
+    server 127.0.0.1:{{ port }};
+{% endfor %}
+}
+
+server {
+    listen 80 default_server;
+    server_name {{ server_name | default(inventory_hostname) }};
+
+    location / {
+        proxy_pass http://demo_app;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+{% if enable_status_page | default(false) %}
+
+    location /nginx_status {
+        stub_status;
+        allow 127.0.0.1;
+        deny all;
+    }
+{% endif %}
+}

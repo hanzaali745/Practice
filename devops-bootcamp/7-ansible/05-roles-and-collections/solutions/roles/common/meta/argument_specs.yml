@@ -1,0 +1,28 @@
+---
+# Checked automatically before the role runs: wrong types fail fast with a clear message
+argument_specs:
+  main:
+    short_description: Server baseline
+    options:
+      common_packages:
+        type: list
+        elements: str
+        description: Packages every server gets
+      common_admin_users:
+        type: list
+        elements: dict
+        description: Admin users with sudo and an SSH key
+        options:
+          name:
+            type: str
+            required: true
+          pubkey_file:
+            type: str
+            required: true
+      common_ssh_password_auth:
+        type: bool
+      common_ssh_root_login:
+        type: str
+        choices: ["no", "prohibit-password"]
+      common_motd_note:
+        type: str

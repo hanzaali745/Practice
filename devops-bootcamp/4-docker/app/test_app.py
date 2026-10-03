@@ -77,3 +77,42 @@ def test_sigterm_exits_cleanly(server):
     _, proc = server
     proc.terminate()                      # SIGTERM, like `docker stop`
     assert proc.wait(timeout=5) == 0
+
+
+def test_redis_auth_and_incr(monkeypatch):
+    """redis_incr talks RESP to a tiny fake Redis that requires a password."""
+    import importlib.util
+    import threading
+
+    spec = importlib.util.spec_from_file_location("demo_app", APP)
+    app = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(app)
+
+    srv = socket.create_server(("127.0.0.1", 0))
+    received = []
+
+    def fake_redis():
+        for _ in range(2):
+            conn, _ = srv.accept()
+            with conn:
+                data = conn.recv(1024)
+                received.append(data)
+                if b"AUTH" in data and b"s3cret" not in data:
+                    conn.sendall(b"-WRONGPASS invalid password\r\n")
+                    continue
+                if b"AUTH" in data:
+                    conn.sendall(b"+OK\r\n")
+                    data = conn.recv(1024)
+                conn.sendall(b":42\r\n")
+
+    threading.Thread(target=fake_redis, daemon=True).start()
+    monkeypatch.setattr(app, "REDIS_HOST", "127.0.0.1")
+    monkeypatch.setattr(app, "REDIS_PORT", srv.getsockname()[1])
+    monkeypatch.setattr(app, "REDIS_PASSWORD", "s3cret")
+    assert app.redis_incr("visits") == 42
+    assert received[0].startswith(b"*2\r\n$4\r\nAUTH\r\n$6\r\ns3cret\r\n")
+
+    monkeypatch.setattr(app, "REDIS_PASSWORD", "wrong")
+    with pytest.raises(RuntimeError, match="AUTH failed"):
+        app.redis_incr("visits")
+    srv.close()

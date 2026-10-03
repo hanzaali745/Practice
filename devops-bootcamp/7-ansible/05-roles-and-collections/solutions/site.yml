@@ -1,0 +1,19 @@
+---
+# Module 05 — the Module 04 deployment, rebuilt from roles
+- name: Baseline for every server
+  hosts: fleet
+  become: true
+  roles:
+    - role: common
+      tags: [common]
+
+- name: Web tier
+  hosts: web
+  become: true
+  roles:
+    - role: demo_app
+      tags: [app]
+    - role: nginx_proxy
+      tags: [nginx]
+      vars:
+        nginx_proxy_upstream_ports: "{{ demo_app_ports }}"

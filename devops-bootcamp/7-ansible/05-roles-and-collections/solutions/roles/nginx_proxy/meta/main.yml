@@ -1,0 +1,10 @@
+---
+galaxy_info:
+  author: devops-bootcamp
+  description: nginx as a load-balancing reverse proxy for local app ports
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: Ubuntu
+      versions: [noble]
+dependencies: []
