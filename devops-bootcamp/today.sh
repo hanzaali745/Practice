@@ -47,6 +47,19 @@ progress_bar() {
     }'
 }
 
+planned_reminder() {
+    # From the first day of Phase 8 on, remind about PLANNED-ADDITIONS.md until nothing in it is PLANNED.
+    # The start of Phase 8 is found in the plan (its "Setup part 3" day), so it stays right if days move.
+    notes="$HERE/PLANNED-ADDITIONS.md"
+    [ -f "$notes" ] && grep -q '^Status: PLANNED' "$notes" || return 0
+    phase8=$(sed -n 's/^## Day \([0-9]*\) — Setup part 3 .*/\1/p' "$PLAN" | head -n 1)
+    [ -n "$phase8" ] && [ "$1" -ge "$phase8" ] || return 0
+    echo
+    echo "📌 Reminder: you've reached Phase 8 — time to add the planned Phase 13 platform skills"
+    echo "   (databases, secrets management, OpenTelemetry + Grafana). See PLANNED-ADDITIONS.md,"
+    echo "   then ask Claude: \"let's add the Phase 13 platform skills\"."
+}
+
 cmd="${1:-today}"
 total=$(total_days)
 completed=$(done_count)
@@ -63,6 +76,7 @@ case "$cmd" in
         echo
         show_day "$today"
         echo "When you're finished:  sh today.sh done"
+        planned_reminder "$today"
         ;;
     done)
         [ "$today" -le "$total" ] || { echo "All $total days are already done 🎉"; exit 0; }
@@ -77,6 +91,7 @@ case "$cmd" in
         fi
         echo
         echo "Don't forget:  git add -A && git commit -m \"Day $today\" && git push"
+        planned_reminder "$((today + 1))"
         ;;
     status)
         progress_bar "$completed" "$total"
