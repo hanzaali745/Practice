@@ -1,0 +1,92 @@
+# Deploy to AWS — every push to main: run CI, build ONE image, scan it, push it to ECR and roll it out to ECS Fargate.
+#   ci ── deploy (environment "production": optional approval → OIDC → build · scan · push → ECS rollout → smoke test)
+# No AWS keys anywhere: the job gets a 1-hour role session through OIDC, and the role trusts only this environment.
+# One-time setup: terraform apply in infra/, then set the repository variables it prints (README, step 4).
+name: deploy-aws
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: deploy-aws
+  cancel-in-progress: false                  # never interrupt a rollout
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml         # the same gate pull requests passed (Phase 8 capstone)
+    permissions:
+      contents: read
+
+  deploy:
+    needs: ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: production
+      url: ${{ vars.APP_URL }}
+    permissions:
+      contents: read
+      id-token: write                        # request the OIDC token that becomes AWS credentials
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+      ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
+      ECS_SERVICE: ${{ vars.ECS_SERVICE }}
+      TASK_FAMILY: ${{ vars.TASK_FAMILY }}
+      APP_URL: ${{ vars.APP_URL }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: aws-actions/configure-aws-credentials@e1253824e5c10ff9df46874f81ed3ec929e19cfd # v6.3.0
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Log in to ECR
+        run: aws ecr get-login-password | docker login --username AWS --password-stdin "${ECR_REPOSITORY%%/*}"
+
+      - id: image
+        name: Build, scan and push (once per commit — tags are immutable)
+        run: |
+          tag="sha-${GITHUB_SHA::7}"
+          repo_name=${ECR_REPOSITORY#*/}
+          if aws ecr describe-images --repository-name "$repo_name" --image-ids imageTag="$tag" > /dev/null 2>&1; then
+            echo "$tag is already in ECR (a re-run): deploying it again"
+          else
+            docker build --build-arg VERSION="$tag" --build-arg GIT_SHA="$GITHUB_SHA" -t "$ECR_REPOSITORY:$tag" .
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:0.75.0 \
+              image --severity HIGH,CRITICAL --ignore-unfixed --exit-code 1 --no-progress "$ECR_REPOSITORY:$tag"
+            docker push "$ECR_REPOSITORY:$tag"
+          fi
+          digest=$(aws ecr describe-images --repository-name "$repo_name" --image-ids imageTag="$tag" \
+            --query 'imageDetails[0].imageDigest' --output text)
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "ref=$ECR_REPOSITORY@$digest" >> "$GITHUB_OUTPUT"
+
+      - name: Roll out to ECS
+        run: ./scripts/ecs_deploy.sh "$IMAGE"          # deploy by DIGEST: exactly the bytes that were scanned
+        env:
+          IMAGE: ${{ steps.image.outputs.ref }}
+
+      - name: Smoke test through the load balancer
+        run: ./scripts/smoke_test.sh "$APP_URL" "$TAG"
+        env:
+          TAG: ${{ steps.image.outputs.tag }}
+
+      - name: Summary
+        if: always()
+        run: |
+          {
+            echo "### Deploy to AWS"
+            echo "- image: \`$IMAGE\`"
+            echo "- service: \`$ECS_CLUSTER/$ECS_SERVICE\` → $APP_URL"
+            echo "- logs: \`aws logs tail /ecs/$ECS_SERVICE --follow\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+        env:
+          IMAGE: ${{ steps.image.outputs.ref }}

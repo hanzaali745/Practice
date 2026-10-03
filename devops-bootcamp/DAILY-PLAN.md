@@ -1,7 +1,7 @@
 # 📅 Daily Plan — learn and practise every day
 
 > **One page, one day at a time.** About **60–90 minutes a day**. Follow the days in order.
-> Every 7th day is a 🔄 **review day**. Total: **180 days** (about 26 weeks).
+> Every 7th day is a 🔄 **review day**. Total: **260 days** (about 38 weeks).
 >
 > Run this to see **today's** task and track your progress:
 > ```bash
@@ -34,6 +34,10 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 | 116–137 | Phase 5 · Kubernetes |
 | 138–159 | Phase 6 · Terraform |
 | 160–180 | Phase 7 · Ansible |
+| 181–201 | Phase 8 · CI/CD |
+| 202–222 | Phase 9 · Monitoring |
+| 223–239 | Phase 10 · ELK logging |
+| 240–260 | Phase 11 · AWS |
 
 ---
 ## Day 1 — Step 0 · Set up your Ubuntu lab
@@ -1776,16 +1780,792 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 - [ ] 🧪 **Practice:** Generate an inventory with Terraform's `templatefile` and run your playbook against it
 - [ ] 💾 **Save:** `git commit -m "Day 179: Ansible 08 Capstone: Terraform → Ansible"`
 
-## Day 180 — Ansible 08 · 🎓 Final graduation
+## Day 180 — Ansible 08 · 🎓 Graduation day (Phases 4–7)
 
-**🎯 Goal:** Confirm you're a DevOps engineer, end to end.  
+**🎯 Goal:** Confirm you're at expert level in the infrastructure tools.  
 **📂 Module:** [7-ansible/08-capstone](7-ansible/08-capstone/README.md)
 
 - [ ] 🔁 **Warm-up (10 min):** Explain to an imaginary interviewer how demo-app goes from code to production with Docker, Kubernetes, Terraform and Ansible.
-- [ ] 📖 **Learn:** All seven expert checklists (Python, Shell, Bash, Docker, Kubernetes, Terraform, Ansible)
+- [ ] 📖 **Learn:** The Docker, Kubernetes, Terraform and Ansible expert checklists
 - [ ] 🧪 **Practice:** Any unticked box → redo that lab today. Then add your four capstones to your GitHub profile README.
-- [ ] 💾 **Save:** `git commit -m "Day 180: Ansible 08 🎓 Final graduation"`
+- [ ] 💾 **Save:** `git commit -m "Day 180: Ansible 08 🎓 Graduation day (Phases 4–7)"`
+
+## Day 181 — Setup part 3 · Install the platform tools
+
+**🎯 Goal:** gh, act, actionlint, the AWS CLI and the Python platform packages installed and checked.  
+**📂 Module:** [00-ubuntu-setup/PART-3-PLATFORM-TOOLS.md](00-ubuntu-setup/PART-3-PLATFORM-TOOLS.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain to yourself in 3 sentences what happens between `git push` and code running in production.
+- [ ] 📖 **Learn:** Part 3 of the setup guide, step by step
+- [ ] 🧪 **Practice:** Run `sh 00-ubuntu-setup/check_platform_tools.sh` until everything is ✅.
+- [ ] 💾 **Save:** `git commit -m "Day 181: Setup part 3 Install the platform tools"`
+
+## Day 182 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 183 — CI/CD 01 · First workflow (1/2)
+
+**🎯 Goal:** CI vs CD vs CD, Actions vocabulary, your lab repo.  
+**📂 Module:** [8-cicd/01-cicd-concepts-and-first-workflow](8-cicd/01-cicd-concepts-and-first-workflow/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Ansible from memory: an ad-hoc command that checks uptime on every host in `web`.
+- [ ] 📖 **Learn:** Lessons 1.1–1.4
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 183: CI/CD 01 First workflow (1/2)"`
+
+## Day 184 — CI/CD 01 · First workflow (2/2)
+
+**🎯 Goal:** Run workflows locally with act; the smallest useful CI.  
+**📂 Module:** [8-cicd/01-cicd-concepts-and-first-workflow](8-cicd/01-cicd-concepts-and-first-workflow/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name the parts of a workflow: event, job, step, runner, action.
+- [ ] 📖 **Learn:** Lessons 1.5–1.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 184: CI/CD 01 First workflow (2/2)"`
+
+## Day 185 — CI/CD 02 · Events, jobs & outputs
+
+**🎯 Goal:** Triggers, filters, needs/if and passing values.  
+**📂 Module:** [8-cicd/02-workflow-syntax](8-cicd/02-workflow-syntax/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a minimal workflow that runs `pytest` on every pull request, from memory.
+- [ ] 📖 **Learn:** Lessons 2.1–2.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 185: CI/CD 02 Events, jobs & outputs"`
+
+## Day 186 — CI/CD 02 · Expressions & matrices
+
+**🎯 Goal:** Contexts, matrix builds and staying fast.  
+**📂 Module:** [8-cicd/02-workflow-syntax](8-cicd/02-workflow-syntax/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** How does a step write an output, and how does another job read it?
+- [ ] 📖 **Learn:** Lessons 2.4–2.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 186: CI/CD 02 Expressions & matrices"`
+
+## Day 187 — CI/CD 03 · Lint & test stages
+
+**🎯 Goal:** Pipeline shape, linting everything, service containers.  
+**📂 Module:** [8-cicd/03-testing-in-ci](8-cicd/03-testing-in-ci/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a 2×2 matrix (Python versions × OS) from memory.
+- [ ] 📖 **Learn:** Lessons 3.1–3.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 187: CI/CD 03 Lint & test stages"`
+
+## Day 188 — CI/CD 03 · Cache, artifacts & the gate
+
+**🎯 Goal:** Faster pipelines and one required check.  
+**📂 Module:** [8-cicd/03-testing-in-ci](8-cicd/03-testing-in-ci/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why is a single required 'gate' job better than requiring every job?
+- [ ] 📖 **Learn:** Lessons 3.4–3.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 188: CI/CD 03 Cache, artifacts & the gate"`
+
+## Day 189 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 190 — CI/CD 04 · Registries & tags
+
+**🎯 Goal:** GHCR, tag strategy, Buildx and multi-arch.  
+**📂 Module:** [8-cicd/04-building-images](8-cicd/04-building-images/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Docker from memory: build with a build-arg and tag twice.
+- [ ] 📖 **Learn:** Lessons 4.1–4.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 190: CI/CD 04 Registries & tags"`
+
+## Day 191 — CI/CD 04 · Scan, sign & attest
+
+**🎯 Goal:** Trivy gates, cosign, SBOM and provenance.  
+**📂 Module:** [8-cicd/04-building-images](8-cicd/04-building-images/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why deploy by digest instead of by tag?
+- [ ] 📖 **Learn:** Lessons 4.4–4.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 191: CI/CD 04 Scan, sign & attest"`
+
+## Day 192 — CI/CD 05 · Secrets, environments & tokens
+
+**🎯 Goal:** Secrets vs variables, approvals, least-privilege GITHUB_TOKEN.  
+**📂 Module:** [8-cicd/05-secrets-and-security](8-cicd/05-secrets-and-security/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a `permissions:` block that only allows reading code.
+- [ ] 📖 **Learn:** Lessons 5.1–5.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 192: CI/CD 05 Secrets, environments & tokens"`
+
+## Day 193 — CI/CD 05 · OIDC & supply chain
+
+**🎯 Goal:** Keyless cloud access, script injection, pinning and Dependabot.  
+**📂 Module:** [8-cicd/05-secrets-and-security](8-cicd/05-secrets-and-security/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Show the injection bug in `run: echo "${{ github.event.issue.title }}"` and fix it.
+- [ ] 📖 **Learn:** Lessons 5.4–5.6
+- [ ] 🧪 **Practice:** Labs 3–5 (Lab 3 needs AWS — or read it now and do it in Phase 11)
+- [ ] 💾 **Save:** `git commit -m "Day 193: CI/CD 05 OIDC & supply chain"`
+
+## Day 194 — CI/CD 06 · Composite actions & reusable workflows
+
+**🎯 Goal:** Stop copy-pasting pipelines.  
+**📂 Module:** [8-cicd/06-reusable-workflows-and-actions](8-cicd/06-reusable-workflows-and-actions/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Pin an action to a commit SHA from memory — and say why.
+- [ ] 📖 **Learn:** Lessons 6.1–6.3
+- [ ] 🧪 **Practice:** Labs 1–3
+- [ ] 💾 **Save:** `git commit -m "Day 194: CI/CD 06 Composite actions & reusable workflows"`
+
+## Day 195 — CI/CD 06 · Your own action
+
+**🎯 Goal:** JavaScript and Docker actions; test it all locally.  
+**📂 Module:** [8-cicd/06-reusable-workflows-and-actions](8-cicd/06-reusable-workflows-and-actions/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Composite action vs reusable workflow: when do you use which?
+- [ ] 📖 **Learn:** Lessons 6.4–6.5
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 195: CI/CD 06 Your own action"`
+
+## Day 196 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 197 — CI/CD 07 · Push deployments & e2e
+
+**🎯 Goal:** Push vs pull, end-to-end tests on kind in CI.  
+**📂 Module:** [8-cicd/07-deployment-and-gitops](8-cicd/07-deployment-and-gitops/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Kubernetes from memory: roll out a new image and watch the rollout.
+- [ ] 📖 **Learn:** Lessons 7.1–7.2
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 197: CI/CD 07 Push deployments & e2e"`
+
+## Day 198 — CI/CD 07 · Strategies & GitOps
+
+**🎯 Goal:** Blue/green, canary, Argo CD and releases.  
+**📂 Module:** [8-cicd/07-deployment-and-gitops](8-cicd/07-deployment-and-gitops/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Rolling vs blue/green vs canary: one sentence each.
+- [ ] 📖 **Learn:** Lessons 7.3–7.5
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 198: CI/CD 07 Strategies & GitOps"`
+
+## Day 199 — CI/CD 08 · Capstone: study the pipeline
+
+**🎯 Goal:** ci → image → staging → production, with approvals.  
+**📂 Module:** [8-cicd/08-capstone](8-cicd/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Draw the delivery pipeline from push to production from memory.
+- [ ] 📖 **Learn:** Project 1 — read `solutions/pipeline/`, run `check.sh`
+- [ ] 🧪 **Practice:** Install it into your lab repo and get a green run
+- [ ] 💾 **Save:** `git commit -m "Day 199: CI/CD 08 Capstone: study the pipeline"`
+
+## Day 200 — CI/CD 08 · Capstone: other CI systems
+
+**🎯 Goal:** The same pipeline in GitLab CI or Jenkins.  
+**📂 Module:** [8-cicd/08-capstone](8-cicd/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What would break first if GHCR were down during a release?
+- [ ] 📖 **Learn:** Project 2 or 3 spec
+- [ ] 🧪 **Practice:** Build one and compare it to the GitHub Actions version
+- [ ] 💾 **Save:** `git commit -m "Day 200: CI/CD 08 Capstone: other CI systems"`
+
+## Day 201 — CI/CD 08 · Capstone: your platform pipeline
+
+**🎯 Goal:** Pipelines other teams can reuse.  
+**📂 Module:** [8-cicd/08-capstone](8-cicd/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain your pipeline's security controls to a teammate.
+- [ ] 📖 **Learn:** Project 4 spec
+- [ ] 🧪 **Practice:** Build it, then tick the CI/CD expert checklist
+- [ ] 💾 **Save:** `git commit -m "Day 201: CI/CD 08 Capstone: your platform pipeline"`
+
+## Day 202 — Monitoring 01 · Observability concepts
+
+**🎯 Goal:** Metrics, logs, traces; RED/USE; SLOs.  
+**📂 Module:** [9-monitoring/01-observability-and-first-stack](9-monitoring/01-observability-and-first-stack/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** CI/CD: name 5 things your pipeline checks before production.
+- [ ] 📖 **Learn:** Lessons 1.1–1.3
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 202: Monitoring 01 Observability concepts"`
+
+## Day 203 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 204 — Monitoring 01 · Your first stack
+
+**🎯 Goal:** Run Prometheus, read raw metrics, first queries.  
+**📂 Module:** [9-monitoring/01-observability-and-first-stack](9-monitoring/01-observability-and-first-stack/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What's an SLO, and what is an error budget for?
+- [ ] 📖 **Learn:** Lessons 1.4–1.7
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 204: Monitoring 01 Your first stack"`
+
+## Day 205 — Monitoring 02 · Configuration & discovery
+
+**🎯 Goal:** prometheus.yml, service discovery, relabeling.  
+**📂 Module:** [9-monitoring/02-prometheus-in-depth](9-monitoring/02-prometheus-in-depth/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a scrape config for one static target from memory.
+- [ ] 📖 **Learn:** Lessons 2.1–2.3
+- [ ] 🧪 **Practice:** Labs 1–3
+- [ ] 💾 **Save:** `git commit -m "Day 205: Monitoring 02 Configuration & discovery"`
+
+## Day 206 — Monitoring 02 · Operating Prometheus
+
+**🎯 Goal:** Check, reload, retention and cardinality.  
+**📂 Module:** [9-monitoring/02-prometheus-in-depth](9-monitoring/02-prometheus-in-depth/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain what `relabel_configs` with `action: keep` does.
+- [ ] 📖 **Learn:** Lessons 2.4–2.5
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 206: Monitoring 02 Operating Prometheus"`
+
+## Day 207 — Monitoring 03 · PromQL basics
+
+**🎯 Goal:** Selectors, rate and aggregation.  
+**📂 Module:** [9-monitoring/03-promql](9-monitoring/03-promql/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why must counters always go through `rate()`?
+- [ ] 📖 **Learn:** Lessons 3.1–3.3
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 207: Monitoring 03 PromQL basics"`
+
+## Day 208 — Monitoring 03 · RED in PromQL
+
+**🎯 Goal:** Error ratios, percentiles, time travel and prediction.  
+**📂 Module:** [9-monitoring/03-promql](9-monitoring/03-promql/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the request rate per path for the last 5 minutes from memory.
+- [ ] 📖 **Learn:** Lessons 3.4–3.5
+- [ ] 🧪 **Practice:** Labs 2–3
+- [ ] 💾 **Save:** `git commit -m "Day 208: Monitoring 03 RED in PromQL"`
+
+## Day 209 — Monitoring 03 · Recording rules
+
+**🎯 Goal:** Precompute queries and unit-test them with promtool.  
+**📂 Module:** [9-monitoring/03-promql](9-monitoring/03-promql/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the p99 latency query with `histogram_quantile` from memory.
+- [ ] 📖 **Learn:** Lesson 3.6
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 209: Monitoring 03 Recording rules"`
+
+## Day 210 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 211 — Monitoring 04 · Instrumenting code
+
+**🎯 Goal:** Expose metrics from Python; batch jobs.  
+**📂 Module:** [9-monitoring/04-instrumenting-and-exporters](9-monitoring/04-instrumenting-and-exporters/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Counter, gauge, histogram: one example of each from demo-app.
+- [ ] 📖 **Learn:** Lessons 4.1–4.3
+- [ ] 🧪 **Practice:** Labs 1–3
+- [ ] 💾 **Save:** `git commit -m "Day 211: Monitoring 04 Instrumenting code"`
+
+## Day 212 — Monitoring 04 · Exporters & probes
+
+**🎯 Goal:** node, redis and blackbox exporters.  
+**📂 Module:** [9-monitoring/04-instrumenting-and-exporters](9-monitoring/04-instrumenting-and-exporters/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why are user IDs a terrible label?
+- [ ] 📖 **Learn:** Lessons 4.4–4.5
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 212: Monitoring 04 Exporters & probes"`
+
+## Day 213 — Monitoring 05 · Grafana dashboards
+
+**🎯 Goal:** Provisioning, panels and variables.  
+**📂 Module:** [9-monitoring/05-grafana](9-monitoring/05-grafana/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the PromQL behind the three RED panels.
+- [ ] 📖 **Learn:** Lessons 5.1–5.4
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 213: Monitoring 05 Grafana dashboards"`
+
+## Day 214 — Monitoring 05 · Dashboards as code
+
+**🎯 Goal:** Change dashboards safely and test them.  
+**📂 Module:** [9-monitoring/05-grafana](9-monitoring/05-grafana/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Where do provisioned data sources and dashboards live on disk?
+- [ ] 📖 **Learn:** Lesson 5.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 214: Monitoring 05 Dashboards as code"`
+
+## Day 215 — Monitoring 06 · Alert rules & tests
+
+**🎯 Goal:** Write alerting rules and unit-test them.  
+**📂 Module:** [9-monitoring/06-alerting-and-slos](9-monitoring/06-alerting-and-slos/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write an alert for 'error ratio above 5% for 5 minutes' from memory.
+- [ ] 📖 **Learn:** Lessons 6.1–6.2
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 215: Monitoring 06 Alert rules & tests"`
+
+## Day 216 — Monitoring 06 · Alertmanager & silences
+
+**🎯 Goal:** Routing, grouping, inhibition, silences.  
+**📂 Module:** [9-monitoring/06-alerting-and-slos](9-monitoring/06-alerting-and-slos/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What does `for: 5m` do — and what happens without it?
+- [ ] 📖 **Learn:** Lessons 6.3–6.4
+- [ ] 🧪 **Practice:** Lab 3
+- [ ] 💾 **Save:** `git commit -m "Day 216: Monitoring 06 Alertmanager & silences"`
+
+## Day 217 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 218 — Monitoring 06 · SLO burn rates
+
+**🎯 Goal:** Multi-window burn-rate alerts, proven end to end.  
+**📂 Module:** [9-monitoring/06-alerting-and-slos](9-monitoring/06-alerting-and-slos/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Draw the Alertmanager routing tree for critical vs warning alerts.
+- [ ] 📖 **Learn:** Lessons 6.5–6.6
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 218: Monitoring 06 SLO burn rates"`
+
+## Day 219 — Monitoring 07 · kube-prometheus-stack
+
+**🎯 Goal:** Install the stack; ServiceMonitors for your app.  
+**📂 Module:** [9-monitoring/07-kubernetes-monitoring](9-monitoring/07-kubernetes-monitoring/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain a 14.4× burn rate in one sentence.
+- [ ] 📖 **Learn:** Lessons 7.1–7.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 219: Monitoring 07 kube-prometheus-stack"`
+
+## Day 220 — Monitoring 07 · Rules & on-call queries
+
+**🎯 Goal:** PrometheusRule, dashboards as objects, validation.  
+**📂 Module:** [9-monitoring/07-kubernetes-monitoring](9-monitoring/07-kubernetes-monitoring/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a ServiceMonitor for demo-app from memory.
+- [ ] 📖 **Learn:** Lessons 7.4–7.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 220: Monitoring 07 Rules & on-call queries"`
+
+## Day 221 — Monitoring 08 · Capstone: study the platform
+
+**🎯 Goal:** An observable demo platform with SLOs and runbooks.  
+**📂 Module:** [9-monitoring/08-capstone](9-monitoring/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Which alert fires first when Redis dies, and why?
+- [ ] 📖 **Learn:** Project 1 — read `solutions/platform/`, run `check.sh`
+- [ ] 🧪 **Practice:** Break it with `chaos.sh` and follow the runbook
+- [ ] 💾 **Save:** `git commit -m "Day 221: Monitoring 08 Capstone: study the platform"`
+
+## Day 222 — Monitoring 08 · Capstone: your own project
+
+**🎯 Goal:** Monitoring you'd actually run.  
+**📂 Module:** [9-monitoring/08-capstone](9-monitoring/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain logs vs metrics vs traces with one incident.
+- [ ] 📖 **Learn:** Project 2, 3 or 4 spec
+- [ ] 🧪 **Practice:** Build it, then tick the Monitoring expert checklist
+- [ ] 💾 **Save:** `git commit -m "Day 222: Monitoring 08 Capstone: your own project"`
+
+## Day 223 — ELK 01 · Logging fundamentals (1/2)
+
+**🎯 Goal:** Levels, structured logs and where logs go.  
+**📂 Module:** [10-elk/01-logging-fundamentals](10-elk/01-logging-fundamentals/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** PromQL from memory: the 5xx ratio of demo-app.
+- [ ] 📖 **Learn:** Lessons 1.1–1.3
+- [ ] 🧪 **Practice:** Labs 1 and 3
+- [ ] 💾 **Save:** `git commit -m "Day 223: ELK 01 Logging fundamentals (1/2)"`
+
+## Day 224 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 225 — ELK 01 · Logging fundamentals (2/2)
+
+**🎯 Goal:** Correlation ids, jq and rotation.  
+**📂 Module:** [10-elk/01-logging-fundamentals](10-elk/01-logging-fundamentals/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why is JSON logging better than text for machines — and worse for what?
+- [ ] 📖 **Learn:** Lessons 1.4–1.6
+- [ ] 🧪 **Practice:** Labs 2 and 4
+- [ ] 💾 **Save:** `git commit -m "Day 225: ELK 01 Logging fundamentals (2/2)"`
+
+## Day 226 — ELK 02 · Elasticsearch basics
+
+**🎯 Goal:** Run it; indices, documents, shards.  
+**📂 Module:** [10-elk/02-elasticsearch](10-elk/02-elasticsearch/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a jq command that counts log lines per level from memory.
+- [ ] 📖 **Learn:** Lessons 2.1–2.3
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 226: ELK 02 Elasticsearch basics"`
+
+## Day 227 — ELK 02 · Mappings, search & aggregations
+
+**🎯 Goal:** Templates, bulk, bool queries, aggregations.  
+**📂 Module:** [10-elk/02-elasticsearch](10-elk/02-elasticsearch/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `text` vs `keyword`: when do you use each?
+- [ ] 📖 **Learn:** Lessons 2.4–2.6
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 227: ELK 02 Mappings, search & aggregations"`
+
+## Day 228 — ELK 03 · Filebeat & Logstash
+
+**🎯 Goal:** Ship logs and filter them.  
+**📂 Module:** [10-elk/03-shipping-and-parsing](10-elk/03-shipping-and-parsing/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a bool query: errors from one service in the last hour.
+- [ ] 📖 **Learn:** Lessons 3.1–3.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 228: ELK 03 Filebeat & Logstash"`
+
+## Day 229 — ELK 03 · Grok
+
+**🎯 Goal:** Parse plain-text logs into fields.  
+**📂 Module:** [10-elk/03-shipping-and-parsing](10-elk/03-shipping-and-parsing/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name the three sections of a Logstash pipeline.
+- [ ] 📖 **Learn:** Lessons 3.4–3.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 229: ELK 03 Grok"`
+
+## Day 230 — ELK 04 · Discover & KQL
+
+**🎯 Goal:** Data views, Discover and KQL.  
+**📂 Module:** [10-elk/04-kibana](10-elk/04-kibana/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a grok pattern for `GET /path 200` from memory.
+- [ ] 📖 **Learn:** Lessons 4.1–4.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 230: ELK 04 Discover & KQL"`
+
+## Day 231 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 232 — ELK 04 · Dashboards as code
+
+**🎯 Goal:** Visualizations, dashboards and saved objects in Git.  
+**📂 Module:** [10-elk/04-kibana](10-elk/04-kibana/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the KQL for '5xx responses on /api paths'.
+- [ ] 📖 **Learn:** Lessons 4.4–4.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 232: ELK 04 Dashboards as code"`
+
+## Day 233 — ELK 05 · Security
+
+**🎯 Goal:** Security on, TLS, roles, users and API keys.  
+**📂 Module:** [10-elk/05-operating-elasticsearch](10-elk/05-operating-elasticsearch/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** How do you export a Kibana dashboard and import it somewhere else?
+- [ ] 📖 **Learn:** Lessons 5.1–5.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 233: ELK 05 Security"`
+
+## Day 234 — ELK 05 · Retention & backups
+
+**🎯 Goal:** Data streams, ILM, snapshots, health and sizing.  
+**📂 Module:** [10-elk/05-operating-elasticsearch](10-elk/05-operating-elasticsearch/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Create an API key that can only write to `logs-*` — from memory.
+- [ ] 📖 **Learn:** Lessons 5.4–5.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 234: ELK 05 Retention & backups"`
+
+## Day 235 — ELK 06 · Fluent Bit on Kubernetes
+
+**🎯 Goal:** Where Pod logs live; a DaemonSet shipper.  
+**📂 Module:** [10-elk/06-kubernetes-logging](10-elk/06-kubernetes-logging/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain the hot → warm → delete phases of an ILM policy.
+- [ ] 📖 **Learn:** Lessons 6.1–6.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 235: ELK 06 Fluent Bit on Kubernetes"`
+
+## Day 236 — ELK 06 · When logs go missing
+
+**🎯 Goal:** Choose a shipper and troubleshoot.  
+**📂 Module:** [10-elk/06-kubernetes-logging](10-elk/06-kubernetes-logging/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why does a log shipper run as a DaemonSet?
+- [ ] 📖 **Learn:** Lessons 6.4–6.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 236: ELK 06 When logs go missing"`
+
+## Day 237 — ELK 07 · Capstone: study the platform
+
+**🎯 Goal:** Secured centralised logging with retention and alerts.  
+**📂 Module:** [10-elk/07-capstone](10-elk/07-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Trace one request from demo-app to a Kibana dashboard.
+- [ ] 📖 **Learn:** Project 1 — read `solutions/platform/`, run `check.sh`
+- [ ] 🧪 **Practice:** Trigger the log alert and find the cause in Kibana
+- [ ] 💾 **Save:** `git commit -m "Day 237: ELK 07 Capstone: study the platform"`
+
+## Day 238 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 239 — ELK 07 · Capstone: your own project
+
+**🎯 Goal:** Logging you'd actually run.  
+**📂 Module:** [10-elk/07-capstone](10-elk/07-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** ELK vs Loki: when would you choose each?
+- [ ] 📖 **Learn:** Project 2, 3 or 4 spec
+- [ ] 🧪 **Practice:** Build it, then tick the ELK expert checklist
+- [ ] 💾 **Save:** `git commit -m "Day 239: ELK 07 Capstone: your own project"`
+
+## Day 240 — AWS 01 · Cloud basics & local AWS
+
+**🎯 Goal:** Regions, AZs, shared responsibility; practise for free.  
+**📂 Module:** [11-aws/01-cloud-and-account-setup](11-aws/01-cloud-and-account-setup/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** ELK from memory: the 3 parts of the stack and what each does.
+- [ ] 📖 **Learn:** Lessons 1.1, 1.4–1.5
+- [ ] 🧪 **Practice:** Labs 1 and 4
+- [ ] 💾 **Save:** `git commit -m "Day 240: AWS 01 Cloud basics & local AWS"`
+
+## Day 241 — AWS 01 · A safe account
+
+**🎯 Goal:** MFA, budgets, SSO — then check it automatically.  
+**📂 Module:** [11-aws/01-cloud-and-account-setup](11-aws/01-cloud-and-account-setup/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name 3 ways a cloud bill surprises people.
+- [ ] 📖 **Learn:** Lessons 1.2–1.3
+- [ ] 🧪 **Practice:** Labs 2–3 (☁️ Lab 2 needs a real account)
+- [ ] 💾 **Save:** `git commit -m "Day 241: AWS 01 A safe account"`
+
+## Day 242 — AWS 02 · IAM: policies
+
+**🎯 Goal:** Users, groups, roles and reading policies.  
+**📂 Module:** [11-aws/02-iam](11-aws/02-iam/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Root user: list what you must do on day one.
+- [ ] 📖 **Learn:** Lessons 2.1–2.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 242: AWS 02 IAM: policies"`
+
+## Day 243 — AWS 02 · IAM: roles & least privilege
+
+**🎯 Goal:** STS, least privilege and testing without AWS.  
+**📂 Module:** [11-aws/02-iam](11-aws/02-iam/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Read a policy aloud: which actions, which resources, which conditions?
+- [ ] 📖 **Learn:** Lessons 2.4–2.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 243: AWS 02 IAM: roles & least privilege"`
+
+## Day 244 — AWS 03 · VPC design
+
+**🎯 Goal:** Public/private subnets and CIDR planning.  
+**📂 Module:** [11-aws/03-networking-vpc](11-aws/03-networking-vpc/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why are roles better than access keys?
+- [ ] 📖 **Learn:** Lessons 3.1–3.2
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 244: AWS 03 VPC design"`
+
+## Day 245 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 246 — AWS 03 · VPC build
+
+**🎯 Goal:** Security groups, endpoints, by hand then as code.  
+**📂 Module:** [11-aws/03-networking-vpc](11-aws/03-networking-vpc/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Draw a two-AZ VPC with its route tables from memory.
+- [ ] 📖 **Learn:** Lessons 3.3–3.5
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 246: AWS 03 VPC build"`
+
+## Day 247 — AWS 04 · EC2 done right
+
+**🎯 Goal:** Instances, user data, IMDSv2 and launch templates.  
+**📂 Module:** [11-aws/04-compute](11-aws/04-compute/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Security group vs NACL: three differences.
+- [ ] 📖 **Learn:** Lessons 4.1–4.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 247: AWS 04 EC2 done right"`
+
+## Day 248 — AWS 04 · Auto Scaling + ALB
+
+**🎯 Goal:** A self-healing fleet in Terraform, tested on local AWS.  
+**📂 Module:** [11-aws/04-compute](11-aws/04-compute/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Find the latest Amazon Linux AMI with one CLI command.
+- [ ] 📖 **Learn:** Lessons 4.4–4.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 248: AWS 04 Auto Scaling + ALB"`
+
+## Day 249 — AWS 05 · S3
+
+**🎯 Goal:** Choose storage; safe buckets, versions and presigned URLs.  
+**📂 Module:** [11-aws/05-storage-and-databases](11-aws/05-storage-and-databases/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What happens to a request when every instance behind an ALB is unhealthy?
+- [ ] 📖 **Learn:** Lessons 5.1–5.2
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 249: AWS 05 S3"`
+
+## Day 250 — AWS 05 · RDS & DynamoDB
+
+**🎯 Goal:** Private, encrypted databases and atomic counters.  
+**📂 Module:** [11-aws/05-storage-and-databases](11-aws/05-storage-and-databases/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** The four settings every S3 bucket gets, from memory.
+- [ ] 📖 **Learn:** Lessons 5.3–5.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 250: AWS 05 RDS & DynamoDB"`
+
+## Day 251 — AWS 06 · ECR & ECS
+
+**🎯 Goal:** A registry done right; how ECS fits together.  
+**📂 Module:** [11-aws/06-containers-on-aws](11-aws/06-containers-on-aws/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Where should a database password live, and how does the app read it?
+- [ ] 📖 **Learn:** Lessons 6.1–6.2
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 251: AWS 06 ECR & ECS"`
+
+## Day 252 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 253 — AWS 06 · Fargate with Terraform
+
+**🎯 Goal:** demo-app behind an ALB, safe rollouts, EKS choices.  
+**📂 Module:** [11-aws/06-containers-on-aws](11-aws/06-containers-on-aws/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Execution role vs task role: who uses each?
+- [ ] 📖 **Learn:** Lessons 6.3–6.4
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 253: AWS 06 Fargate with Terraform"`
+
+## Day 254 — AWS 07 · Lambda & EventBridge
+
+**🎯 Goal:** Test-first automation on a schedule.  
+**📂 Module:** [11-aws/07-serverless-and-monitoring](11-aws/07-serverless-and-monitoring/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** ECS vs EKS vs App Runner vs Lambda: one use case each.
+- [ ] 📖 **Learn:** Lessons 7.1–7.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 254: AWS 07 Lambda & EventBridge"`
+
+## Day 255 — AWS 07 · CloudWatch & audit
+
+**🎯 Goal:** Logs → metrics → alarms → SNS; CloudTrail and friends.  
+**📂 Module:** [11-aws/07-serverless-and-monitoring](11-aws/07-serverless-and-monitoring/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a least-privilege policy that may only stop `env=dev` instances.
+- [ ] 📖 **Learn:** Lessons 7.4–7.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 255: AWS 07 CloudWatch & audit"`
+
+## Day 256 — AWS 08 · Capstone: rehearse locally
+
+**🎯 Goal:** The whole platform, free, on local AWS.  
+**📂 Module:** [11-aws/08-capstone](11-aws/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain why the ECS service ignores changes to `task_definition`.
+- [ ] 📖 **Learn:** Read the README and every file in `solutions/infra/`
+- [ ] 🧪 **Practice:** Step 1 — `./check.sh` and `./check.sh --local-aws`
+- [ ] 💾 **Save:** `git commit -m "Day 256: AWS 08 Capstone: rehearse locally"`
+
+## Day 257 — AWS 08 · Capstone: ☁️ deploy it
+
+**🎯 Goal:** Real infrastructure and a keyless pipeline.  
+**📂 Module:** [11-aws/08-capstone](11-aws/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Draw the OIDC trust between GitHub and AWS from memory.
+- [ ] 📖 **Learn:** Steps 2–4
+- [ ] 🧪 **Practice:** Push a change and approve the deployment
+- [ ] 💾 **Save:** `git commit -m "Day 257: AWS 08 Capstone: ☁️ deploy it"`
+
+## Day 258 — AWS 08 · Capstone: ☁️ break it, then tear down
+
+**🎯 Goal:** Prove rollback, self-healing, scaling and alerting.  
+**📂 Module:** [11-aws/08-capstone](11-aws/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Estimate the daily cost of the capstone from memory.
+- [ ] 📖 **Learn:** Steps 5–6
+- [ ] 🧪 **Practice:** Every experiment in the table, then `terraform destroy`
+- [ ] 💾 **Save:** `git commit -m "Day 258: AWS 08 Capstone: ☁️ break it, then tear down"`
+
+## Day 259 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 260 — AWS 08 · 🎓 Final graduation
+
+**🎯 Goal:** Confirm you're a DevOps engineer, end to end.  
+**📂 Module:** [11-aws/08-capstone](11-aws/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain to an imaginary interviewer how demo-app goes from a commit to monitored production on AWS.
+- [ ] 📖 **Learn:** All eleven expert checklists
+- [ ] 🧪 **Practice:** Any unticked box → redo that lab today. Then add your capstones to your GitHub profile README and pick a certification.
+- [ ] 💾 **Save:** `git commit -m "Day 260: AWS 08 🎓 Final graduation"`
 
 ---
 
-🎉 **You finished the bootcamp.** Keep going: a cloud certification (AWS Solutions Architect Associate or CKA), GitOps with Argo CD, and monitoring with Prometheus + Grafana.
+🎉 **You finished the bootcamp.** Keep going: an AWS certification (Solutions Architect Associate, then DevOps Engineer Professional) or the CKA, OpenTelemetry tracing, and a real project of your own, end to end.

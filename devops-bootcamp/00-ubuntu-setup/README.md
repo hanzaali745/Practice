@@ -136,7 +136,7 @@ git push
 
 ## 📅 Step 10 — Meet your daily plan
 
-The course is a **180-day plan** ([DAILY-PLAN.md](../DAILY-PLAN.md)). Each day your terminal tells you what to do:
+The course is a **260-day plan** ([DAILY-PLAN.md](../DAILY-PLAN.md)). Each day your terminal tells you what to do:
 
 ```bash
 cd ~/Practice/devops-bootcamp
@@ -163,4 +163,5 @@ Mark Day 1 done now: `sh today.sh done` 🎉
 
 👉 Ready? Run `sh today.sh` — Day 2 is [Python Module 01](../1-python/01-getting-started/README.md).
 
-> 🐳 **Later:** on Day 97 (before Docker) you'll do [Part 2 — Install the DevOps tools](PART-2-DEVOPS-TOOLS.md).
+> 🐳 **Later:** on Day 97 (before Docker) you'll do [Part 2 — Install the DevOps tools](PART-2-DEVOPS-TOOLS.md),
+> and on Day 181 (before CI/CD) [Part 3 — Install the platform tools](PART-3-PLATFORM-TOOLS.md).

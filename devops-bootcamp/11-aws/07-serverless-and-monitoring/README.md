@@ -135,4 +135,4 @@ input transformer that turns them into a one-line message: `CRITICAL CVEs in dem
 - [ ] I can turn logs into metrics, metrics into alarms and alarms into notifications, and test that path
 - [ ] I know what CloudTrail, Config, GuardDuty and Security Hub are for, and turn them on
 
-👉 Next: [Module 08 — Capstone: demo-app on AWS](../08-capstone/README.md)
+👉 Next: [Module 08 — AWS Capstone](../08-capstone/README.md)

@@ -117,7 +117,9 @@ Molecule tests in GitHub Actions, semantic version tags. Install it in your plat
 
 ---
 
-## 🎓 Ansible phase complete — and the whole bootcamp!
-Tick the [Ansible expert checklist](../README.md#-ansible-expert-checklist). Then go back to the
-[bootcamp roadmap](../../README.md) and look at how far you've come: Python, Shell, Bash, Docker, Kubernetes,
-Terraform and Ansible — the core toolbox of a DevOps engineer.
+## 🎓 Ansible phase complete!
+Tick the [Ansible expert checklist](../README.md#-ansible-expert-checklist). Look at how far you've come: Python,
+Shell, Bash, Docker, Kubernetes, Terraform and Ansible — the core toolbox of a DevOps engineer. Next you'll automate
+how all of it ships: every push tested, built, scanned and deployed by a pipeline.
+
+👉 Next phase: [Phase 8 — CI/CD](../../8-cicd/README.md)

@@ -1,4 +1,4 @@
-# 🚀 DevOps Bootcamp: Python → Shell → Bash → Docker → Kubernetes → Terraform → Ansible
+# 🚀 DevOps Bootcamp: Python → Shell → Bash → Docker → Kubernetes → Terraform → Ansible → CI/CD → Monitoring → ELK → AWS
 
 > **From your CEO / Senior DevOps Engineer:**
 > Welcome to the team. In DevOps we automate *everything*: servers, deployments, backups,
@@ -15,6 +15,13 @@
 > - **Terraform** — create infrastructure (cloud, clusters) from reviewed code
 > - **Ansible** — configure servers and deploy apps, idempotently, over SSH
 >
+> And finally the practices that run it all in production:
+>
+> - **CI/CD** — every push tested, built, scanned, signed and deployed by a pipeline (GitHub Actions, GitOps)
+> - **Monitoring** — Prometheus and Grafana: metrics, dashboards, alerts and SLOs
+> - **Logging** — the ELK stack: structured logs, shipped, parsed, searched and kept for the right time
+> - **AWS** — the cloud: IAM, networking, compute, containers, serverless — safely and cheaply
+>
 > This bootcamp takes you from zero to the level I expect from engineers on my team.
 > Everything is designed and tested for **Ubuntu**.
 >
@@ -25,7 +32,7 @@
 
 ## 📅 Learn every day: the Daily Plan
 
-The whole course is laid out as **180 days** (about 6 months) of 60–90 minutes, in [**DAILY-PLAN.md**](DAILY-PLAN.md).
+The whole course is laid out as **260 days** (about 9 months) of 60–90 minutes, in [**DAILY-PLAN.md**](DAILY-PLAN.md).
 Every day = 🔁 10-min warm-up on older material + 📖 lessons + 🧪 labs + 💾 commit.
 Every 7th day is a review day. Your terminal tells you what to do today:
 
@@ -53,17 +60,26 @@ sh today.sh status   # progress bar
  │   DOCKER     │─► │  KUBERNETES  │ ──► │  TERRAFORM   │ ──► │   ANSIBLE    │
  │  7 modules   │   │ 10 modules   │     │ 10 modules   │     │  8 modules   │
  │ Days 97–115  │   │ Days 116–137 │     │ Days 138–159 │     │ Days 160–180 │
+ └──────────────┘   └──────────────┘     └──────────────┘     └──────┬───────┘
+   (Day 97: setup part 2 — install the DevOps tools)                 │
+        ┌────────────────────────────────────────────────────────────┘
+        ▼
+ PHASE 8            PHASE 9              PHASE 10             PHASE 11
+ ┌──────────────┐   ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+ │    CI/CD     │─► │  MONITORING  │ ──► │ ELK LOGGING  │ ──► │     AWS      │
+ │  8 modules   │   │  8 modules   │     │  7 modules   │     │  8 modules   │
+ │ Days 181–201 │   │ Days 202–222 │     │ Days 223–239 │     │ Days 240–260 │
  └──────────────┘   └──────────────┘     └──────────────┘     └──────────────┘
-   (Day 97: setup part 2 — install the DevOps tools)
+   (Day 181: setup part 3 — install the platform tools)
 ```
 
-One app — **demo-app** — travels through Phases 4–7: you containerise it, run it on Kubernetes, describe its
-platform in Terraform, and deploy it to Linux servers with Ansible. By the end you've shipped the same service
-four professional ways.
+One app — **demo-app** — travels through Phases 4–11: you containerise it, run it on Kubernetes, describe its
+platform in Terraform and deploy it to Linux servers with Ansible. Then a pipeline ships it on every push, Prometheus
+and ELK watch it, and finally it runs on AWS — the same service, all the way to monitored production.
 
 | Step | Track | What it covers |
 |------|-------|----------------|
-| **0** | [🐧 Ubuntu Setup](00-ubuntu-setup/README.md) | Install tools, Python venv, editor, Git, check script — and [part 2](00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md) (Docker, kubectl, kind, Helm, Terraform, Ansible) |
+| **0** | [🐧 Ubuntu Setup](00-ubuntu-setup/README.md) | Install tools, Python venv, editor, Git, check script — [part 2](00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md) (Docker, kubectl, kind, Helm, Terraform, Ansible) and [part 3](00-ubuntu-setup/PART-3-PLATFORM-TOOLS.md) (gh, act, actionlint, AWS CLI) |
 | **1** | [🐍 Python](1-python/README.md) | 15 modules: basics → automation → APIs/cloud → testing → advanced → capstone |
 | **2** | [🐚 Shell Scripting (POSIX sh)](2-shell-scripting/README.md) | 10 modules: terminal → scripts → loops → grep/sed/awk → errors → cron → capstone |
 | **3** | [💪 Bash](3-bash/README.md) | 8 modules: Bash features → arrays → strict mode → SSH & fleets → real DevOps scripts → pro → capstone |
@@ -71,6 +87,10 @@ four professional ways.
 | **5** | [☸️ Kubernetes](5-kubernetes/README.md) | 10 modules: kind cluster → pods → deployments → services & ingress → config → storage → autoscaling → Helm → security → capstone |
 | **6** | [🏗️ Terraform](6-terraform/README.md) | 10 modules: first config → resources → variables → state → loops → modules → Kubernetes → AWS (optional) → testing & CI → capstone |
 | **7** | [⚙️ Ansible](7-ansible/README.md) | 8 modules: inventory → playbooks → variables → templates → roles → vault → testing → capstone |
+| **8** | [🔁 CI/CD](8-cicd/README.md) | 8 modules: first workflow → syntax → testing → images → security → reusable workflows → deployment & GitOps → capstone |
+| **9** | [📈 Monitoring](9-monitoring/README.md) | 8 modules: first stack → Prometheus → PromQL → instrumenting → Grafana → alerting & SLOs → Kubernetes → capstone |
+| **10** | [🔎 ELK Logging](10-elk/README.md) | 7 modules: logging basics → Elasticsearch → shipping & parsing → Kibana → operating ES → Kubernetes → capstone |
+| **11** | [☁️ AWS](11-aws/README.md) | 8 modules: safe account → IAM → VPC → EC2 & ALB → storage → containers → serverless & CloudWatch → capstone |
 
 ### Shell scripting vs Bash — why are they separate?
 
@@ -188,6 +208,57 @@ are portable and which aren't — that's a senior-engineer skill.
 | 07 | [Testing & Quality](7-ansible/07-testing-and-quality/README.md) | 🔴 |
 | 08 | [Ansible Capstone](7-ansible/08-capstone/README.md) | 🏆 |
 
+## 🔁 Phase 8 — CI/CD → [`8-cicd/`](8-cicd/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [CI/CD Concepts & Your First Workflow](8-cicd/01-cicd-concepts-and-first-workflow/README.md) | 🟢 |
+| 02 | [Workflow Syntax in Depth](8-cicd/02-workflow-syntax/README.md) | 🟢 |
+| 03 | [Testing & Quality Gates in CI](8-cicd/03-testing-in-ci/README.md) | 🟡 |
+| 04 | [Building & Publishing Images](8-cicd/04-building-images/README.md) | 🟡 |
+| 05 | [Secrets, Environments & Pipeline Security](8-cicd/05-secrets-and-security/README.md) | 🔴 |
+| 06 | [Reusable Workflows & Custom Actions](8-cicd/06-reusable-workflows-and-actions/README.md) | 🔴 |
+| 07 | [Deployment Pipelines & GitOps](8-cicd/07-deployment-and-gitops/README.md) | 🔴 |
+| 08 | [CI/CD Capstone](8-cicd/08-capstone/README.md) | 🏆 |
+
+## 📈 Phase 9 — Monitoring → [`9-monitoring/`](9-monitoring/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [Observability & Your First Stack](9-monitoring/01-observability-and-first-stack/README.md) | 🟢 |
+| 02 | [Prometheus in Depth](9-monitoring/02-prometheus-in-depth/README.md) | 🟢 |
+| 03 | [PromQL](9-monitoring/03-promql/README.md) | 🟡 |
+| 04 | [Instrumenting Apps & Exporters](9-monitoring/04-instrumenting-and-exporters/README.md) | 🟡 |
+| 05 | [Grafana Dashboards as Code](9-monitoring/05-grafana/README.md) | 🟡 |
+| 06 | [Alerting & SLOs](9-monitoring/06-alerting-and-slos/README.md) | 🔴 |
+| 07 | [Monitoring Kubernetes](9-monitoring/07-kubernetes-monitoring/README.md) | 🔴 |
+| 08 | [Monitoring Capstone](9-monitoring/08-capstone/README.md) | 🏆 |
+
+## 🔎 Phase 10 — ELK Logging → [`10-elk/`](10-elk/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [Logging Fundamentals](10-elk/01-logging-fundamentals/README.md) | 🟢 |
+| 02 | [Elasticsearch](10-elk/02-elasticsearch/README.md) | 🟢 |
+| 03 | [Shipping & Parsing Logs](10-elk/03-shipping-and-parsing/README.md) | 🟡 |
+| 04 | [Kibana](10-elk/04-kibana/README.md) | 🟡 |
+| 05 | [Operating Elasticsearch](10-elk/05-operating-elasticsearch/README.md) | 🔴 |
+| 06 | [Logging on Kubernetes](10-elk/06-kubernetes-logging/README.md) | 🔴 |
+| 07 | [ELK Capstone](10-elk/07-capstone/README.md) | 🏆 |
+
+## ☁️ Phase 11 — AWS → [`11-aws/`](11-aws/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [Cloud Basics & a Safe Account](11-aws/01-cloud-and-account-setup/README.md) | 🟢 |
+| 02 | [IAM](11-aws/02-iam/README.md) | 🟢 |
+| 03 | [Networking: VPC](11-aws/03-networking-vpc/README.md) | 🟡 |
+| 04 | [Compute: EC2, Auto Scaling & ALB](11-aws/04-compute/README.md) | 🟡 |
+| 05 | [Storage & Databases](11-aws/05-storage-and-databases/README.md) | 🟡 |
+| 06 | [Containers on AWS](11-aws/06-containers-on-aws/README.md) | 🔴 |
+| 07 | [Serverless & Monitoring](11-aws/07-serverless-and-monitoring/README.md) | 🔴 |
+| 08 | [AWS Capstone](11-aws/08-capstone/README.md) | 🏆 |
+
 ---
 
 ## 📚 Every module has the same structure
@@ -223,7 +294,11 @@ Missed a day? Continue where you stopped — never skip ahead.
 [Docker](4-docker/README.md#-docker-expert-checklist) ·
 [Kubernetes](5-kubernetes/README.md#-kubernetes-expert-checklist) ·
 [Terraform](6-terraform/README.md#-terraform-expert-checklist) ·
-[Ansible](7-ansible/README.md#-ansible-expert-checklist)
+[Ansible](7-ansible/README.md#-ansible-expert-checklist) ·
+[CI/CD](8-cicd/README.md#-cicd-expert-checklist) ·
+[Monitoring](9-monitoring/README.md#-monitoring-expert-checklist) ·
+[ELK](10-elk/README.md#-elk-expert-checklist) ·
+[AWS](11-aws/README.md#-aws-expert-checklist)
 
 ---
 
@@ -245,5 +320,13 @@ And for the platform tools:
 | package an app + its dependencies | run many containers reliably | **create** infrastructure via APIs | **configure** what's inside servers |
 | get the same build everywhere | self-heal, roll out, autoscale | keep state, plan before changing | install, template, restart, patch |
 | run local dev stacks (Compose) | expose apps (Services, Ingress) | build VPCs, clusters, buckets, DNS | deploy to VMs and bare metal |
+
+And for running it in production:
+
+| Use **CI/CD** to… | Use **Prometheus + Grafana** to… | Use **ELK** to… | Use **AWS** to… |
+|-------------------|----------------------------------|-----------------|-----------------|
+| test every change before it merges | know *that* something is wrong (metrics) | find out *exactly what* happened (logs) | rent servers, networks, databases on demand |
+| build, scan and sign one image | alert on symptoms, track SLOs | search and aggregate events across servers | run containers and functions without servers |
+| deploy the same digest to every environment | graph trends and capacity | keep logs as long as you must, and no longer | pay only for what you use — and turn it off |
 
 👉 **Start now:** [Step 0 — Set up your Ubuntu lab](00-ubuntu-setup/README.md)

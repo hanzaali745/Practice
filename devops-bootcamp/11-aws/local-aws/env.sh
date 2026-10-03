@@ -1,3 +1,4 @@
+# shellcheck shell=sh
 # env.sh — point the AWS CLI, boto3 and Terraform at the LOCAL fake AWS (moto) in THIS shell.
 #   source ~/Practice/devops-bootcamp/11-aws/local-aws/env.sh      (then every `aws ...` command goes to moto)
 #   source ~/Practice/devops-bootcamp/11-aws/local-aws/env.sh off  (back to your real AWS profile)
