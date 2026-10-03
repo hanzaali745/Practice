@@ -1,0 +1,28 @@
+# Module 01 — demo-app writing structured JSON logs to stdout, with log rotation on the Docker side
+name: log01
+
+x-logging: &logging
+  driver: json-file             # Docker's default driver: what `docker logs` reads
+  options:
+    max-size: "10m"             # rotate at 10 MB...
+    max-file: "3"               # ...keep 3 files → at most 30 MB per container, never a full disk
+
+services:
+  app:
+    build:
+      context: ../../../4-docker/app
+      dockerfile_inline: |
+        FROM python:3.12-slim
+        COPY app.py /app/app.py
+        USER 10001
+        CMD ["python3", "/app/app.py"]
+    environment:
+      LOG_FORMAT: json          # one JSON object per line, Elastic Common Schema field names
+    logging: *logging
+    ports: ["127.0.0.1:8000:8000"]
+
+  load:
+    image: python:3.12-slim
+    command: ["python3", "/loadgen.py", "http://app:8000", "10", "0.05"]
+    volumes: ["./loadgen.py:/loadgen.py:ro"]
+    logging: *logging

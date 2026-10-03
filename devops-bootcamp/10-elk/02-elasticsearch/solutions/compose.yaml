@@ -1,0 +1,26 @@
+# Module 02 — a single Elasticsearch node for learning.
+# ⚠️ Security is OFF here so you can focus on the APIs. Module 05 turns it on — never run like this on a network.
+name: elk02
+
+services:
+  elasticsearch:
+    image: elastic/elasticsearch:9.5.4
+    environment:
+      discovery.type: single-node          # no cluster forming, no bootstrap checks for multiple nodes
+      xpack.security.enabled: "false"      # LAB ONLY
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"    # heap: about half the container's memory, max ~30 GB
+      # Laptop-friendly disk watermarks: by default ES stops placing data at 90% disk use (a common "why is my
+      # cluster red?" on laptops). Absolute free-space limits are easier to live with in a lab.
+      cluster.routing.allocation.disk.watermark.low: 2gb
+      cluster.routing.allocation.disk.watermark.high: 1gb
+      cluster.routing.allocation.disk.watermark.flood_stage: 500mb
+    mem_limit: 1g
+    volumes: ["es-data:/usr/share/elasticsearch/data"]
+    ports: ["127.0.0.1:9200:9200"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs localhost:9200/_cluster/health?wait_for_status=yellow\\&timeout=5s || exit 1"]
+      interval: 10s
+      retries: 30
+
+volumes:
+  es-data:
