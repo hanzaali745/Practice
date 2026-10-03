@@ -1,0 +1,27 @@
+# Lab 1 — your first workflow. Copy to .github/workflows/hello.yml in your lab repo.
+name: hello
+
+on:
+  push:                        # every push, any branch
+  workflow_dispatch:           # adds a "Run workflow" button in the Actions tab
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest     # a fresh GitHub-hosted VM for every run
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v7
+
+      - name: Say hello
+        run: |
+          echo "Hello from GitHub Actions!"
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Commit:     $GITHUB_SHA"
+          echo "Triggered by ${{ github.event_name }} from ${{ github.actor }}"
+
+      - name: Look around the runner
+        run: |
+          uname -a
+          python3 --version
+          docker --version
+          ls -la

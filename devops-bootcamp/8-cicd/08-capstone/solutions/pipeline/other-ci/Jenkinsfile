@@ -1,0 +1,74 @@
+// Project 3 — the same pipeline as a Jenkins declarative pipeline (Jenkinsfile at the repo root)
+// Needs the Docker Pipeline plugin and an agent with Docker.
+pipeline {
+    agent any
+    options {
+        timeout(time: 30, unit: 'MINUTES')
+        disableConcurrentBuilds()                       // ≈ concurrency
+    }
+    environment {
+        IMAGE = 'ghcr.io/your-user/cicd-lab'
+        TAG   = "sha-${env.GIT_COMMIT.take(7)}"
+    }
+    stages {
+        stage('Lint') {
+            agent { docker { image 'python:3.12-slim' } }
+            steps {
+                sh 'pip install -r requirements-dev.txt && ruff check .'
+            }
+        }
+        stage('Test') {
+            parallel {                                   // ≈ jobs without needs between them
+                stage('Unit') {
+                    agent { docker { image 'python:3.12-slim' } }
+                    steps {
+                        sh 'pip install -r requirements-dev.txt && python3 -m pytest -q tests/test_app.py --junitxml=reports/unit.xml'
+                    }
+                    post { always { junit 'reports/unit.xml' } }
+                }
+                stage('Integration') {
+                    steps {
+                        script {
+                            docker.image('redis:7-alpine').withRun('-p 6379:6379') { redis ->
+                                docker.image('python:3.12-slim').inside('--network host') {
+                                    sh 'pip install -r requirements-dev.txt && REDIS_HOST=127.0.0.1 python3 -m pytest -q tests/test_integration.py'
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build & push') {
+            when { branch 'main' }
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'ghcr', usernameVariable: 'USER', passwordVariable: 'TOKEN')]) {
+                    sh '''
+                        echo "$TOKEN" | docker login ghcr.io -u "$USER" --password-stdin
+                        docker build -t "$IMAGE:$TAG" --build-arg VERSION="$TAG" .
+                        docker push "$IMAGE:$TAG"
+                    '''
+                }
+            }
+        }
+        stage('Deploy staging') {
+            when { branch 'main' }
+            steps {
+                sh 'scripts/bump_image.sh deploy/overlays/staging/kustomization.yaml "$IMAGE" "$TAG"'
+                sh 'git commit -am "deploy(staging): $TAG" && git push origin HEAD:main'
+            }
+        }
+        stage('Deploy production') {
+            when { branch 'main' }
+            steps {
+                input message: "Deploy ${env.TAG} to production?", ok: 'Deploy'   // ≈ required reviewers
+                sh 'git pull --ff-only origin main'
+                sh 'scripts/bump_image.sh deploy/overlays/production/kustomization.yaml "$IMAGE" "$TAG"'
+                sh 'git commit -am "deploy(production): $TAG" && git push origin HEAD:main'
+            }
+        }
+    }
+    post {
+        failure { echo "Pipeline failed: ${env.BUILD_URL}" }   // send a Slack/email notification here
+    }
+}

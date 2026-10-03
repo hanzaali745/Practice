@@ -1,0 +1,44 @@
+# Lab 2 — a REUSABLE workflow: other workflows call it like a function
+#   same repo:   uses: ./.github/workflows/reusable-python-ci.yml
+#   other repo:  uses: YOUR-USER/cicd-lab/.github/workflows/reusable-python-ci.yml@<sha or tag>
+name: reusable-python-ci
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        type: string
+        default: "3.12"
+      tests:
+        description: What pytest should run
+        type: string
+        default: tests/
+    outputs:
+      python-version:
+        description: Exact Python version that was tested
+        value: ${{ jobs.test.outputs.python-version }}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      python-version: ${{ steps.setup.outputs.python-version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - id: setup
+        uses: ./.github/actions/setup-demo
+        with:
+          python-version: ${{ inputs.python-version }}
+      - run: ruff check .
+      - name: Tests
+        env:
+          TESTS: ${{ inputs.tests }}
+        run: |
+          # shellcheck disable=SC2086  # unquoted on purpose: TESTS may hold several paths
+          python3 -m pytest -q $TESTS

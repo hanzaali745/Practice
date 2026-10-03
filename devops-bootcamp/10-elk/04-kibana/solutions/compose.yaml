@@ -1,0 +1,41 @@
+# Module 04 — Elasticsearch + Kibana + 24 h of sample logs
+name: elk04
+
+services:
+  elasticsearch:
+    image: elastic/elasticsearch:9.5.4
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"                # LAB ONLY (Module 05 turns it on)
+      ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+      cluster.routing.allocation.disk.watermark.low: 2gb
+      cluster.routing.allocation.disk.watermark.high: 1gb
+      cluster.routing.allocation.disk.watermark.flood_stage: 500mb
+    mem_limit: 1536m                                # heap 512m + off-heap; 1 GB is too tight once Kibana is busy
+    volumes: ["es-data:/usr/share/elasticsearch/data"]
+    ports: ["127.0.0.1:9200:9200"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs localhost:9200/_cluster/health?wait_for_status=yellow\\&timeout=5s || exit 1"]
+      interval: 10s
+      retries: 30
+
+  loader:                                            # one-shot: template + 5000 sample log lines
+    image: python:3.12-slim
+    command: ["python3", "/work/load_sample_data.py", "http://elasticsearch:9200", "5000"]
+    volumes: ["./:/work:ro"]
+    depends_on:
+      elasticsearch: {condition: service_healthy}
+    restart: "no"
+
+  kibana:
+    image: elastic/kibana:9.5.4
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      TELEMETRY_OPTIN: "false"
+    mem_limit: 1536m
+    ports: ["127.0.0.1:5601:5601"]
+    depends_on:
+      elasticsearch: {condition: service_healthy}
+
+volumes:
+  es-data:

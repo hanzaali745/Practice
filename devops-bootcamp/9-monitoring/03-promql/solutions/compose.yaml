@@ -1,0 +1,28 @@
+# Module 03 — demo-app under steady load, so PromQL has real data to chew on
+name: mon03
+
+services:
+  app:
+    build:
+      context: ../../../4-docker/app
+      dockerfile_inline: |
+        FROM python:3.12-slim
+        COPY app.py /app/app.py
+        USER 10001
+        CMD ["python3", "/app/app.py"]
+    deploy:
+      replicas: 2
+
+  load:
+    image: python:3.12-slim
+    command: ["python3", "/loadgen.py", "http://app:8000", "20"]
+    volumes: ["./loadgen.py:/loadgen.py:ro"]
+    depends_on: [app]
+
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    command: [--config.file=/etc/prometheus/prometheus.yml]
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./rules:/etc/prometheus/rules:ro
+    ports: ["127.0.0.1:9090:9090"]

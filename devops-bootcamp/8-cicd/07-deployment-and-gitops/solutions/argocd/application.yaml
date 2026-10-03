@@ -1,0 +1,21 @@
+# Lab 3 — tell Argo CD: "keep namespace demo in the cluster equal to deploy/k8s in my repo"
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/YOUR-USER/cicd-lab.git     # public repo: no credentials needed
+    targetRevision: main
+    path: deploy/k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo
+  syncPolicy:
+    automated:
+      prune: true              # delete things that were removed from Git
+      selfHeal: true           # undo manual kubectl changes (drift)
+    syncOptions:
+      - CreateNamespace=true

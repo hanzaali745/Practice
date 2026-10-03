@@ -1,0 +1,22 @@
+# Lab 4 — a GitHub Release with generated notes for every vX.Y.Z tag (uses the preinstalled gh CLI)
+name: release
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write                      # create the release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          # --generate-notes lists the merged PRs since the previous release
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --verify-tag --generate-notes \
+            --title "demo-app $TAG"

@@ -1,0 +1,66 @@
+# Lab 3 — GitOps: CI never touches the cluster. It builds the image, then COMMITS the new tag to Git;
+# Argo CD sees the commit and deploys it. Rollback = git revert.
+name: gitops-bump
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - deploy/**                      # our own bump commits must not trigger another bump
+
+permissions: {}
+
+concurrency:
+  group: gitops-bump
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    outputs:
+      image: ${{ steps.vars.outputs.image }}
+      tag: ${{ steps.vars.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - id: vars
+        run: |
+          echo "image=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_OUTPUT"   # ,, = lowercase
+          echo "tag=sha-${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        env:
+          IMAGE: ${{ steps.vars.outputs.image }}
+          TAG: ${{ steps.vars.outputs.tag }}
+        run: |
+          docker build -t "$IMAGE:$TAG" --build-arg VERSION="$TAG" --build-arg GIT_SHA="$GITHUB_SHA" .
+          docker push "$IMAGE:$TAG"
+
+  bump:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write                  # to push the bump commit
+    steps:
+      - uses: actions/checkout@v7      # keeps credentials: this job must push
+      - name: Point the manifests at the new image
+        env:
+          IMAGE: ${{ needs.build.outputs.image }}
+          TAG: ${{ needs.build.outputs.tag }}
+        run: scripts/bump_image.sh deploy/k8s/kustomization.yaml "$IMAGE" "$TAG"
+      - name: Commit and push
+        env:
+          TAG: ${{ needs.build.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "deploy: demo-app $TAG"
+          git push

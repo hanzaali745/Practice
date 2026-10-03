@@ -1,0 +1,46 @@
+# Fluent Bit configuration (YAML format) — the same file is used by the DaemonSet and by validate.sh
+service:
+  flush: 5
+  log_level: info
+  http_server: on                      # /api/v1/health and Prometheus metrics on :2020
+  http_listen: 0.0.0.0
+  http_port: 2020
+  health_check: on
+
+pipeline:
+  inputs:
+    - name: tail                       # every container's log file on this node
+      tag: kube.*
+      path: /var/log/containers/*.log
+      exclude_path: /var/log/containers/*_logging_*.log    # not our own logs
+      multiline.parser: cri, docker    # unwrap the container runtime's line format (kind uses containerd → cri)
+      db: /var/fluent-bit/state/tail.db                    # remembers positions across restarts
+      read_from_head: false            # first start: skip what's already on disk (avoids a flood); new lines only
+      mem_buf_limit: 50MB
+      skip_long_lines: on
+
+  filters:
+    - name: kubernetes                 # add namespace, pod, container, labels from the API server
+      match: kube.*
+      merge_log: on                    # demo-app's JSON line → real fields
+      keep_log: off
+      labels: on
+      annotations: off
+      k8s-logging.exclude: on          # pods can opt out with the annotation fluentbit.io/exclude: "true"
+
+    - name: modify                     # where the logs came from
+      match: kube.*
+      add: cluster kind-lab
+
+  outputs:
+    - name: es
+      match: kube.*
+      host: ${ES_HOST}
+      port: ${ES_PORT}
+      http_api_key: ${ES_API_KEY}      # create_doc-only key from Module 05 (stored in a Secret)
+      tls: ${ES_TLS}
+      index: logs-k8s-default          # a data stream (Module 05): op_type must be create
+      write_operation: create
+      suppress_type_name: on
+      replace_dots: on
+      retry_limit: 10

@@ -1,0 +1,33 @@
+# Module 06 — Alertmanager: group, route, silence and inhibit alerts, then notify the right people
+route:
+  receiver: chat                          # default: a team chat channel
+  group_by: [alertname, job]              # one notification per alert type per job, not one per instance
+  group_wait: 10s                         # wait a bit to batch alerts that start together (lab: 10 s; usually 30 s)
+  group_interval: 1m                      # how often to send updates about a group
+  repeat_interval: 4h                     # remind if still firing
+  routes:
+    - matchers: [severity="critical"]
+      receiver: pager                     # critical → wake someone up
+      continue: true                      # ...and ALSO post it to chat (next matching route)
+    - matchers: [severity=~"warning|critical"]
+      receiver: chat
+
+receivers:
+  - name: pager                           # real life: pagerduty_configs / opsgenie_configs
+    webhook_configs:
+      - url: http://receiver:5001/pager
+        send_resolved: true
+  - name: chat                            # real life: slack_configs / msteams_configs / email_configs
+    webhook_configs:
+      - url: http://receiver:5001/chat
+        send_resolved: true
+
+inhibit_rules:
+  # If an instance is DOWN, don't also page about its errors and latency — they're symptoms of the same thing
+  - source_matchers: [alertname="DemoAppDown"]
+    target_matchers: [alertname=~"DemoAppHighErrorRate|DemoAppHighLatency"]
+    equal: [job]
+  # A critical alert silences the warning version of the same thing
+  - source_matchers: [severity="critical"]
+    target_matchers: [severity="warning"]
+    equal: [alertname, job]

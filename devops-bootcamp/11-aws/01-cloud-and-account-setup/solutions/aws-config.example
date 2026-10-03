@@ -1,0 +1,17 @@
+# ~/.aws/config — sign in with IAM Identity Center (SSO): short-lived credentials, no access keys on disk
+[sso-session bootcamp]
+sso_start_url = https://d-1234567890.awsapps.com/start
+sso_region = eu-west-1
+sso_registration_scopes = sso:account:access
+
+[profile lab]
+sso_session = bootcamp
+sso_account_id = 123456789012
+sso_role_name = AdministratorAccess
+region = eu-west-1
+output = json
+
+# The start URL is in IAM Identity Center → Settings. Usage:
+#   aws sso login --sso-session bootcamp
+#   export AWS_PROFILE=lab
+#   aws sts get-caller-identity

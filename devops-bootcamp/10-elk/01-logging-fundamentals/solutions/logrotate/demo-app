@@ -1,0 +1,19 @@
+# Lab 4 — /etc/logrotate.d/demo-app: for apps that write their own log FILES (not containers).
+# Note: logrotate only allows comments on their OWN line — never after a directive.
+/var/log/demo-app/*.log {
+    # rotate once a day, or sooner if a file passes 100 MB
+    daily
+    maxsize 100M
+    # keep 14 old files, gzipped — except the newest old one (the app may still be writing to it)
+    rotate 14
+    compress
+    delaycompress
+    # no error if there are no logs yet; don't rotate empty files
+    missingok
+    notifempty
+    # demo-app.log-20261003 instead of demo-app.log.1
+    dateext
+    # for apps that can't reopen their log file (otherwise: postrotate + a reload signal)
+    copytruncate
+    su root root
+}

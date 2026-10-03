@@ -1,0 +1,88 @@
+# Fluent Bit as a DaemonSet: one pod per node reads /var/log/containers and ships to Elasticsearch
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: logging
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: fluent-bit
+  namespace: logging
+---
+# Read-only access to pod and namespace metadata (for the kubernetes filter)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: fluent-bit-read
+rules:
+  - apiGroups: [""]
+    resources: [pods, namespaces]
+    verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: fluent-bit-read
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: fluent-bit-read
+subjects:
+  - kind: ServiceAccount
+    name: fluent-bit
+    namespace: logging
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: fluent-bit
+  namespace: logging
+  labels: {app: fluent-bit}
+spec:
+  selector:
+    matchLabels: {app: fluent-bit}
+  template:
+    metadata:
+      labels: {app: fluent-bit}
+    spec:
+      serviceAccountName: fluent-bit
+      tolerations:
+        - operator: Exists               # run on EVERY node, including the control plane
+      containers:
+        - name: fluent-bit
+          image: fluent/fluent-bit:4.2.8
+          args: ["--config=/fluent-bit/etc/fluent-bit.yaml"]
+          env:
+            - name: ES_HOST
+              value: elasticsearch.logging.svc   # or an external host
+            - name: ES_PORT
+              value: "9200"
+            - name: ES_TLS
+              value: "off"                       # "on" with a real cluster
+            - name: ES_API_KEY
+              valueFrom:
+                secretKeyRef: {name: elasticsearch-shipper, key: api-key}
+          ports:
+            - {name: http, containerPort: 2020}
+          livenessProbe:
+            httpGet: {path: /api/v1/health, port: http}
+          readinessProbe:
+            httpGet: {path: /api/v1/health, port: http}
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {memory: 200Mi}
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+          volumeMounts:
+            - {name: config, mountPath: /fluent-bit/etc/fluent-bit.yaml, subPath: fluent-bit.yaml}
+            - {name: varlog, mountPath: /var/log, readOnly: true}
+            - {name: state, mountPath: /var/fluent-bit/state}
+      volumes:
+        - name: config
+          configMap: {name: fluent-bit-config}
+        - name: varlog
+          hostPath: {path: /var/log}
+        - name: state                            # positions survive pod restarts
+          hostPath: {path: /var/lib/fluent-bit, type: DirectoryOrCreate}

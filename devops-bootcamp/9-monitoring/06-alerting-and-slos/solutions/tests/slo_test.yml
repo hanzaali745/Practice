@@ -1,0 +1,41 @@
+# Unit test for the SLO burn-rate alerts:  10% errors is 20× the 0.5% budget → fast burn must fire, slow must too
+rule_files: [../rules/slo.yml]
+evaluation_interval: 30s
+
+tests:
+  - name: 10% errors for over an hour → fast burn (critical)
+    interval: 1m
+    input_series:
+      - series: 'http_requests_total{job="demo-app", code="200"}'
+        values: '0+90x400'
+      - series: 'http_requests_total{job="demo-app", code="500"}'
+        values: '0+10x400'
+    alert_rule_test:
+      - eval_time: 70m
+        alertname: DemoAppErrorBudgetFastBurn
+        exp_alerts:
+          - exp_labels: {severity: critical, job: demo-app}
+            exp_annotations:
+              summary: "demo-app is burning its error budget 14× too fast"
+              description: "At this rate the 30-day error budget (0.5%) is gone in about 2 days."
+      - eval_time: 6h30m
+        alertname: DemoAppErrorBudgetSlowBurn
+        exp_alerts:
+          - exp_labels: {severity: warning, job: demo-app}
+            exp_annotations:
+              summary: "demo-app is burning its error budget 6× too fast"
+
+  - name: 0.2% errors is within budget → no burn alerts
+    interval: 1m
+    input_series:
+      - series: 'http_requests_total{job="demo-app", code="200"}'
+        values: '0+998x400'
+      - series: 'http_requests_total{job="demo-app", code="500"}'
+        values: '0+2x400'
+    alert_rule_test:
+      - eval_time: 6h30m
+        alertname: DemoAppErrorBudgetFastBurn
+        exp_alerts: []
+      - eval_time: 6h30m
+        alertname: DemoAppErrorBudgetSlowBurn
+        exp_alerts: []

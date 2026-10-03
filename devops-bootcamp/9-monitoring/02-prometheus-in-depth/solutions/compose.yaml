@@ -1,0 +1,36 @@
+# Module 02 — service discovery, relabeling, reloads
+name: mon02
+
+services:
+  app:
+    build:
+      context: ../../../4-docker/app
+      dockerfile_inline: |
+        FROM python:3.12-slim
+        COPY app.py /app/app.py
+        USER 10001
+        CMD ["python3", "/app/app.py"]
+    deploy:
+      replicas: 3                     # three instances, found by DNS service discovery
+
+  node-exporter:
+    image: prom/node-exporter:v1.12.1
+    command: ["--path.rootfs=/host"]
+    pid: host
+    volumes: ["/:/host:ro"]
+
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.retention.time=7d
+      - --storage.tsdb.retention.size=1GB
+      - --web.enable-lifecycle          # allows POST /-/reload (lab only: protect it in production)
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./targets:/etc/prometheus/targets:ro
+      - prometheus-data:/prometheus
+    ports: ["127.0.0.1:9090:9090"]
+
+volumes:
+  prometheus-data:

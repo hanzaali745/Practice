@@ -1,0 +1,116 @@
+# Module 03 — a complete CI quality gate: lint → unit tests → integration tests (Redis) → image build
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip                               # caches ~/.cache/pip keyed on requirements files
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - name: Python lint
+        run: ruff check --output-format=github .  # annotations appear on the PR's "Files changed" tab
+      - name: Shell lint
+        run: docker run --rm -v "$PWD:/mnt" -w /mnt koalaman/shellcheck:v0.11.0 scripts/*.sh
+      - name: Dockerfile lint
+        run: docker run --rm -i hadolint/hadolint:v2.15.1 < Dockerfile
+
+  unit:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - name: Unit tests
+        run: python3 -m pytest -q --junitxml=reports/unit.xml
+      - name: Keep the test report
+        # always(): upload even (especially!) when tests fail.
+        # !env.ACT: act (local runs) sets ACT=true and its artifact server doesn't support v7 yet
+        if: always() && !env.ACT
+        uses: actions/upload-artifact@v7
+        with:
+          name: unit-test-report
+          path: reports/
+          retention-days: 7
+
+  integration:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:                                      # side containers, started before the steps
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 2s
+          --health-timeout 2s
+          --health-retries 15
+    env:
+      REDIS_HOST: 127.0.0.1                        # the job runs on the VM, so the service is on localhost
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - name: Integration tests against a real Redis
+        run: python3 -m pytest -q tests/test_integration.py
+
+  image:
+    needs: [unit, integration]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the image (no push yet — that's Module 04)
+        run: docker build -t demo-app:ci --build-arg VERSION="ci-${GITHUB_SHA::7}" .
+      - name: Smoke test the image
+        run: |
+          docker run -d --name app -p 8000:8000 demo-app:ci
+          scripts/smoke_test.sh http://127.0.0.1:8000 "ci-${GITHUB_SHA::7}"
+      - name: Show logs if it failed
+        if: failure()
+        run: docker logs app || true
+      - name: Clean up                             # matters with act, where Docker is your laptop's
+        if: always()
+        run: docker rm -f app || true
+
+  # One stable check name for branch protection: require "ci-ok" instead of every job by name
+  ci-ok:
+    needs: [lint, unit, integration, image]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: All jobs passed?
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "results: $RESULTS"
+          for r in $RESULTS; do [[ $r == success ]] || exit 1; done

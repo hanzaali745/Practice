@@ -1,0 +1,16 @@
+# "Prometheus, scrape every Service labelled app=demo-app in namespace demo, on its port named http"
+# The operator turns this into scrape config — no prometheus.yml editing, and it follows pods as they come and go.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: demo-app
+  namespace: demo
+spec:
+  selector:
+    matchLabels: {app: demo-app}
+  namespaceSelector:
+    matchNames: [demo]
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

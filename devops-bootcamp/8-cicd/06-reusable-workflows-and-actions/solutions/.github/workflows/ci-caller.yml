@@ -1,0 +1,50 @@
+# Labs 2-4 — the CALLER: a short workflow that reuses the pieces above
+name: ci-caller
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    strategy:
+      matrix:
+        python: ["3.12", "3.13"]
+    uses: ./.github/workflows/reusable-python-ci.yml
+    with:
+      python-version: ${{ matrix.python }}
+      tests: tests/test_app.py
+
+  report:
+    needs: python
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read the reusable workflow's output
+        env:
+          TESTED: ${{ needs.python.outputs.python-version }}   # with a matrix: the last one to finish
+        run: echo "reusable workflow tested Python $TESTED"
+
+  smoke:
+    needs: python
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Start the app straight from source
+        run: |
+          PORT=8000 APP_VERSION=caller-test python3 app/app.py > app.log 2>&1 &
+      - id: smoke
+        uses: ./.github/actions/smoke-test
+        with:
+          url: http://127.0.0.1:8000
+          version: caller-test
+      - name: Use the action's output
+        env:
+          RESULT: ${{ steps.smoke.outputs.result }}
+        run: echo "smoke test said → $RESULT"

@@ -1,0 +1,22 @@
+# Lab 2 — blue/green: two complete versions side by side; the Service decides which one gets traffic
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-blue
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: demo-bg, color: blue}
+  template:
+    metadata:
+      labels: {app: demo-bg, color: blue}
+    spec:
+      containers:
+        - name: app
+          image: demo-app:1.0.0
+          env:
+            - {name: APP_VERSION, value: "1.0.0-blue"}
+          ports:
+            - containerPort: 8000
+          readinessProbe:
+            httpGet: {path: /health, port: 8000}

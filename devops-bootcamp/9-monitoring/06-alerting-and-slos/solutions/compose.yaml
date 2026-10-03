@@ -1,0 +1,53 @@
+# Module 06 — rules + Alertmanager + a fake "Slack/PagerDuty" so you can watch notifications arrive
+name: mon06
+
+services:
+  app:
+    build:
+      context: ../../../4-docker/app
+      dockerfile_inline: |
+        FROM python:3.12-slim
+        COPY app.py /app/app.py
+        USER 10001
+        CMD ["python3", "/app/app.py"]
+    environment:
+      REDIS_HOST: redis
+    deploy:
+      replicas: 2
+
+  load:
+    image: python:3.12-slim
+    command: ["python3", "/loadgen.py", "http://app:8000", "15", "${ERROR_FRACTION:-0.01}"]
+    volumes: ["./loadgen.py:/loadgen.py:ro"]
+
+  redis:
+    image: redis:7-alpine
+
+  redis-exporter:
+    image: oliver006/redis_exporter:v1.93.0
+    environment:
+      REDIS_ADDR: redis://redis:6379
+
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    command: [--config.file=/etc/prometheus/prometheus.yml]
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./rules:/etc/prometheus/rules:ro
+    ports: ["127.0.0.1:9090:9090"]
+
+  alertmanager:
+    image: prom/alertmanager:v0.34.1
+    command: [--config.file=/etc/alertmanager/alertmanager.yml]
+    volumes: ["./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro"]
+    ports: ["127.0.0.1:9093:9093"]
+
+  receiver:
+    image: python:3.12-slim
+    command: ["python3", "-u", "/alert_receiver.py", "5001"]
+    volumes:
+      - ./alert_receiver.py:/alert_receiver.py:ro
+      - receiver-data:/data
+
+volumes:
+  receiver-data:

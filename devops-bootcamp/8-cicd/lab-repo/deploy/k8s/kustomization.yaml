@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - service.yaml
+# CI changes this with:  kustomize edit set image demo-app=ghcr.io/OWNER/REPO:TAG
+images:
+  - name: demo-app
+    newName: demo-app
+    newTag: dev

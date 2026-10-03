@@ -1,0 +1,50 @@
+# Labs 1-2 — secrets, variables and environments with an approval gate
+#   Settings → Environments: create "staging" and "production".
+#   production: add yourself as a Required reviewer, and allow only the main branch.
+name: deploy-environments
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {}                       # least privilege: nothing unless a job asks for it
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false           # never cancel a deploy halfway
+
+jobs:
+  staging:
+    runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://staging.example.com
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false                    # don't leave the token in .git/config
+      - name: Deploy to staging
+        env:
+          API_TOKEN: ${{ secrets.DEPLOY_TOKEN }}        # environment secret (masked as *** in logs)
+          REGION: ${{ vars.REGION }}                    # environment variable (not secret, visible)
+        run: |
+          echo "deploying to staging in ${REGION:-unset}"
+          echo "token length: ${#API_TOKEN}"            # never echo the token itself
+          if [[ -z $API_TOKEN ]]; then echo "::warning::DEPLOY_TOKEN is not set for staging"; fi
+
+  production:
+    needs: staging
+    runs-on: ubuntu-latest
+    environment:
+      name: production                                  # pauses here until a reviewer approves
+      url: https://www.example.com
+    permissions:
+      contents: read
+    steps:
+      - name: Deploy to production
+        env:
+          API_TOKEN: ${{ secrets.DEPLOY_TOKEN }}        # the PRODUCTION value of the same secret name
+        run: echo "deploying to production (token length ${#API_TOKEN})"

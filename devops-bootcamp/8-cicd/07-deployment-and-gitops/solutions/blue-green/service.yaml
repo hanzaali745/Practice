@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-bg
+spec:
+  selector:
+    app: demo-bg
+    color: blue                # switch_color.sh flips this to green (and back, to roll back)
+  ports:
+    - port: 80
+      targetPort: 8000

@@ -1,0 +1,19 @@
+# The user-facing alert: external probe through nginx failing for 1 minute
+rule_files: [../rules/alerts.yml]
+evaluation_interval: 10s
+tests:
+  - interval: 10s
+    input_series:
+      - series: 'probe_success{job="blackbox-site", instance="http://nginx/health"}'
+        values: '1 1 1 0 0 0 0 0 0 0 0 0'
+    alert_rule_test:
+      - eval_time: 50s
+        alertname: SiteUnreachable
+        exp_alerts: []
+      - eval_time: 110s
+        alertname: SiteUnreachable
+        exp_alerts:
+          - exp_labels: {severity: critical, job: blackbox-site, instance: "http://nginx/health"}
+            exp_annotations:
+              summary: "The site http://nginx/health fails its external health check"
+              runbook_url: "https://github.com/YOUR-USER/cicd-lab/blob/main/runbooks/demo-app.md#siteunreachable"

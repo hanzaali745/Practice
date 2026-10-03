@@ -1,0 +1,30 @@
+# Lab 4 — your own action with inputs and outputs, wrapping a script that lives next to it
+name: demo-app smoke test
+description: Wait until demo-app answers healthy, optionally with an expected version
+
+inputs:
+  url:
+    description: Base URL of the app, e.g. http://127.0.0.1:8000
+    required: true
+  version:
+    description: Expected version (empty = any)
+    required: false
+    default: ""
+
+outputs:
+  result:
+    description: Last line printed by the smoke test
+    value: ${{ steps.smoke.outputs.result }}
+
+runs:
+  using: composite
+  steps:
+    - id: smoke
+      shell: bash
+      env:
+        URL: ${{ inputs.url }}
+        VERSION: ${{ inputs.version }}
+      run: |
+        result=$("$GITHUB_ACTION_PATH/smoke.sh" "$URL" "$VERSION" | tail -1)
+        echo "$result"
+        echo "result=$result" >> "$GITHUB_OUTPUT"

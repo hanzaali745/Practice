@@ -1,0 +1,6 @@
+# Terraform working files and state never go into Git
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+*.tfplan

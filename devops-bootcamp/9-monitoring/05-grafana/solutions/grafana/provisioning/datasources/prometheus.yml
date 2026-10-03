@@ -1,0 +1,12 @@
+# Provisioned data source: created when Grafana starts — no clicking, same in every environment
+apiVersion: 1
+datasources:
+  - name: Prometheus
+    uid: prometheus                 # dashboards refer to this uid
+    type: prometheus
+    access: proxy                   # the Grafana server talks to Prometheus, not your browser
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false
+    jsonData:
+      timeInterval: 10s             # = scrape interval: Grafana's $__rate_interval uses it

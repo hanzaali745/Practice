@@ -1,0 +1,29 @@
+# Lab 3 — one job definition, many combinations
+name: matrix
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: test (py${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false                     # let every combination finish, even if one fails
+      max-parallel: 3
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+        include:
+          - python: "3.12"
+            coverage: true                 # extra variable for one combination only
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install -r requirements-dev.txt
+      - run: python3 -m pytest -q
+      - name: Coverage (one combination only)
+        if: matrix.coverage
+        run: echo "coverage would run here for ${{ matrix.python }}"

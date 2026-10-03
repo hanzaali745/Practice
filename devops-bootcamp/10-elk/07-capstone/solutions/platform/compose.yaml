@@ -1,0 +1,125 @@
+# ELK capstone — secured, centralised logging for the demo platform
+#   app ×2 (JSON) + nginx (text) → Filebeat → Logstash (parse, route) → Elasticsearch data streams (ILM, security)
+#   Kibana (dashboards as code) · log_alert.py → receiver (#chat)
+name: logs
+
+x-es-env: &es-passwords
+  ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-bootcamp-elastic}
+  KIBANA_PASSWORD: ${KIBANA_PASSWORD:-bootcamp-kibana}
+  LOGSTASH_PASSWORD: ${LOGSTASH_PASSWORD:-bootcamp-logstash}
+  ALERTER_PASSWORD: ${ALERTER_PASSWORD:-bootcamp-alerter}
+  DEV_PASSWORD: ${DEV_PASSWORD:-bootcamp-dev}
+
+services:
+  elasticsearch:
+    image: elastic/elasticsearch:9.5.4
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "true"
+      xpack.security.http.ssl.enabled: "false"     # lab on localhost; TLS everywhere else (Module 05)
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD:-bootcamp-elastic}
+      ES_JAVA_OPTS: "-Xms768m -Xmx768m"
+      cluster.routing.allocation.disk.watermark.low: 2gb
+      cluster.routing.allocation.disk.watermark.high: 1gb
+      cluster.routing.allocation.disk.watermark.flood_stage: 500mb
+    mem_limit: 2g                                  # heap + off-heap memory; 1 GB gets OOM-killed under this load
+    volumes: ["es-data:/usr/share/elasticsearch/data"]
+    ports: ["127.0.0.1:9200:9200"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs -u elastic:$${ELASTIC_PASSWORD} localhost:9200/_cluster/health?wait_for_status=yellow\\&timeout=5s || exit 1"]
+      interval: 10s
+      retries: 30
+
+  setup:
+    image: python:3.12-slim
+    command: ["python3", "-u", "/setup.py"]
+    environment: *es-passwords
+    volumes: ["./setup.py:/setup.py:ro"]
+    depends_on:
+      elasticsearch: {condition: service_healthy}
+    restart: "no"
+
+  logstash:
+    image: elastic/logstash:9.5.4
+    environment:
+      LS_JAVA_OPTS: "-Xms256m -Xmx256m"
+      XPACK_MONITORING_ENABLED: "false"
+      PIPELINE_ECS_COMPATIBILITY: v8
+      LOGSTASH_PASSWORD: ${LOGSTASH_PASSWORD:-bootcamp-logstash}
+    mem_limit: 1g
+    volumes: ["./logstash/pipeline:/usr/share/logstash/pipeline:ro"]
+    depends_on:
+      setup: {condition: service_completed_successfully}
+
+  filebeat:
+    image: elastic/filebeat:9.5.4
+    user: root
+    command: ["filebeat", "-e", "--strict.perms=false"]
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - filebeat-data:/usr/share/filebeat/data
+    depends_on: [logstash]
+
+  kibana:
+    image: elastic/kibana:9.5.4
+    environment:
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      ELASTICSEARCH_USERNAME: kibana_system
+      ELASTICSEARCH_PASSWORD: ${KIBANA_PASSWORD:-bootcamp-kibana}
+      TELEMETRY_OPTIN: "false"
+    mem_limit: 1536m
+    ports: ["127.0.0.1:5601:5601"]
+    depends_on:
+      setup: {condition: service_completed_successfully}
+
+  app:
+    build:
+      context: ../../../../4-docker/app
+      dockerfile_inline: |
+        FROM python:3.12-slim
+        COPY app.py /app/app.py
+        USER 10001
+        CMD ["python3", "/app/app.py"]
+    environment:
+      LOG_FORMAT: json
+      APP_VERSION: "2.1.0"
+    deploy:
+      replicas: 2
+
+  nginx:
+    image: nginx:1.29-alpine
+    volumes: ["./nginx.conf:/etc/nginx/conf.d/default.conf:ro"]
+    ports: ["127.0.0.1:8080:80"]
+    depends_on: [app]
+
+  load:
+    image: python:3.12-slim
+    command: ["python3", "/loadgen.py", "http://nginx", "8", "${ERROR_FRACTION:-0.002}"]
+    volumes: ["./loadgen.py:/loadgen.py:ro"]
+    depends_on: [nginx]
+
+  log-alert:
+    image: python:3.12-slim
+    command: ["python3", "-u", "/log_alert.py"]
+    environment:
+      ALERTER_PASSWORD: ${ALERTER_PASSWORD:-bootcamp-alerter}
+      THRESHOLD: "10"
+      WINDOW: 2m
+      INTERVAL: "20"
+    volumes: ["./log_alert.py:/log_alert.py:ro"]
+    depends_on:
+      setup: {condition: service_completed_successfully}
+
+  receiver:
+    image: python:3.12-slim
+    command: ["python3", "-u", "/alert_receiver.py", "5001"]
+    volumes:
+      - ./alert_receiver.py:/alert_receiver.py:ro
+      - receiver-data:/data
+
+volumes:
+  es-data:
+  filebeat-data:
+  receiver-data:

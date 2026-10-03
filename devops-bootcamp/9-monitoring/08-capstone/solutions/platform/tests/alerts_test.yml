@@ -1,0 +1,43 @@
+# Unit tests for alerts:  promtool test rules tests/alerts_test.yml
+rule_files: [../rules/recording.yml, ../rules/alerts.yml]
+evaluation_interval: 15s
+
+tests:
+  - name: instance down for 1 minute → DemoAppDown fires; 30 s → it doesn't
+    interval: 15s
+    input_series:
+      - series: 'up{job="demo-app", instance="app-1"}'
+        values: '1 1 1 0 0 0 0 0 0'                # down from 45 s onwards
+    alert_rule_test:
+      - eval_time: 75s                             # down for 30 s → pending, not firing
+        alertname: DemoAppDown
+        exp_alerts: []
+      - eval_time: 2m                              # down for 75 s → firing
+        alertname: DemoAppDown
+        exp_alerts:
+          - exp_labels: {severity: critical, job: demo-app, instance: app-1}
+            exp_annotations:
+              summary: "demo-app instance app-1 is down"
+              description: "Prometheus could not scrape app-1 for more than 1 minute."
+              runbook_url: "https://github.com/YOUR-USER/cicd-lab/blob/main/runbooks/demo-app.md#demoappdown"
+
+  - name: 10% errors → DemoAppHighErrorRate; 1% errors → nothing
+    interval: 15s
+    input_series:
+      - series: 'http_requests_total{job="demo-app", code="200"}'
+        values: '0+90x60'
+      - series: 'http_requests_total{job="demo-app", code="500"}'
+        values: '0+10x60'                          # 10 of every 100 requests fail
+      - series: 'http_requests_total{job="healthy-app", code="200"}'
+        values: '0+99x60'
+      - series: 'http_requests_total{job="healthy-app", code="500"}'
+        values: '0+1x60'
+    alert_rule_test:
+      - eval_time: 10m
+        alertname: DemoAppHighErrorRate
+        exp_alerts:
+          - exp_labels: {severity: warning, job: demo-app}
+            exp_annotations:
+              summary: "demo-app error ratio is 10%"
+              description: "More than 5% of requests failed with a 5xx for 2 minutes."
+              runbook_url: "https://github.com/YOUR-USER/cicd-lab/blob/main/runbooks/demo-app.md#demoapphigherrorrate"

@@ -1,0 +1,115 @@
+# CI — every pull request, and called by delivery.yml for every push to main. Nothing is published here.
+#   lint ─┬─ unit ────────┬─ e2e (kind) ── ci-ok   ← the only required check
+#         └─ integration ─┘
+name: ci
+
+on:
+  pull_request:
+  workflow_call:                             # delivery.yml runs the very same checks before releasing
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-demo
+      - run: ruff check --output-format=github .
+      - run: docker run --rm -v "$PWD:/mnt" -w /mnt koalaman/shellcheck:v0.11.0 scripts/*.sh
+      - run: docker run --rm -i hadolint/hadolint:v2.15.1 < Dockerfile
+      - uses: azure/setup-kubectl@829323503d1be3d00ca8346e5391ca0b07a9ab0d # v5.1.0
+      - name: Manifests are valid
+        run: |
+          for env in staging production; do
+            kubectl kustomize "deploy/overlays/$env" > "/tmp/$env.yaml"
+          done
+          docker run --rm -v /tmp:/m ghcr.io/yannh/kubeconform:v0.7.0 -strict -summary /m/staging.yaml /m/production.yaml
+
+  unit:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-demo
+      - run: python3 -m pytest -q tests/test_app.py --junitxml=reports/unit.xml
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always() && !env.ACT
+        with:
+          name: unit-report
+          path: reports/
+          retention-days: 7
+
+  integration:
+    needs: lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      redis:
+        image: redis:7-alpine
+        ports: ["6379:6379"]
+        options: --health-cmd "redis-cli ping" --health-interval 2s --health-retries 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: ./.github/actions/setup-demo
+      - env:
+          REDIS_HOST: 127.0.0.1
+        run: python3 -m pytest -q tests/test_integration.py
+
+  e2e:
+    needs: [unit, integration]
+    # kind can't run inside act: locally, run  act -e act-event.json  (contains {"act": true}) to skip this job
+    if: ${{ !github.event.act }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: helm/kind-action@06c1ae10762d3b9c1644e7fe69596ae519e015a2 # v1.15.0
+        with:
+          cluster_name: e2e
+      - name: Build and load the image
+        run: |
+          docker build -t demo-app:e2e --build-arg VERSION="e2e-${GITHUB_SHA::7}" .
+          kind load docker-image demo-app:e2e --name e2e
+      - name: Deploy the staging overlay with the test image
+        run: |
+          scripts/bump_image.sh deploy/overlays/staging/kustomization.yaml demo-app e2e
+          kubectl apply -k deploy/overlays/staging --server-side
+          kubectl -n demo-staging rollout status deployment/demo-app --timeout=120s
+      - name: Smoke test
+        run: |
+          kubectl -n demo-staging port-forward service/demo-app 8080:80 > /dev/null 2>&1 &
+          scripts/smoke_test.sh http://127.0.0.1:8080 "e2e-${GITHUB_SHA::7}"
+      - name: Debug info
+        if: failure()
+        run: |
+          kubectl -n demo-staging get all -o wide
+          kubectl -n demo-staging describe pods
+          kubectl -n demo-staging logs -l app=demo-app --tail=50
+
+  ci-ok:
+    needs: [lint, unit, integration, e2e]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          echo "results: $RESULTS"
+          for r in $RESULTS; do [[ $r == success || $r == skipped ]] || exit 1; done
+          [[ $RESULTS == *success* ]]
