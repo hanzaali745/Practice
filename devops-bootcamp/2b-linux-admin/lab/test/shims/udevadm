@@ -1,0 +1,18 @@
+#!/bin/sh
+# TEST SHIM: containers have no udev, so partition device nodes (/dev/loop0p1) never appear.
+# "udevadm settle" here creates them from /sys, like udev would on a real machine.
+for part in /sys/block/loop*/loop*p*; do
+    [ -e "$part/dev" ] || continue
+    node=/dev/$(basename "$part")
+    [ -b "$node" ] && continue
+    devnum=$(cat "$part/dev")
+    mknod "$node" b "${devnum%%:*}" "${devnum##*:}"
+done
+# ...and the /dev/disk/by-uuid links that systemd's fstab mount units wait for
+mkdir -p /dev/disk/by-uuid
+for dev in /dev/loop*; do
+    [ -b "$dev" ] || continue
+    uuid=$(blkid -s UUID -o value "$dev" 2> /dev/null) || continue
+    [ -n "$uuid" ] && ln -sfn "../../${dev#/dev/}" "/dev/disk/by-uuid/$uuid"
+done
+exit 0

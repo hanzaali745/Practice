@@ -1,0 +1,3 @@
+#!/bin/sh
+# hello-lab — installed by the hello-lab package (Linux admin module 04)
+echo "Hello from hello-lab on $(hostname)!"

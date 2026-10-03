@@ -1,0 +1,4 @@
+#!/bin/sh
+# TEST SHIM: the test container is offline; packages were pre-downloaded into the image, so "update" is a no-op.
+[ "${1:-}" = update ] && { echo "(test shim) apt-get update skipped: offline test container"; exit 0; }
+exec /usr/bin/apt-get "$@"
