@@ -1,0 +1,23 @@
+# .pre-commit-config.yaml — hooks the whole team shares (https://pre-commit.com):
+#   pip install pre-commit && pre-commit install        → runs on every git commit
+#   pre-commit run --all-files                          → run on everything (do this in CI too)
+#   pre-commit autoupdate                               → bump the pinned versions
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-merge-conflict          # stray <<<<<<< markers
+      - id: check-added-large-files
+        args: ["--maxkb=1024"]
+      - id: detect-private-key
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks                      # secrets: cloud keys, tokens, passwords
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck

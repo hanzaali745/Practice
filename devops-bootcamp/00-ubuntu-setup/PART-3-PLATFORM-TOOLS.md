@@ -47,7 +47,7 @@ docker pull catthehacker/ubuntu:act-24.04
 ```bash
 source ~/venvs/devops/bin/activate
 cd ~/Practice/devops-bootcamp
-pip install -r requirements-platform.txt     # zizmor, prometheus-client, boto3, moto
+pip install -r requirements-platform.txt     # zizmor, prometheus-client, boto3, moto, git-filter-repo, pre-commit
 ```
 
 ## Step 4 — AWS CLI v2 (official installer)
