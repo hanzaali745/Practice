@@ -1,0 +1,1 @@
+🟠 web-1: /var/log/demo-app is 80% full — but a colleague says "I already deleted the big file, du shows almost nothing!"
