@@ -1,7 +1,7 @@
 # 📅 Daily Plan — learn and practise every day
 
 > **One page, one day at a time.** About **60–90 minutes a day**. Follow the days in order.
-> Every 7th day is a 🔄 **review day**. Total: **96 days** (about 14 weeks).
+> Every 7th day is a 🔄 **review day**. Total: **180 days** (about 26 weeks).
 >
 > Run this to see **today's** task and track your progress:
 > ```bash
@@ -30,6 +30,10 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 | 2–44 | Phase 1 · Python |
 | 45–70 | Phase 2 · Shell scripting |
 | 71–96 | Phase 3 · Bash |
+| 97–115 | Phase 4 · Docker |
+| 116–137 | Phase 5 · Kubernetes |
+| 138–159 | Phase 6 · Terraform |
+| 160–180 | Phase 7 · Ansible |
 
 ---
 ## Day 1 — Step 0 · Set up your Ubuntu lab
@@ -956,7 +960,7 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 - [ ] 🧪 **Practice:** Build it and install the timer
 - [ ] 💾 **Save:** `git commit -m "Day 95: Bash 08 Capstone: Python + Bash"`
 
-## Day 96 — Bash 08 · 🎓 Graduation day
+## Day 96 — Bash 08 · 🎓 Graduation day (Phases 1–3)
 
 **🎯 Goal:** Confirm you're at expert level in all three.  
 **📂 Module:** [3-bash/08-capstone](3-bash/08-capstone/README.md)
@@ -964,8 +968,824 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 - [ ] 🔁 **Warm-up (10 min):** Explain to an imaginary interviewer: when do you use sh, Bash or Python?
 - [ ] 📖 **Learn:** All three expert checklists (Python, Shell, Bash)
 - [ ] 🧪 **Practice:** Any unticked box → redo that lab today. Then update your GitHub profile README to show off your capstones.
-- [ ] 💾 **Save:** `git commit -m "Day 96: Bash 08 🎓 Graduation day"`
+- [ ] 💾 **Save:** `git commit -m "Day 96: Bash 08 🎓 Graduation day (Phases 1–3)"`
+
+## Day 97 — Setup part 2 · Install the DevOps tools
+
+**🎯 Goal:** Docker, kubectl, kind, Helm, Terraform and Ansible installed and checked.  
+**📂 Module:** [00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md](00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain to yourself in 3 sentences: what problem do containers solve?
+- [ ] 📖 **Learn:** Part 2 of the setup guide, step by step
+- [ ] 🧪 **Practice:** Run `sh 00-ubuntu-setup/check_devops_tools.sh` until everything is ✅; `docker run hello-world` works without sudo.
+- [ ] 💾 **Save:** `git commit -m "Day 97: Setup part 2 Install the DevOps tools"`
+
+## Day 98 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 99 — Docker 01 · Containers (1/2)
+
+**🎯 Goal:** Run, list, stop and remove containers.  
+**📂 Module:** [4-docker/01-containers-and-setup](4-docker/01-containers-and-setup/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Bash from memory: a `for` loop that pings 3 hosts with `ping -c1 -W1` and prints UP/DOWN.
+- [ ] 📖 **Learn:** Lessons 1.1–1.5
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 99: Docker 01 Containers (1/2)"`
+
+## Day 100 — Docker 01 · Containers (2/2)
+
+**🎯 Goal:** Debug containers with logs, exec, inspect and stats.  
+**📂 Module:** [4-docker/01-containers-and-setup](4-docker/01-containers-and-setup/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** From memory: run nginx detached on port 8080 with a name, curl it, remove it.
+- [ ] 📖 **Learn:** Lessons 1.6–1.8
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 100: Docker 01 Containers (2/2)"`
+
+## Day 101 — Docker 02 · Images & registries
+
+**🎯 Goal:** Understand layers, tags and digests; run a registry.  
+**📂 Module:** [4-docker/02-images-and-registries](4-docker/02-images-and-registries/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `docker exec` into a running container and find its OS version and PID 1.
+- [ ] 📖 **Learn:** Lessons 2.1–2.5
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 101: Docker 02 Images & registries"`
+
+## Day 102 — Docker 02 · Registries & cleanup
+
+**🎯 Goal:** Script registry reports, move images offline, reclaim disk.  
+**📂 Module:** [4-docker/02-images-and-registries](4-docker/02-images-and-registries/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain tag vs digest. Which one would you deploy to production, and why?
+- [ ] 📖 **Learn:** Lessons 2.6–2.7
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 102: Docker 02 Registries & cleanup"`
+
+## Day 103 — Docker 03 · Dockerfile (1/2)
+
+**🎯 Goal:** Write Dockerfiles and containerise demo-app.  
+**📂 Module:** [4-docker/03-dockerfile](4-docker/03-dockerfile/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** List 5 `docker image` / `docker system` commands from memory and what they do.
+- [ ] 📖 **Learn:** Lessons 3.1–3.4
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 103: Docker 03 Dockerfile (1/2)"`
+
+## Day 104 — Docker 03 · Dockerfile (2/2)
+
+**🎯 Goal:** Master the build cache, .dockerignore, CMD vs ENTRYPOINT, ARG.  
+**📂 Module:** [4-docker/03-dockerfile](4-docker/03-dockerfile/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the demo-app Dockerfile from a blank file. Build and run it.
+- [ ] 📖 **Learn:** Lessons 3.5–3.8
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 104: Docker 03 Dockerfile (2/2)"`
+
+## Day 105 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 106 — Docker 04 · Volumes
+
+**🎯 Goal:** Keep data with volumes and bind mounts; back them up.  
+**📂 Module:** [4-docker/04-volumes-and-networking](4-docker/04-volumes-and-networking/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why does exec-form `CMD ["python3", "app.py"]` stop faster than shell form?
+- [ ] 📖 **Learn:** Lessons 4.1–4.4
+- [ ] 🧪 **Practice:** Labs 1–3
+- [ ] 💾 **Save:** `git commit -m "Day 106: Docker 04 Volumes"`
+
+## Day 107 — Docker 04 · Networking
+
+**🎯 Goal:** Connect containers on user networks and publish ports safely.  
+**📂 Module:** [4-docker/04-volumes-and-networking](4-docker/04-volumes-and-networking/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Back up a named volume to a `.tar.gz` with a throwaway container — from memory.
+- [ ] 📖 **Learn:** Lessons 4.5–4.7
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 107: Docker 04 Networking"`
+
+## Day 108 — Docker 05 · Compose (1/2)
+
+**🎯 Goal:** Define multi-container apps with healthchecks and config.  
+**📂 Module:** [4-docker/05-docker-compose](4-docker/05-docker-compose/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Create a network, start redis on it, and `redis-cli ping` it from a second container.
+- [ ] 📖 **Learn:** Lessons 5.1–5.4
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 108: Docker 05 Compose (1/2)"`
+
+## Day 109 — Docker 05 · Compose (2/2)
+
+**🎯 Goal:** Scale, load-balance and split dev/prod with override files.  
+**📂 Module:** [4-docker/05-docker-compose](4-docker/05-docker-compose/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a compose service with a healthcheck and `depends_on: condition: service_healthy`.
+- [ ] 📖 **Learn:** Lessons 5.5–5.7
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 109: Docker 05 Compose (2/2)"`
+
+## Day 110 — Docker 06 · Production images (1/2)
+
+**🎯 Goal:** Small, multi-stage, non-root images with healthchecks.  
+**📂 Module:** [4-docker/06-production-images](4-docker/06-production-images/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `docker compose config` — explain what override files changed.
+- [ ] 📖 **Learn:** Lessons 6.1–6.5
+- [ ] 🧪 **Practice:** Labs 1–3
+- [ ] 💾 **Save:** `git commit -m "Day 110: Docker 06 Production images (1/2)"`
+
+## Day 111 — Docker 06 · Production images (2/2)
+
+**🎯 Goal:** PID 1, labels, vulnerability scans and CI builds.  
+**📂 Module:** [4-docker/06-production-images](4-docker/06-production-images/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a multi-stage Dockerfile for a Go hello-world from memory.
+- [ ] 📖 **Learn:** Lessons 6.6–6.9
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 111: Docker 06 Production images (2/2)"`
+
+## Day 112 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 113 — Docker 07 · Capstone: shipit (1/2)
+
+**🎯 Goal:** Study and run a build → push → deploy tool.  
+**📂 Module:** [4-docker/07-capstone](4-docker/07-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** List 6 hardening flags for `docker run` (`--read-only`, `--cap-drop`...).
+- [ ] 📖 **Learn:** Project 1 — read `solutions/shipit/`, run `demo.sh`
+- [ ] 🧪 **Practice:** Release two versions, then trigger an automatic rollback with the broken image
+- [ ] 💾 **Save:** `git commit -m "Day 113: Docker 07 Capstone: shipit (1/2)"`
+
+## Day 114 — Docker 07 · Capstone: shipit (2/2)
+
+**🎯 Goal:** Make it yours.  
+**📂 Module:** [4-docker/07-capstone](4-docker/07-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain how `shipit` decides to roll back.
+- [ ] 📖 **Learn:** Project 1 stretch goals
+- [ ] 🧪 **Practice:** Add one feature (e.g. `shipit logs` or image signing) with a test
+- [ ] 💾 **Save:** `git commit -m "Day 114: Docker 07 Capstone: shipit (2/2)"`
+
+## Day 115 — Docker 07 · Capstone: your own stack
+
+**🎯 Goal:** Containerise something real.  
+**📂 Module:** [4-docker/07-capstone](4-docker/07-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain the difference between an image, a container and a volume to a beginner.
+- [ ] 📖 **Learn:** Project 2 or 3 spec
+- [ ] 🧪 **Practice:** Build it, then tick the Docker expert checklist
+- [ ] 💾 **Save:** `git commit -m "Day 115: Docker 07 Capstone: your own stack"`
+
+## Day 116 — Kubernetes 01 · Concepts & cluster
+
+**🎯 Goal:** Create a kind cluster and find your way with kubectl.  
+**📂 Module:** [5-kubernetes/01-concepts-and-cluster](5-kubernetes/01-concepts-and-cluster/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Docker from memory: build, tag and run demo-app, then `curl /health`.
+- [ ] 📖 **Learn:** Lessons 1.1–1.7
+- [ ] 🧪 **Practice:** Labs 1–4
+- [ ] 💾 **Save:** `git commit -m "Day 116: Kubernetes 01 Concepts & cluster"`
+
+## Day 117 — Kubernetes 02 · Pods (1/2)
+
+**🎯 Goal:** Write pod manifests and debug them.  
+**📂 Module:** [5-kubernetes/02-pods-and-kubectl](5-kubernetes/02-pods-and-kubectl/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name the control-plane components and what each one does.
+- [ ] 📖 **Learn:** Lessons 2.1–2.4
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 117: Kubernetes 02 Pods (1/2)"`
+
+## Day 118 — Kubernetes 02 · Pods (2/2)
+
+**🎯 Goal:** Labels, selectors, sidecars and init containers.  
+**📂 Module:** [5-kubernetes/02-pods-and-kubectl](5-kubernetes/02-pods-and-kubectl/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Debug drill: `describe`, `logs --previous`, `get events` — when do you use each?
+- [ ] 📖 **Learn:** Lessons 2.5–2.7
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 118: Kubernetes 02 Pods (2/2)"`
+
+## Day 119 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 120 — Kubernetes 03 · Deployments (1/2)
+
+**🎯 Goal:** Deploy, scale and roll out new versions.  
+**📂 Module:** [5-kubernetes/03-deployments-and-rollouts](5-kubernetes/03-deployments-and-rollouts/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Generate a pod YAML with `kubectl run --dry-run=client -o yaml`.
+- [ ] 📖 **Learn:** Lessons 3.1–3.4
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 120: Kubernetes 03 Deployments (1/2)"`
+
+## Day 121 — Kubernetes 03 · Deployments (2/2)
+
+**🎯 Goal:** History, rollback and safe broken rollouts.  
+**📂 Module:** [5-kubernetes/03-deployments-and-rollouts](5-kubernetes/03-deployments-and-rollouts/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain `maxSurge` and `maxUnavailable` with numbers.
+- [ ] 📖 **Learn:** Lessons 3.5–3.7
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 121: Kubernetes 03 Deployments (2/2)"`
+
+## Day 122 — Kubernetes 04 · Services
+
+**🎯 Goal:** Stable networking and service DNS.  
+**📂 Module:** [5-kubernetes/04-services-and-ingress](5-kubernetes/04-services-and-ingress/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `kubectl rollout undo` to a specific revision — from memory.
+- [ ] 📖 **Learn:** Lessons 4.1–4.3
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 122: Kubernetes 04 Services"`
+
+## Day 123 — Kubernetes 04 · Ingress
+
+**🎯 Goal:** One entry point for many apps; Gateway API preview.  
+**📂 Module:** [5-kubernetes/04-services-and-ingress](5-kubernetes/04-services-and-ingress/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the full DNS name of a Service `web` in namespace `shop`.
+- [ ] 📖 **Learn:** Lessons 4.4–4.5
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 123: Kubernetes 04 Ingress"`
+
+## Day 124 — Kubernetes 05 · ConfigMaps & Secrets
+
+**🎯 Goal:** Configure apps without rebuilding images.  
+**📂 Module:** [5-kubernetes/05-configmaps-and-secrets](5-kubernetes/05-configmaps-and-secrets/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write an Ingress for host `demo.localtest.me` → service `demo-app:80` from memory.
+- [ ] 📖 **Learn:** Lessons 5.1–5.5
+- [ ] 🧪 **Practice:** Labs 1–4
+- [ ] 💾 **Save:** `git commit -m "Day 124: Kubernetes 05 ConfigMaps & Secrets"`
+
+## Day 125 — Kubernetes 06 · Storage
+
+**🎯 Goal:** PVCs and StatefulSets for data that must survive.  
+**📂 Module:** [5-kubernetes/06-storage-and-statefulsets](5-kubernetes/06-storage-and-statefulsets/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why is a Secret not encrypted? Name 2 real-world fixes.
+- [ ] 📖 **Learn:** Lessons 6.1–6.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 125: Kubernetes 06 Storage"`
+
+## Day 126 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 127 — Kubernetes 06 · Stateful apps & backups
+
+**🎯 Goal:** demo-app + Redis, and backup Jobs.  
+**📂 Module:** [5-kubernetes/06-storage-and-statefulsets](5-kubernetes/06-storage-and-statefulsets/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Deployment vs StatefulSet: give 3 differences.
+- [ ] 📖 **Learn:** Lessons 6.4–6.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 127: Kubernetes 06 Stateful apps & backups"`
+
+## Day 128 — Kubernetes 07 · Probes & resources
+
+**🎯 Goal:** Make pods production-ready.  
+**📂 Module:** [5-kubernetes/07-probes-resources-autoscaling](5-kubernetes/07-probes-resources-autoscaling/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a CronJob schedule for 02:30 every day.
+- [ ] 📖 **Learn:** Lessons 7.1–7.2
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 128: Kubernetes 07 Probes & resources"`
+
+## Day 129 — Kubernetes 07 · Autoscaling & disruption
+
+**🎯 Goal:** HPA, PDBs and spreading.  
+**📂 Module:** [5-kubernetes/07-probes-resources-autoscaling](5-kubernetes/07-probes-resources-autoscaling/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Liveness vs readiness vs startup probe — what happens when each one fails?
+- [ ] 📖 **Learn:** Lessons 7.3–7.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 129: Kubernetes 07 Autoscaling & disruption"`
+
+## Day 130 — Kubernetes 08 · Kustomize & Helm (1/2)
+
+**🎯 Goal:** Overlays and installing charts.  
+**📂 Module:** [5-kubernetes/08-helm-and-kustomize](5-kubernetes/08-helm-and-kustomize/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What does a pod need for the HPA to work? (2 things)
+- [ ] 📖 **Learn:** Lessons 8.1–8.2
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 130: Kubernetes 08 Kustomize & Helm (1/2)"`
+
+## Day 131 — Kubernetes 08 · Kustomize & Helm (2/2)
+
+**🎯 Goal:** Write your own chart and upgrade atomically.  
+**📂 Module:** [5-kubernetes/08-helm-and-kustomize](5-kubernetes/08-helm-and-kustomize/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a Kustomize overlay that changes replicas and the image tag.
+- [ ] 📖 **Learn:** Lessons 8.3–8.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 131: Kubernetes 08 Kustomize & Helm (2/2)"`
+
+## Day 132 — Kubernetes 09 · Troubleshooting & RBAC
+
+**🎯 Goal:** Fix broken apps fast; least-privilege access.  
+**📂 Module:** [5-kubernetes/09-troubleshooting-and-security](5-kubernetes/09-troubleshooting-and-security/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `helm upgrade --install --atomic` — what does each flag protect you from?
+- [ ] 📖 **Learn:** Lessons 9.1–9.2
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 132: Kubernetes 09 Troubleshooting & RBAC"`
+
+## Day 133 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 134 — Kubernetes 09 · Pod security & network policies
+
+**🎯 Goal:** Restricted pods, quotas, default-deny networking.  
+**📂 Module:** [5-kubernetes/09-troubleshooting-and-security](5-kubernetes/09-troubleshooting-and-security/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `kubectl auth can-i` — check 3 permissions of a ServiceAccount.
+- [ ] 📖 **Learn:** Lessons 9.3–9.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 134: Kubernetes 09 Pod security & network policies"`
+
+## Day 135 — Kubernetes 10 · Capstone: study the platform
+
+**🎯 Goal:** Understand a complete, hardened platform.  
+**📂 Module:** [5-kubernetes/10-capstone](5-kubernetes/10-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a default-deny NetworkPolicy from memory.
+- [ ] 📖 **Learn:** Project 1 — read `solutions/platform/`, run `validate.sh`
+- [ ] 🧪 **Practice:** Deploy it to kind and `curl` it through the Ingress
+- [ ] 💾 **Save:** `git commit -m "Day 135: Kubernetes 10 Capstone: study the platform"`
+
+## Day 136 — Kubernetes 10 · Capstone: break & fix
+
+**🎯 Goal:** Prove it's resilient.  
+**📂 Module:** [5-kubernetes/10-capstone](5-kubernetes/10-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Draw the platform: Ingress → Service → Pods → Redis, with every policy.
+- [ ] 📖 **Learn:** Project 4 (chaos day) spec
+- [ ] 🧪 **Practice:** Kill pods and drain a node while a load loop runs; write down what happened
+- [ ] 💾 **Save:** `git commit -m "Day 136: Kubernetes 10 Capstone: break & fix"`
+
+## Day 137 — Kubernetes 10 · Capstone: make it yours
+
+**🎯 Goal:** Extend it.  
+**📂 Module:** [5-kubernetes/10-capstone](5-kubernetes/10-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Walk through your 5-step troubleshooting method out loud.
+- [ ] 📖 **Learn:** Project 2 or 3 spec
+- [ ] 🧪 **Practice:** Build it, then tick the Kubernetes expert checklist
+- [ ] 💾 **Save:** `git commit -m "Day 137: Kubernetes 10 Capstone: make it yours"`
+
+## Day 138 — Terraform 01 · First config
+
+**🎯 Goal:** init, plan, apply, destroy — and HCL basics.  
+**📂 Module:** [6-terraform/01-iac-and-first-config](6-terraform/01-iac-and-first-config/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** kubectl from memory: create a deployment, scale it to 3, expose it.
+- [ ] 📖 **Learn:** Lessons 1.1–1.6
+- [ ] 🧪 **Practice:** Labs 1–4
+- [ ] 💾 **Save:** `git commit -m "Day 138: Terraform 01 First config"`
+
+## Day 139 — Terraform 02 · Resources (1/2)
+
+**🎯 Goal:** References, the graph, depends_on, data sources.  
+**📂 Module:** [6-terraform/02-resources-and-dependencies](6-terraform/02-resources-and-dependencies/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain what `terraform plan` compares (3 things).
+- [ ] 📖 **Learn:** Lessons 2.1–2.4
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 139: Terraform 02 Resources (1/2)"`
+
+## Day 140 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 141 — Terraform 02 · Resources (2/2)
+
+**🎯 Goal:** terraform_data, lifecycle, replace — and why to avoid provisioners.  
+**📂 Module:** [6-terraform/02-resources-and-dependencies](6-terraform/02-resources-and-dependencies/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Resource vs data source — one sentence each.
+- [ ] 📖 **Learn:** Lessons 2.5–2.8
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 141: Terraform 02 Resources (2/2)"`
+
+## Day 142 — Terraform 03 · Variables (1/2)
+
+**🎯 Goal:** Typed, validated, sensitive inputs.  
+**📂 Module:** [6-terraform/03-variables-outputs-locals](6-terraform/03-variables-outputs-locals/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a `lifecycle` block with `prevent_destroy` and `ignore_changes` from memory.
+- [ ] 📖 **Learn:** Lessons 3.1–3.4
+- [ ] 🧪 **Practice:** Labs 1–3
+- [ ] 💾 **Save:** `git commit -m "Day 142: Terraform 03 Variables (1/2)"`
+
+## Day 143 — Terraform 03 · Locals & outputs
+
+**🎯 Goal:** Locals, outputs and the console.  
+**📂 Module:** [6-terraform/03-variables-outputs-locals](6-terraform/03-variables-outputs-locals/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a variable with type, default and a validation block from memory.
+- [ ] 📖 **Learn:** Lessons 3.5–3.8
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 143: Terraform 03 Locals & outputs"`
+
+## Day 144 — Terraform 04 · State (1/2)
+
+**🎯 Goal:** What state is; moved and import blocks.  
+**📂 Module:** [6-terraform/04-state](6-terraform/04-state/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** List the variable precedence order, lowest to highest.
+- [ ] 📖 **Learn:** Lessons 4.1–4.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 144: Terraform 04 State (1/2)"`
+
+## Day 145 — Terraform 04 · State (2/2)
+
+**🎯 Goal:** removed blocks, drift, remote state and workspaces.  
+**📂 Module:** [6-terraform/04-state](6-terraform/04-state/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a `moved` block that renames `random_pet.a` to `random_pet.name`.
+- [ ] 📖 **Learn:** Lessons 4.4–4.7
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 145: Terraform 04 State (2/2)"`
+
+## Day 146 — Terraform 05 · Loops (1/2)
+
+**🎯 Goal:** count vs for_each and for expressions.  
+**📂 Module:** [6-terraform/05-expressions-and-loops](6-terraform/05-expressions-and-loops/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why must state never be committed to Git? Give 2 reasons.
+- [ ] 📖 **Learn:** Lessons 5.1–5.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 146: Terraform 05 Loops (1/2)"`
+
+## Day 147 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 148 — Terraform 05 · Loops (2/2)
+
+**🎯 Goal:** Conditionals, templatefile, dynamic blocks, functions.  
+**📂 Module:** [6-terraform/05-expressions-and-loops](6-terraform/05-expressions-and-loops/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain the count trap with a 3-item list where you delete the middle one.
+- [ ] 📖 **Learn:** Lessons 5.4–5.7
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 148: Terraform 05 Loops (2/2)"`
+
+## Day 149 — Terraform 06 · Modules (1/2)
+
+**🎯 Goal:** Write and call modules with good interfaces.  
+**📂 Module:** [6-terraform/06-modules](6-terraform/06-modules/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a `for` expression that turns a map into a list of `"name=value"` strings.
+- [ ] 📖 **Learn:** Lessons 6.1–6.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 149: Terraform 06 Modules (1/2)"`
+
+## Day 150 — Terraform 06 · Modules (2/2)
+
+**🎯 Goal:** Registry and Git sources, environments, refactoring into modules.  
+**📂 Module:** [6-terraform/06-modules](6-terraform/06-modules/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What belongs in a module's variables.tf, outputs.tf and versions.tf?
+- [ ] 📖 **Learn:** Lessons 6.4–6.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 150: Terraform 06 Modules (2/2)"`
+
+## Day 151 — Terraform 07 · Terraform + Kubernetes
+
+**🎯 Goal:** Manage your kind cluster as code.  
+**📂 Module:** [6-terraform/07-kubernetes-with-terraform](6-terraform/07-kubernetes-with-terraform/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Pin a module from Git to a tag — write the `source` line.
+- [ ] 📖 **Learn:** Lessons 7.1–7.5
+- [ ] 🧪 **Practice:** Labs 1–4
+- [ ] 💾 **Save:** `git commit -m "Day 151: Terraform 07 Terraform + Kubernetes"`
+
+## Day 152 — Terraform 08 · AWS (optional) (1/2)
+
+**🎯 Goal:** A safe account, credentials and data sources.  
+**📂 Module:** [6-terraform/08-aws-with-terraform](6-terraform/08-aws-with-terraform/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Who should own a Deployment: Terraform, Helm or GitOps? Argue one side.
+- [ ] 📖 **Learn:** Lessons 8.1–8.3
+- [ ] 🧪 **Practice:** Lab 1 (no AWS account? read the lessons and do Lab 1 as a checklist)
+- [ ] 💾 **Save:** `git commit -m "Day 152: Terraform 08 AWS (optional) (1/2)"`
+
+## Day 153 — Terraform 08 · AWS (optional) (2/2)
+
+**🎯 Goal:** A web server and a state bucket — then destroy.  
+**📂 Module:** [6-terraform/08-aws-with-terraform](6-terraform/08-aws-with-terraform/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name 3 AWS cost traps and how to avoid them.
+- [ ] 📖 **Learn:** Lessons 8.4–8.6
+- [ ] 🧪 **Practice:** Labs 2–4 (or `terraform validate` only, without an account)
+- [ ] 💾 **Save:** `git commit -m "Day 153: Terraform 08 AWS (optional) (2/2)"`
+
+## Day 154 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 155 — Terraform 09 · Testing
+
+**🎯 Goal:** Fast checks, terraform test and mocks.  
+**📂 Module:** [6-terraform/09-workflow-testing-ci](6-terraform/09-workflow-testing-ci/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the fast-check sequence: fmt, validate, tflint — with flags.
+- [ ] 📖 **Learn:** Lessons 9.1–9.3
+- [ ] 🧪 **Practice:** Labs 1–3
+- [ ] 💾 **Save:** `git commit -m "Day 155: Terraform 09 Testing"`
+
+## Day 156 — Terraform 09 · CI & promotion
+
+**🎯 Goal:** PR pipelines, plan files and environments.  
+**📂 Module:** [6-terraform/09-workflow-testing-ci](6-terraform/09-workflow-testing-ci/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a `run` block with `command = plan` and one `assert` from memory.
+- [ ] 📖 **Learn:** Lessons 9.4–9.5
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 156: Terraform 09 CI & promotion"`
+
+## Day 157 — Terraform 10 · Capstone: study the platform
+
+**🎯 Goal:** A tested, multi-environment module.  
+**📂 Module:** [6-terraform/10-capstone](6-terraform/10-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain why every environment gets its own root module and state.
+- [ ] 📖 **Learn:** Project 1 — read `solutions/platform/`, run `check.sh`
+- [ ] 🧪 **Practice:** Apply `live/dev` to kind and `curl` it
+- [ ] 💾 **Save:** `git commit -m "Day 157: Terraform 10 Capstone: study the platform"`
+
+## Day 158 — Terraform 10 · Capstone: extend it
+
+**🎯 Goal:** Add a feature with a test.  
+**📂 Module:** [6-terraform/10-capstone](6-terraform/10-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Draw the PR pipeline from push to apply.
+- [ ] 📖 **Learn:** Project 1 stretch goals
+- [ ] 🧪 **Practice:** Add one feature and a `terraform test` run for it
+- [ ] 💾 **Save:** `git commit -m "Day 158: Terraform 10 Capstone: extend it"`
+
+## Day 159 — Terraform 10 · Capstone: your own project
+
+**🎯 Goal:** Infrastructure you'd actually use.  
+**📂 Module:** [6-terraform/10-capstone](6-terraform/10-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain `moved`, `import` and `removed` blocks to a teammate.
+- [ ] 📖 **Learn:** Project 2, 3 or 4 spec
+- [ ] 🧪 **Practice:** Build it, then tick the Terraform expert checklist
+- [ ] 💾 **Save:** `git commit -m "Day 159: Terraform 10 Capstone: your own project"`
+
+## Day 160 — Ansible 01 · Inventory & ad-hoc (1/2)
+
+**🎯 Goal:** Start the practice fleet and run your first commands.  
+**📂 Module:** [7-ansible/01-inventory-and-adhoc](7-ansible/01-inventory-and-adhoc/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Terraform from memory: init, fmt, validate, plan -out, apply the plan.
+- [ ] 📖 **Learn:** Lessons 1.1–1.4
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 160: Ansible 01 Inventory & ad-hoc (1/2)"`
+
+## Day 161 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 162 — Ansible 01 · Inventory & ad-hoc (2/2)
+
+**🎯 Goal:** Ad-hoc commands, become, facts and idempotence.  
+**📂 Module:** [7-ansible/01-inventory-and-adhoc](7-ansible/01-inventory-and-adhoc/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write the fleet's inventory (groups web, db, fleet) from memory.
+- [ ] 📖 **Learn:** Lessons 1.5–1.6
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 162: Ansible 01 Inventory & ad-hoc (2/2)"`
+
+## Day 163 — Ansible 02 · Playbooks (1/2)
+
+**🎯 Goal:** Plays, tasks and the core modules.  
+**📂 Module:** [7-ansible/02-playbooks](7-ansible/02-playbooks/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why does `command: apt-get install -y tree` always say `changed`?
+- [ ] 📖 **Learn:** Lessons 2.1–2.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 163: Ansible 02 Playbooks (1/2)"`
+
+## Day 164 — Ansible 02 · Playbooks (2/2)
+
+**🎯 Goal:** Dry runs, tags, limits and the idempotence test.  
+**📂 Module:** [7-ansible/02-playbooks](7-ansible/02-playbooks/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a task that installs nginx with `cache_valid_time` from memory.
+- [ ] 📖 **Learn:** Lessons 2.4–2.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 164: Ansible 02 Playbooks (2/2)"`
+
+## Day 165 — Ansible 03 · Variables & facts
+
+**🎯 Goal:** group_vars, host_vars, precedence and facts.  
+**📂 Module:** [7-ansible/03-variables-facts-loops](7-ansible/03-variables-facts-loops/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `--check --diff` — what does each flag do, and what is the check-mode gotcha?
+- [ ] 📖 **Learn:** Lessons 3.1–3.2
+- [ ] 🧪 **Practice:** Labs 1 and 3
+- [ ] 💾 **Save:** `git commit -m "Day 165: Ansible 03 Variables & facts"`
+
+## Day 166 — Ansible 03 · Conditions, loops & errors
+
+**🎯 Goal:** register, when, loop, block/rescue/always.  
+**📂 Module:** [7-ansible/03-variables-facts-loops](7-ansible/03-variables-facts-loops/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** List the variable precedence order (simplified) from memory.
+- [ ] 📖 **Learn:** Lessons 3.3–3.6
+- [ ] 🧪 **Practice:** Labs 2 and 4
+- [ ] 💾 **Save:** `git commit -m "Day 166: Ansible 03 Conditions, loops & errors"`
+
+## Day 167 — Ansible 04 · Templates
+
+**🎯 Goal:** Jinja2 templates and validating files.  
+**📂 Module:** [7-ansible/04-templates-and-handlers](7-ansible/04-templates-and-handlers/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a `block`/`rescue`/`always` skeleton from memory.
+- [ ] 📖 **Learn:** Lessons 4.1–4.2
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 167: Ansible 04 Templates"`
+
+## Day 168 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 169 — Ansible 04 · Handlers & services
+
+**🎯 Goal:** Handlers, systemd template units and nginx.  
+**📂 Module:** [7-ansible/04-templates-and-handlers](7-ansible/04-templates-and-handlers/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a Jinja2 `for` loop that renders `server 127.0.0.1:PORT;` lines.
+- [ ] 📖 **Learn:** Lessons 4.3–4.5
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 169: Ansible 04 Handlers & services"`
+
+## Day 170 — Ansible 05 · Roles (1/2)
+
+**🎯 Goal:** Role layout, defaults and using roles.  
+**📂 Module:** [7-ansible/05-roles-and-collections](7-ansible/05-roles-and-collections/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** When do handlers run, and how do you force them to run earlier?
+- [ ] 📖 **Learn:** Lessons 5.1–5.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 170: Ansible 05 Roles (1/2)"`
+
+## Day 171 — Ansible 05 · Roles (2/2)
+
+**🎯 Goal:** Argument specs and collections.  
+**📂 Module:** [7-ansible/05-roles-and-collections](7-ansible/05-roles-and-collections/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Draw a role's folder tree and say what each folder is for.
+- [ ] 📖 **Learn:** Lessons 5.4–5.5
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 171: Ansible 05 Roles (2/2)"`
+
+## Day 172 — Ansible 06 · Vault (1/2)
+
+**🎯 Goal:** Encrypt secrets and use the vars → vault pattern.  
+**📂 Module:** [7-ansible/06-vault-and-secrets](7-ansible/06-vault-and-secrets/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `import_role` vs `include_role` — when do you use each?
+- [ ] 📖 **Learn:** Lessons 6.1–6.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 172: Ansible 06 Vault (1/2)"`
+
+## Day 173 — Ansible 06 · Vault (2/2)
+
+**🎯 Goal:** no_log, vault IDs, rotation and secret managers.  
+**📂 Module:** [7-ansible/06-vault-and-secrets](7-ansible/06-vault-and-secrets/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Encrypt a string with `ansible-vault encrypt_string` from memory.
+- [ ] 📖 **Learn:** Lessons 6.4–6.6
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 173: Ansible 06 Vault (2/2)"`
+
+## Day 174 — Ansible 07 · Linting
+
+**🎯 Goal:** yamllint, ansible-lint and the test pyramid.  
+**📂 Module:** [7-ansible/07-testing-and-quality](7-ansible/07-testing-and-quality/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name 3 ways a secret can leak from an Ansible run, and the fix for each.
+- [ ] 📖 **Learn:** Lessons 7.1–7.2
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 174: Ansible 07 Linting"`
+
+## Day 175 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 176 — Ansible 07 · Molecule & CI
+
+**🎯 Goal:** Role tests in containers and the quality gate.  
+**📂 Module:** [7-ansible/07-testing-and-quality](7-ansible/07-testing-and-quality/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Fix from memory: `mode: 0644`, `copy:` without FQCN, `command` without `changed_when`.
+- [ ] 📖 **Learn:** Lessons 7.3–7.4
+- [ ] 🧪 **Practice:** Labs 2–4
+- [ ] 💾 **Save:** `git commit -m "Day 176: Ansible 07 Molecule & CI"`
+
+## Day 177 — Ansible 08 · Capstone: study the platform
+
+**🎯 Goal:** A multi-tier platform with vault and tests.  
+**📂 Module:** [7-ansible/08-capstone](7-ansible/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a Molecule `verify.yml` task that checks an HTTP response.
+- [ ] 📖 **Learn:** Project 1 — read `solutions/platform/`, run `./check.sh --e2e`
+- [ ] 🧪 **Practice:** Reset the fleet and build everything with one command; prove `changed=0`
+- [ ] 💾 **Save:** `git commit -m "Day 177: Ansible 08 Capstone: study the platform"`
+
+## Day 178 — Ansible 08 · Capstone: releases & rollback
+
+**🎯 Goal:** Ship safely, one server at a time.  
+**📂 Module:** [7-ansible/08-capstone](7-ansible/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `serial` + `max_fail_percentage` — what do they do together?
+- [ ] 📖 **Learn:** Project 1 — the release process
+- [ ] 🧪 **Practice:** Run a good release and a bad one; explain exactly what happened on web1 and web2
+- [ ] 💾 **Save:** `git commit -m "Day 178: Ansible 08 Capstone: releases & rollback"`
+
+## Day 179 — Ansible 08 · Capstone: Terraform → Ansible
+
+**🎯 Goal:** Provision with Terraform, configure with Ansible.  
+**📂 Module:** [7-ansible/08-capstone](7-ansible/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain the difference between what Terraform and Ansible are best at.
+- [ ] 📖 **Learn:** Project 2 spec
+- [ ] 🧪 **Practice:** Generate an inventory with Terraform's `templatefile` and run your playbook against it
+- [ ] 💾 **Save:** `git commit -m "Day 179: Ansible 08 Capstone: Terraform → Ansible"`
+
+## Day 180 — Ansible 08 · 🎓 Final graduation
+
+**🎯 Goal:** Confirm you're a DevOps engineer, end to end.  
+**📂 Module:** [7-ansible/08-capstone](7-ansible/08-capstone/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain to an imaginary interviewer how demo-app goes from code to production with Docker, Kubernetes, Terraform and Ansible.
+- [ ] 📖 **Learn:** All seven expert checklists (Python, Shell, Bash, Docker, Kubernetes, Terraform, Ansible)
+- [ ] 🧪 **Practice:** Any unticked box → redo that lab today. Then add your four capstones to your GitHub profile README.
+- [ ] 💾 **Save:** `git commit -m "Day 180: Ansible 08 🎓 Final graduation"`
 
 ---
 
-🎉 **You finished the bootcamp.** Keep going: Docker → Kubernetes → Terraform → Ansible → AWS certifications.
+🎉 **You finished the bootcamp.** Keep going: a cloud certification (AWS Solutions Architect Associate or CKA), GitOps with Argo CD, and monitoring with Prometheus + Grafana.

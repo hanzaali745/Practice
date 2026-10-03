@@ -81,19 +81,18 @@ This is exactly how many real internal tools are shipped.
 
 ---
 
-## 🎓 Congratulations — you've completed the bootcamp!
+## 🎓 Congratulations — you've completed the scripting half of the bootcamp!
 
 You can now:
 - ✅ Write Python automation: files, processes, APIs, cloud, tests, CI
 - ✅ Write production-grade Bash: strict mode, traps, getopts, ShellCheck, Bats
 - ✅ Choose the right tool for each job
 
-**What I'd have you learn next on my team:**
-1. **Git** deeply (branching, rebasing, PR workflow) — you've started in this repo!
-2. **Docker** → **Kubernetes**
-3. **CI/CD**: GitHub Actions / GitLab CI / Jenkins
-4. **Infrastructure as Code**: Terraform, then **Ansible** (Python + YAML — you're ready)
-5. **Cloud**: AWS (EC2, S3, IAM, VPC) — aim for AWS Cloud Practitioner → Solutions Architect Associate
-6. **Observability**: Prometheus, Grafana, ELK/Loki
+**Next on my team: the platform tools.** Install them first with
+[Setup part 2](../../00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md) (Day 97), then:
+1. [Phase 4 — Docker](../../4-docker/README.md)
+2. [Phase 5 — Kubernetes](../../5-kubernetes/README.md)
+3. [Phase 6 — Terraform](../../6-terraform/README.md)
+4. [Phase 7 — Ansible](../../7-ansible/README.md)
 
-👉 Back to the [bootcamp home](../../README.md)
+👉 Next phase: [Phase 4 — Docker](../../4-docker/README.md)
