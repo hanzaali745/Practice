@@ -1,7 +1,7 @@
 # 📅 Daily Plan — learn and practise every day
 
 > **One page, one day at a time.** About **60–90 minutes a day**. Follow the days in order.
-> Every 7th day is a 🔄 **review day**. Total: **260 days** (about 38 weeks).
+> Every 7th day is a 🔄 **review day**. Total: **296 days** (about 43 weeks).
 >
 > Run this to see **today's** task and track your progress:
 > ```bash
@@ -38,6 +38,7 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 | 202–222 | Phase 9 · Monitoring |
 | 223–239 | Phase 10 · ELK logging |
 | 240–260 | Phase 11 · AWS |
+| 261–296 | Phase 12 · Job-ready |
 
 ---
 ## Day 1 — Step 0 · Set up your Ubuntu lab
@@ -2556,16 +2557,366 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 - [ ] 💾 **Commit & push** your week's work
 - [ ] 😌 Rest — consistency beats intensity
 
-## Day 260 — AWS 08 · 🎓 Final graduation
+## Day 260 — AWS 08 · 🎓 Graduation day (Phases 8–11)
 
-**🎯 Goal:** Confirm you're a DevOps engineer, end to end.  
+**🎯 Goal:** Confirm you can build and run the whole platform.  
 **📂 Module:** [11-aws/08-capstone](11-aws/08-capstone/README.md)
 
 - [ ] 🔁 **Warm-up (10 min):** Explain to an imaginary interviewer how demo-app goes from a commit to monitored production on AWS.
-- [ ] 📖 **Learn:** All eleven expert checklists
-- [ ] 🧪 **Practice:** Any unticked box → redo that lab today. Then add your capstones to your GitHub profile README and pick a certification.
-- [ ] 💾 **Save:** `git commit -m "Day 260: AWS 08 🎓 Final graduation"`
+- [ ] 📖 **Learn:** The CI/CD, Monitoring, ELK and AWS expert checklists
+- [ ] 🧪 **Practice:** Any unticked box → redo that lab today. Then add the capstones to your GitHub profile README.
+- [ ] 💾 **Save:** `git commit -m "Day 260: AWS 08 🎓 Graduation day (Phases 8–11)"`
+
+## Day 261 — Job-ready 01 · A method & services
+
+**🎯 Goal:** Troubleshoot with a method; debug systemd services.  
+**📂 Module:** [12-job-ready/01-linux-troubleshooting](12-job-ready/01-linux-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** AWS from memory: why does a private subnet need a NAT gateway or endpoints?
+- [ ] 📖 **Learn:** Lessons 1.1–1.3 (and the lab introduction)
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 261: Job-ready 01 A method & services"`
+
+## Day 262 — Job-ready 01 · CPU, processes & memory
+
+**🎯 Goal:** Find what eats the CPU — and what keeps restarting it.  
+**📂 Module:** [12-job-ready/01-linux-troubleshooting](12-job-ready/01-linux-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Say the five steps of the troubleshooting method out loud.
+- [ ] 📖 **Learn:** Lessons 1.4–1.5
+- [ ] 🧪 **Practice:** Lab 6
+- [ ] 💾 **Save:** `git commit -m "Day 262: Job-ready 01 CPU, processes & memory"`
+
+## Day 263 — Job-ready 01 · Disks & permissions
+
+**🎯 Goal:** Space, inodes, deleted files, least-privilege permissions.  
+**📂 Module:** [12-job-ready/01-linux-troubleshooting](12-job-ready/01-linux-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What does `x` on a directory mean? Why is `chmod 777` wrong?
+- [ ] 📖 **Learn:** Lessons 1.6–1.7
+- [ ] 🧪 **Practice:** Labs 3–5
+- [ ] 💾 **Save:** `git commit -m "Day 263: Job-ready 01 Disks & permissions"`
+
+## Day 264 — Job-ready 01 · Your triage script
+
+**🎯 Goal:** One command that snapshots a sick server.  
+**📂 Module:** [12-job-ready/01-linux-troubleshooting](12-job-ready/01-linux-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** df says full, du says empty — explain it in two sentences.
+- [ ] 📖 **Learn:** Re-read Lesson 1.2
+- [ ] 🧪 **Practice:** Lab 7
+- [ ] 💾 **Save:** `git commit -m "Day 264: Job-ready 01 Your triage script"`
+
+## Day 265 — Job-ready 02 · Layer by layer
+
+**🎯 Goal:** Name, route, port: refused vs timeout.  
+**📂 Module:** [12-job-ready/02-networking-troubleshooting](12-job-ready/02-networking-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** List the first-60-seconds commands from memory.
+- [ ] 📖 **Learn:** Lessons 2.1 and 2.3
+- [ ] 🧪 **Practice:** Labs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 265: Job-ready 02 Layer by layer"`
+
+## Day 266 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 267 — Job-ready 02 · Name resolution
+
+**🎯 Goal:** DNS vs /etc/hosts, and what programs really use.  
+**📂 Module:** [12-job-ready/02-networking-troubleshooting](12-job-ready/02-networking-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Refused vs timeout: what does each tell you?
+- [ ] 📖 **Learn:** Lessons 2.2 and 2.4
+- [ ] 🧪 **Practice:** Labs 3–4
+- [ ] 💾 **Save:** `git commit -m "Day 267: Job-ready 02 Name resolution"`
+
+## Day 268 — Job-ready 02 · TLS & firewalls
+
+**🎯 Goal:** Certificates with the right SAN; the one rule that blocks.  
+**📂 Module:** [12-job-ready/02-networking-troubleshooting](12-job-ready/02-networking-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why can `dig` and `getent` disagree?
+- [ ] 📖 **Learn:** Lessons 2.5–2.6
+- [ ] 🧪 **Practice:** Labs 5–6
+- [ ] 💾 **Save:** `git commit -m "Day 268: Job-ready 02 TLS & firewalls"`
+
+## Day 269 — Job-ready 02 · Your layer checker
+
+**🎯 Goal:** A script that says which layer is broken.  
+**📂 Module:** [12-job-ready/02-networking-troubleshooting](12-job-ready/02-networking-troubleshooting/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What does a client check in a TLS certificate?
+- [ ] 📖 **Learn:** Re-read Lesson 2.1
+- [ ] 🧪 **Practice:** Lab 7
+- [ ] 💾 **Save:** `git commit -m "Day 269: Job-ready 02 Your layer checker"`
+
+## Day 270 — Job-ready 03 · Team workflows & conflicts
+
+**🎯 Goal:** Trunk-based work, merge vs rebase, calm conflicts.  
+**📂 Module:** [12-job-ready/03-git-for-teams](12-job-ready/03-git-for-teams/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Networking from memory: walk through `curl https://example.com` layer by layer.
+- [ ] 📖 **Learn:** Lessons 3.1–3.3
+- [ ] 🧪 **Practice:** Lab 1
+- [ ] 💾 **Save:** `git commit -m "Day 270: Job-ready 03 Team workflows & conflicts"`
+
+## Day 271 — Job-ready 03 · Clean history
+
+**🎯 Goal:** Squash, reword, and push safely.  
+**📂 Module:** [12-job-ready/03-git-for-teams](12-job-ready/03-git-for-teams/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a Conventional Commit message for a bug fix, with a body that says why.
+- [ ] 📖 **Learn:** Lesson 3.4
+- [ ] 🧪 **Practice:** Lab 4
+- [ ] 💾 **Save:** `git commit -m "Day 271: Job-ready 03 Clean history"`
+
+## Day 272 — Job-ready 03 · Undo anything
+
+**🎯 Goal:** Reflog rescues and bisect.  
+**📂 Module:** [12-job-ready/03-git-for-teams](12-job-ready/03-git-for-teams/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** `--force` vs `--force-with-lease`: what's the difference?
+- [ ] 📖 **Learn:** Lesson 3.5
+- [ ] 🧪 **Practice:** Labs 2–3
+- [ ] 💾 **Save:** `git commit -m "Day 272: Job-ready 03 Undo anything"`
+
+## Day 273 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 274 — Job-ready 03 · Releases & hotfixes
+
+**🎯 Goal:** Revert a merge, cherry-pick a fix, tag a release.  
+**📂 Module:** [12-job-ready/03-git-for-teams](12-job-ready/03-git-for-teams/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** How do you find the commit that introduced a bug?
+- [ ] 📖 **Learn:** Lesson 3.6
+- [ ] 🧪 **Practice:** Labs 5–6
+- [ ] 💾 **Save:** `git commit -m "Day 274: Job-ready 03 Releases & hotfixes"`
+
+## Day 275 — Job-ready 03 · Secrets & guard rails
+
+**🎯 Goal:** Purge a leaked key — rotation first — and prevent the next one.  
+**📂 Module:** [12-job-ready/03-git-for-teams](12-job-ready/03-git-for-teams/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Undo a pushed merge on main without rewriting history — the command?
+- [ ] 📖 **Learn:** Lesson 3.7
+- [ ] 🧪 **Practice:** Labs 7–8
+- [ ] 💾 **Save:** `git commit -m "Day 275: Job-ready 03 Secrets & guard rails"`
+
+## Day 276 — Job-ready 04 · Incident response
+
+**🎯 Goal:** The first five minutes, communication, pressure.  
+**📂 Module:** [12-job-ready/04-incident-practice](12-job-ready/04-incident-practice/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** The four steps after a leaked secret, in order.
+- [ ] 📖 **Learn:** Lessons 4.1–4.3
+- [ ] 🧪 **Practice:** Lab 1 — your first two random pages
+- [ ] 💾 **Save:** `git commit -m "Day 276: Job-ready 04 Incident response"`
+
+## Day 277 — Job-ready 04 · More pages
+
+**🎯 Goal:** Speed and calm through repetition.  
+**📂 Module:** [12-job-ready/04-incident-practice](12-job-ready/04-incident-practice/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write a status update for a SEV2 from memory.
+- [ ] 📖 **Learn:** Your notes from yesterday
+- [ ] 🧪 **Practice:** Lab 1 — pages 3 to 5
+- [ ] 💾 **Save:** `git commit -m "Day 277: Job-ready 04 More pages"`
+
+## Day 278 — Job-ready 04 · Two causes at once
+
+**🎯 Goal:** When the first fix doesn't seem to work.  
+**📂 Module:** [12-job-ready/04-incident-practice](12-job-ready/04-incident-practice/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name the severity levels and what each means.
+- [ ] 📖 **Learn:** Re-read Lesson 4.3
+- [ ] 🧪 **Practice:** Lab 2 — `./lab.sh incident --hard` (twice if time allows)
+- [ ] 💾 **Save:** `git commit -m "Day 278: Job-ready 04 Two causes at once"`
+
+## Day 279 — Job-ready 04 · Blameless postmortems
+
+**🎯 Goal:** Turn an incident into a better system.  
+**📂 Module:** [12-job-ready/04-incident-practice](12-job-ready/04-incident-practice/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What makes an action item good?
+- [ ] 📖 **Learn:** Lesson 4.4 and the example postmortem
+- [ ] 🧪 **Practice:** Lab 3
+- [ ] 💾 **Save:** `git commit -m "Day 279: Job-ready 04 Blameless postmortems"`
+
+## Day 280 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 281 — Job-ready 04 · Tabletop (1/2)
+
+**🎯 Goal:** Kubernetes and CI incidents, out loud.  
+**📂 Module:** [12-job-ready/04-incident-practice](12-job-ready/04-incident-practice/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Why mitigate before finding the root cause?
+- [ ] 📖 **Learn:** Drills 1–5
+- [ ] 🧪 **Practice:** Lab 4 — 10 minutes each, then the model answers
+- [ ] 💾 **Save:** `git commit -m "Day 281: Job-ready 04 Tabletop (1/2)"`
+
+## Day 282 — Job-ready 04 · Tabletop (2/2)
+
+**🎯 Goal:** Cloud, monitoring and security incidents, out loud.  
+**📂 Module:** [12-job-ready/04-incident-practice](12-job-ready/04-incident-practice/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** CrashLoopBackOff after a deploy: your first two commands?
+- [ ] 📖 **Learn:** Drills 6–10
+- [ ] 🧪 **Practice:** Lab 4 — 10 minutes each, then the model answers
+- [ ] 💾 **Save:** `git commit -m "Day 282: Job-ready 04 Tabletop (2/2)"`
+
+## Day 283 — Job-ready 05 · The interview loop
+
+**🎯 Goal:** Know every stage; answer with structure.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Tell your 90-second 'about me' out loud.
+- [ ] 📖 **Learn:** Lessons 5.1–5.2
+- [ ] 🧪 **Practice:** Lab 1 — questions 1–18 (Linux, networking), out loud
+- [ ] 💾 **Save:** `git commit -m "Day 283: Job-ready 05 The interview loop"`
+
+## Day 284 — Job-ready 05 · Questions: Git to Kubernetes
+
+**🎯 Goal:** Fundamentals, with your own examples.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** A server is slow — your first five commands?
+- [ ] 📖 **Learn:** Model answers for yesterday's weak questions
+- [ ] 🧪 **Practice:** Lab 1 — questions 19–42
+- [ ] 💾 **Save:** `git commit -m "Day 284: Job-ready 05 Questions: Git to Kubernetes"`
+
+## Day 285 — Job-ready 05 · Questions: IaC to culture
+
+**🎯 Goal:** Finish the bank.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Liveness vs readiness — in two sentences.
+- [ ] 📖 **Learn:** Model answers for yesterday's weak questions
+- [ ] 🧪 **Practice:** Lab 1 — questions 43–75
+- [ ] 💾 **Save:** `git commit -m "Day 285: Job-ready 05 Questions: IaC to culture"`
+
+## Day 286 — Job-ready 05 · Live coding (1/2)
+
+**🎯 Goal:** Practical scripts, with tests, under time.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Merge vs rebase — when do you use each?
+- [ ] 📖 **Learn:** Lessons 5.3–5.4
+- [ ] 🧪 **Practice:** Lab 2 — exercises 1–3, 30 minutes each
+- [ ] 💾 **Save:** `git commit -m "Day 286: Job-ready 05 Live coding (1/2)"`
+
+## Day 287 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 288 — Job-ready 05 · Live coding (2/2)
+
+**🎯 Goal:** More practical scripts.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Write an exponential backoff with jitter formula from memory.
+- [ ] 📖 **Learn:** Re-read the 'questions interviewers add' list
+- [ ] 🧪 **Practice:** Lab 2 — exercises 4–6
+- [ ] 💾 **Save:** `git commit -m "Day 288: Job-ready 05 Live coding (2/2)"`
+
+## Day 289 — Job-ready 05 · System design (1/2)
+
+**🎯 Goal:** A structured 45-minute design.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Terraform state: what is it, where do you keep it?
+- [ ] 📖 **Learn:** The framework in system-design.md
+- [ ] 🧪 **Practice:** Lab 3 — designs 1–2
+- [ ] 💾 **Save:** `git commit -m "Day 289: Job-ready 05 System design (1/2)"`
+
+## Day 290 — Job-ready 05 · System design (2/2)
+
+**🎯 Goal:** Observability, migrations and IaC at company scale.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Name the five steps of the design framework.
+- [ ] 📖 **Learn:** Yesterday's worked answers
+- [ ] 🧪 **Practice:** Lab 3 — designs 3–5
+- [ ] 💾 **Save:** `git commit -m "Day 290: Job-ready 05 System design (2/2)"`
+
+## Day 291 — Job-ready 05 · Your story bank
+
+**🎯 Goal:** STAR stories from your own work.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Blue/green vs canary — one sentence each.
+- [ ] 📖 **Learn:** behavioral.md
+- [ ] 🧪 **Practice:** Lab 4 — fill every row, say each story in under 2 minutes
+- [ ] 💾 **Save:** `git commit -m "Day 291: Job-ready 05 Your story bank"`
+
+## Day 292 — Job-ready 05 · Portfolio & CV
+
+**🎯 Goal:** Show your work.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Tell your best incident story in STAR form.
+- [ ] 📖 **Learn:** cv-and-portfolio.md
+- [ ] 🧪 **Practice:** Lab 5 — profile README, pinned capstones with diagrams, a CV with numbers
+- [ ] 💾 **Save:** `git commit -m "Day 292: Job-ready 05 Portfolio & CV"`
+
+## Day 293 — Job-ready 05 · Mock interview (1/2)
+
+**🎯 Goal:** A full troubleshooting-heavy mock.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** What will you ask THEM at the end of an interview?
+- [ ] 📖 **Learn:** The mock interview script
+- [ ] 🧪 **Practice:** Lab 6 — mock #1, then write 3 things to improve
+- [ ] 💾 **Save:** `git commit -m "Day 293: Job-ready 05 Mock interview (1/2)"`
+
+## Day 294 — 🔄 Review day
+
+- [ ] 🔁 **Redo** the hardest lab of this week from a blank file — no peeking (30 min)
+- [ ] ✅ **Re-check** the Checkpoint list of every module you studied this week
+- [ ] 🧠 **Recall:** write down 10 commands/concepts from this week from memory, then check them
+- [ ] 💾 **Commit & push** your week's work
+- [ ] 😌 Rest — consistency beats intensity
+
+## Day 295 — Job-ready 05 · Mock interviews (2/2)
+
+**🎯 Goal:** Design-heavy and behavioral mocks; close the gaps.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain SLOs and error budgets to a non-engineer.
+- [ ] 📖 **Learn:** Your notes from mock #1
+- [ ] 🧪 **Practice:** Lab 6 — mocks #2 and #3, then Lab 7
+- [ ] 💾 **Save:** `git commit -m "Day 295: Job-ready 05 Mock interviews (2/2)"`
+
+## Day 296 — Job-ready 05 · 🎓 Final graduation
+
+**🎯 Goal:** Confirm you're ready for a DevOps engineering job.  
+**📂 Module:** [12-job-ready/05-interview-prep](12-job-ready/05-interview-prep/README.md)
+
+- [ ] 🔁 **Warm-up (10 min):** Explain to an imaginary interviewer how demo-app goes from a commit to monitored production on AWS — and how you'd debug it at 3 a.m.
+- [ ] 📖 **Learn:** All twelve expert checklists
+- [ ] 🧪 **Practice:** Any unticked box → redo that lab today. Then send your first five job applications. 🚀
+- [ ] 💾 **Save:** `git commit -m "Day 296: Job-ready 05 🎓 Final graduation"`
 
 ---
 
-🎉 **You finished the bootcamp.** Keep going: an AWS certification (Solutions Architect Associate, then DevOps Engineer Professional) or the CKA, OpenTelemetry tracing, and a real project of your own, end to end.
+🎉 **You finished the bootcamp.** Keep going: keep applying, get an AWS certification (Solutions Architect Associate) or the CKA, learn OpenTelemetry tracing, and build a real project of your own, end to end.

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # messy-history — reference solution (run in DIR/work). Interactive alternative: git rebase -i main
 # (mark commits "fixup"/"squash", reorder, "reword"). Here: the same result without an editor.
 git switch feature/healthcheck

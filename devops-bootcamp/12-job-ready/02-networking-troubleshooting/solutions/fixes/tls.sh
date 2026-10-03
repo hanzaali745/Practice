@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # tls — the reference fix
 curl -sv --resolve demo.lab:443:127.0.0.1 --cacert /etc/ssl/lab/ca.crt https://demo.lab/health 2>&1 | grep -i "subject\|match\|error" || true
 openssl s_client -connect 127.0.0.1:443 -servername demo.lab < /dev/null 2>/dev/null | openssl x509 -noout -subject -ext subjectAltName -dates

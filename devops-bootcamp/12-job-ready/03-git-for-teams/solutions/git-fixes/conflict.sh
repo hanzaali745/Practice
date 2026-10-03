@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # conflict — reference solution (run in DIR/work)
 git fetch origin                                  # get Ada's new commit
 git rebase origin/main || true                    # replays your commit on top — and stops on the conflict

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # port-conflict — the reference fix
 ss -tlnp 'sport = :8000'                                        # users:(("python3",pid=...)) — but which python?
 pid=$(ss -Htlnp 'sport = :8000' | grep -oP 'pid=\K[0-9]+' | head -1)

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # hotfix — reference solution (run in DIR/work)
 fix=$(git log origin/main --format=%H --grep='^fix: escape user input')
 git switch release/1.4                            # creates the local branch from origin/release/1.4

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # disk-full — the reference fix: buy time, then fix the policy
 df -h /var/log/demo-app; du -sh /var/log/demo-app/* | sort -h
 rm /var/log/demo-app/app.log.[3-6]                              # oldest first (or archive them somewhere else)

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # dns — the reference fix
 curl -s localhost/visits                                        # 503 redis unavailable: [Errno -3] Temporary failure in name resolution
 getent hosts redis || echo "does not resolve"

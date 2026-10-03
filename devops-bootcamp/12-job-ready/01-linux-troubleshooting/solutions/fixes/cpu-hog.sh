@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # cpu-hog — the reference fix: stop the cause, then the symptom
 ps aux --sort=-%cpu | head -3                                   # root ... /bin/bash /usr/local/bin/nightly-report
 grep -r nightly-report /etc/cron.d/                             # /etc/cron.d/nightly-report: * * * * * root ...

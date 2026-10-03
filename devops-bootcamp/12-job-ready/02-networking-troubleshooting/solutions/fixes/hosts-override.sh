@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # hosts-override — the reference fix
 dig +short redis; getent hosts redis                            # DNS: 172.x.x.x — getent: 10.255.255.1
 grep hosts: /etc/nsswitch.conf                                  # hosts: files dns → /etc/hosts wins

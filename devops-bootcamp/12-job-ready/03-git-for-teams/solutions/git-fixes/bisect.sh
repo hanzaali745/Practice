@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # bisect — reference solution (run in DIR/work)
 git bisect start main v1.0                        # bad, then good
 git bisect run ../test_total.sh                   # git tests the middle commit, halves the range, repeats (~5 steps for 30)

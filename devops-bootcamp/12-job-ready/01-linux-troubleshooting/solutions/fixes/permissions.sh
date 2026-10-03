@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # permissions — the reference fix
 journalctl -u demo-app -n 20 --no-pager                         # python3: can't open file ... [Errno 13] Permission denied
 namei -l /opt/demo-app/app.py                                   # drwx------ root /opt/demo-app, -rw------- root app.py

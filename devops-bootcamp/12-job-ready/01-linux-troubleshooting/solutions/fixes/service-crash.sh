@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # service-crash — the reference fix (run as root on the server)
 systemctl status demo-app --no-pager || true                    # activating (auto-restart), exit-code
 journalctl -u demo-app -n 20 --no-pager                         # ValueError: invalid literal for int() ... '8O00'

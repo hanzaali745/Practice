@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # leaked-secret — reference solution (run in DIR/work). Needs git-filter-repo (pip install git-filter-repo).
 # 0. FIRST rotate the key in AWS (deactivate + delete it): rewriting history doesn't un-leak it.
 cd .. || exit 1

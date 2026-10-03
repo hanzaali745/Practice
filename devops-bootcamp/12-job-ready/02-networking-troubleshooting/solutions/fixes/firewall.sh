@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # firewall — the reference fix
 nc -vz -w 3 redis 6379 || true                                  # timed out → packets are dropped, not refused
 iptables -L OUTPUT -n -v --line-numbers                         # rule 1: DROP tcp dpt:6379 (packet counter rising)

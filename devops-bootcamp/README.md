@@ -1,4 +1,4 @@
-# 🚀 DevOps Bootcamp: Python → Shell → Bash → Docker → Kubernetes → Terraform → Ansible → CI/CD → Monitoring → ELK → AWS
+# 🚀 DevOps Bootcamp: Python → Shell → Bash → Docker → Kubernetes → Terraform → Ansible → CI/CD → Monitoring → ELK → AWS → Job-ready
 
 > **From your CEO / Senior DevOps Engineer:**
 > Welcome to the team. In DevOps we automate *everything*: servers, deployments, backups,
@@ -22,6 +22,9 @@
 > - **Logging** — the ELK stack: structured logs, shipped, parsed, searched and kept for the right time
 > - **AWS** — the cloud: IAM, networking, compute, containers, serverless — safely and cheaply
 >
+> And then you get **job-ready**: troubleshooting broken servers under pressure, Git in a team, incident response,
+> and interview preparation.
+>
 > This bootcamp takes you from zero to the level I expect from engineers on my team.
 > Everything is designed and tested for **Ubuntu**.
 >
@@ -32,7 +35,7 @@
 
 ## 📅 Learn every day: the Daily Plan
 
-The whole course is laid out as **260 days** (about 9 months) of 60–90 minutes, in [**DAILY-PLAN.md**](DAILY-PLAN.md).
+The whole course is laid out as **296 days** (about 10 months) of 60–90 minutes, in [**DAILY-PLAN.md**](DAILY-PLAN.md).
 Every day = 🔁 10-min warm-up on older material + 📖 lessons + 🧪 labs + 💾 commit.
 Every 7th day is a review day. Your terminal tells you what to do today:
 
@@ -69,8 +72,15 @@ sh today.sh status   # progress bar
  │    CI/CD     │─► │  MONITORING  │ ──► │ ELK LOGGING  │ ──► │     AWS      │
  │  8 modules   │   │  8 modules   │     │  7 modules   │     │  8 modules   │
  │ Days 181–201 │   │ Days 202–222 │     │ Days 223–239 │     │ Days 240–260 │
- └──────────────┘   └──────────────┘     └──────────────┘     └──────────────┘
-   (Day 181: setup part 3 — install the platform tools)
+ └──────────────┘   └──────────────┘     └──────────────┘     └──────┬───────┘
+   (Day 181: setup part 3 — install the platform tools)              │
+        ┌────────────────────────────────────────────────────────────┘
+        ▼
+ PHASE 12
+ ┌────────────────────────────────────────────────────────────────────────────┐
+ │  JOB-READY: Linux & network troubleshooting · Git for teams · incidents ·  │
+ │  interview prep — 5 modules · Days 261–296                                 │
+ └────────────────────────────────────────────────────────────────────────────┘
 ```
 
 One app — **demo-app** — travels through Phases 4–11: you containerise it, run it on Kubernetes, describe its
@@ -91,6 +101,7 @@ and ELK watch it, and finally it runs on AWS — the same service, all the way t
 | **9** | [📈 Monitoring](9-monitoring/README.md) | 8 modules: first stack → Prometheus → PromQL → instrumenting → Grafana → alerting & SLOs → Kubernetes → capstone |
 | **10** | [🔎 ELK Logging](10-elk/README.md) | 7 modules: logging basics → Elasticsearch → shipping & parsing → Kibana → operating ES → Kubernetes → capstone |
 | **11** | [☁️ AWS](11-aws/README.md) | 8 modules: safe account → IAM → VPC → EC2 & ALB → storage → containers → serverless & CloudWatch → capstone |
+| **12** | [💼 Job-ready](12-job-ready/README.md) | 5 modules: Linux troubleshooting → networking troubleshooting → Git for teams → incident practice → interview prep |
 
 ### Shell scripting vs Bash — why are they separate?
 
@@ -259,6 +270,16 @@ are portable and which aren't — that's a senior-engineer skill.
 | 07 | [Serverless & Monitoring](11-aws/07-serverless-and-monitoring/README.md) | 🔴 |
 | 08 | [AWS Capstone](11-aws/08-capstone/README.md) | 🏆 |
 
+## 💼 Phase 12 — Job-ready → [`12-job-ready/`](12-job-ready/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [Linux Troubleshooting](12-job-ready/01-linux-troubleshooting/README.md) | 🟡 |
+| 02 | [Networking Troubleshooting](12-job-ready/02-networking-troubleshooting/README.md) | 🟡 |
+| 03 | [Git for Teams](12-job-ready/03-git-for-teams/README.md) | 🟡 |
+| 04 | [Incident Practice](12-job-ready/04-incident-practice/README.md) | 🔴 |
+| 05 | [Interview Prep](12-job-ready/05-interview-prep/README.md) | 🏆 |
+
 ---
 
 ## 📚 Every module has the same structure
@@ -298,7 +319,8 @@ Missed a day? Continue where you stopped — never skip ahead.
 [CI/CD](8-cicd/README.md#-cicd-expert-checklist) ·
 [Monitoring](9-monitoring/README.md#-monitoring-expert-checklist) ·
 [ELK](10-elk/README.md#-elk-expert-checklist) ·
-[AWS](11-aws/README.md#-aws-expert-checklist)
+[AWS](11-aws/README.md#-aws-expert-checklist) ·
+[Job-ready](12-job-ready/README.md#-job-ready-expert-checklist)
 
 ---
 
