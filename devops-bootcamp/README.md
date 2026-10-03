@@ -108,6 +108,9 @@ and ELK watch it, and finally it runs on AWS — the same service, all the way t
 | **11** | [☁️ AWS](11-aws/README.md) | 8 modules: safe account → IAM → VPC → EC2 & ALB → storage → containers → serverless & CloudWatch → capstone |
 | **12** | [💼 Job-ready](12-job-ready/README.md) | 5 modules: Linux troubleshooting → networking troubleshooting → Git for teams → incident practice → interview prep |
 
+🗺️ **Coming later:** [planned additions](PLANNED-ADDITIONS.md) — databases, secrets management, OpenTelemetry + Grafana —
+built when you reach Phase 8 (`today.sh` will remind you).
+
 ### Shell scripting vs Bash — why are they separate?
 
 - **Shell scripting (POSIX `sh`)** is the **standard** core every shell understands. Scripts start with

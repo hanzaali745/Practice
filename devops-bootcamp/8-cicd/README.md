@@ -1,5 +1,8 @@
 # 🔁 Phase 8: CI/CD
 
+> 📌 **Reached Phase 8?** Time for the [planned Phase 13 additions](../PLANNED-ADDITIONS.md) (databases, secrets
+> management, OpenTelemetry + Grafana) — ask Claude: *"let's add the Phase 13 platform skills"*.
+
 > **Before you start:** finish Phases 4–7 and install `act`, `actionlint` and the GitHub CLI
 > ([Part 3 of the Ubuntu setup](../00-ubuntu-setup/PART-3-PLATFORM-TOOLS.md)).
 > **It's free:** you practise in your own public GitHub repository (unlimited Actions minutes for public repos),
