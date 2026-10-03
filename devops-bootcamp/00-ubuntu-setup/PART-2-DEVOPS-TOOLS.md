@@ -140,4 +140,4 @@ cd ~/Practice/devops-bootcamp
 sh 00-ubuntu-setup/check_devops_tools.sh
 ```
 
-All ✅? Run `sh today.sh` — Day 97 is [Docker Module 01](../4-docker/01-containers-and-setup/README.md). 🚀
+All ✅? Run `sh today.sh` — the next day is [Docker Module 01](../4-docker/01-containers-and-setup/README.md). 🚀

@@ -64,4 +64,4 @@ and print the installed version. Never leave half-installed files (use `trap`).
 Go back to the [expert checklist](../README.md#-shell-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes)
 and tick every item. Then move on.
 
-👉 Next phase: [Phase 3 — Bash](../../3-bash/README.md)
+👉 Next phase: [Phase 2B — Linux Administration](../../2b-linux-admin/README.md) (then [Phase 3 — Bash](../../3-bash/README.md))
