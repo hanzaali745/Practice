@@ -2919,4 +2919,4 @@ Missed a day? No problem — just continue where you stopped. Don't skip ahead.
 
 ---
 
-🎉 **You finished the bootcamp.** Keep going: keep applying, get an AWS certification (Solutions Architect Associate) or the CKA, learn OpenTelemetry tracing, and build a real project of your own, end to end.
+🎉 **You finished the bootcamp.** Keep going: keep applying, get an AWS certification (Solutions Architect Associate, then DevOps Engineer Professional) or the CKA, learn OpenTelemetry tracing, and build a real project of your own, end to end.
