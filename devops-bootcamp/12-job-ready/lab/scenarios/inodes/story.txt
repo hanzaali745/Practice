@@ -1,0 +1,1 @@
+🟠 web-1: "No space left on device" when creating files in /var/log/demo-app — yet df -h says it's almost empty.

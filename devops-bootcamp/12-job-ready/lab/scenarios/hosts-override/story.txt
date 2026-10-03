@@ -1,0 +1,1 @@
+🟠 web-1: /visits times out. "dig redis" gives the right IP, so "it can't be DNS"... the on-call before you gave up.

@@ -28,6 +28,8 @@ check "zizmor installed"                    command -v zizmor
 check "prometheus-client importable"        python3 -c "import prometheus_client"
 check "boto3 importable"                    python3 -c "import boto3"
 check "moto server installed"               command -v moto_server
+check "git-filter-repo installed"            command -v git-filter-repo
+check "pre-commit installed"                 command -v pre-commit
 
 echo "== AWS =="
 check "aws cli v2 installed"                sh -c 'aws --version 2>&1 | grep -q "aws-cli/2"'

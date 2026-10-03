@@ -1,0 +1,1 @@
+🟠 web-1: /visits is slow (2 s) and then fails with 503 since the "firewall hardening" change. Everything else is fine.

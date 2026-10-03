@@ -1,6 +1,8 @@
-# Extra Python packages for Phases 8-11 (CI/CD, Monitoring, ELK, AWS). Install inside your venv:
+# Extra Python packages for Phases 8-12 (CI/CD, Monitoring, ELK, AWS, Job-ready). Install inside your venv:
 #   pip install -r requirements-platform.txt
 zizmor==1.30.1                 # GitHub Actions security linter (Phase 8)
 prometheus-client==0.26.0      # instrumenting Python apps (Phase 9)
 boto3==1.43.108                # AWS SDK for Python (Phase 11)
 moto[server]==5.2.3            # local AWS mock, for practising without an account (Phase 11)
+git-filter-repo==2.47.0        # remove files (e.g. leaked secrets) from Git history (Phase 12)
+pre-commit==4.6.2              # shared Git hooks for a team (Phase 12)

@@ -1,0 +1,27 @@
+# The troubleshooting lab: one Ubuntu "server" (systemd · nginx :80 → demo-app :8000 → Redis) plus its Redis.
+# Use ./lab.sh, not docker compose directly: it builds, waits for boot, breaks and checks.
+name: troubleshoot
+
+services:
+  server:
+    build: server
+    image: troubleshoot-lab:24.04
+    hostname: web-1
+    privileged: true                 # systemd and iptables inside a container need this (lab only!)
+    cgroup: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    tmpfs:
+      - /run
+      - /run/lock
+      - /tmp
+      # a deliberately SMALL log disk, so "disk full" happens in seconds and never touches your real disk
+      - /var/log/demo-app:size=64m,nr_inodes=8192,uid=900,gid=900,mode=0755
+    ports:
+      - "127.0.0.1:8080:80"
+      - "127.0.0.1:8443:443"
+    depends_on: [redis]
+
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--save", "", "--appendonly", "no"]

@@ -1,0 +1,1 @@
+🔴 web-1: the site is down since the 03:00 maintenance window ("hardening + nginx cleanup"). Two changes went out together.

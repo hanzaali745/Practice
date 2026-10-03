@@ -146,5 +146,8 @@ How to study:
 - [ ] I can explain every resource in `infra/`: why it exists and what it costs
 - [ ] ☁️ Everything is destroyed, and the bill shows what I expected
 
-🎉 **That's the AWS track — and the whole bootcamp.** Go back to the
-[AWS expert checklist](../README.md#-aws-expert-checklist), then the [bootcamp README](../../README.md) for what's next.
+🎉 **That's the AWS track.** Tick the [AWS expert checklist](../README.md#-aws-expert-checklist). You can now build and
+run the whole platform; the last phase makes you ready for the job itself — troubleshooting under pressure, Git in a
+team, and interviews.
+
+👉 Next phase: [Phase 12 — Job-ready](../../12-job-ready/README.md)

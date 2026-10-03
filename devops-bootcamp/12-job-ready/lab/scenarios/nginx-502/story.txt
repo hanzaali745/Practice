@@ -1,0 +1,1 @@
+🔴 web-1: every page returns "502 Bad Gateway" since the nginx config change at 14:05. The app team says "our service is up!"

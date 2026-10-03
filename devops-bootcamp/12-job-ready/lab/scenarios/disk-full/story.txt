@@ -1,0 +1,1 @@
+🟠 web-1: disk /var/log/demo-app is 94% full and growing. Logging will stop soon.

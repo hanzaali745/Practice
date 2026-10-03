@@ -136,7 +136,7 @@ git push
 
 ## 📅 Step 10 — Meet your daily plan
 
-The course is a **260-day plan** ([DAILY-PLAN.md](../DAILY-PLAN.md)). Each day your terminal tells you what to do:
+The course is a **296-day plan** ([DAILY-PLAN.md](../DAILY-PLAN.md)). Each day your terminal tells you what to do:
 
 ```bash
 cd ~/Practice/devops-bootcamp

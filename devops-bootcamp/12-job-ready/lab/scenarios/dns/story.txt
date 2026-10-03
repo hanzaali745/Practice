@@ -1,0 +1,1 @@
+🟠 web-1: /visits returns 503 "redis unavailable". The cache team swears Redis is fine. The home page still works.
