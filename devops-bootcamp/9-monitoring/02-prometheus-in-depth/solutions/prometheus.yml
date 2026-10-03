@@ -1,0 +1,36 @@
+# Module 02 — a more realistic configuration
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  external_labels:                     # added to everything this Prometheus sends elsewhere (alerts, remote write)
+    cluster: lab
+    env: dev
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # Lab 2 — DNS service discovery: every IP behind the name "app" becomes a target
+  - job_name: demo-app
+    dns_sd_configs:
+      - names: ["app"]
+        type: A
+        port: 8000
+        refresh_interval: 15s
+    relabel_configs:                   # BEFORE scraping: change labels / pick targets
+      - source_labels: [__address__]
+        regex: "([^:]+):.*"
+        target_label: ip               # keep the bare IP as its own label
+      - target_label: service          # add a constant label
+        replacement: demo-app
+
+  # Lab 3 — file service discovery: Prometheus re-reads these files by itself, no reload needed
+  - job_name: file-targets
+    file_sd_configs:
+      - files: ["/etc/prometheus/targets/*.json"]
+        refresh_interval: 30s
+    metric_relabel_configs:            # AFTER scraping: drop series you don't want to store
+      - source_labels: [__name__]
+        regex: "node_scrape_collector_.*|node_(arp|softnet|sockstat)_.*"
+        action: drop

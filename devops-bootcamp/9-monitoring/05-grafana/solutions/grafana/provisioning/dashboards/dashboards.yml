@@ -1,0 +1,11 @@
+# Load every dashboard JSON file from a folder (in Git) — dashboards as code
+apiVersion: 1
+providers:
+  - name: bootcamp
+    folder: Bootcamp
+    type: file
+    disableDeletion: true
+    allowUiUpdates: false           # edits in the UI can't be saved: change the JSON in Git instead
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards

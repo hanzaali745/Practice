@@ -116,3 +116,44 @@ def test_redis_auth_and_incr(monkeypatch):
     with pytest.raises(RuntimeError, match="AUTH failed"):
         app.redis_incr("visits")
     srv.close()
+
+
+def test_error_endpoint_returns_500(server):
+    base, _ = server
+    assert get(base + "/error")[0] == 500
+
+
+def test_metrics_count_requests_and_latency(server):
+    base, _ = server
+    get(base + "/")
+    get(base + "/")
+    get(base + "/error")
+    get(base + "/no-such-page")
+    with urllib.request.urlopen(base + "/metrics", timeout=3) as r:
+        assert r.headers["Content-Type"].startswith("text/plain")
+        text = r.read().decode()
+    assert 'http_requests_total{method="GET",path="/",code="200"} 2' in text
+    assert 'http_requests_total{method="GET",path="/error",code="500"} 1' in text
+    assert 'path="other",code="404"' in text                      # unknown paths share one label value
+    assert 'http_request_duration_seconds_bucket{path="/",le="+Inf"} 2' in text
+    assert 'demo_app_build_info{version="9.9.9"} 1' in text
+    assert "http_requests_in_progress 1" in text                  # the /metrics request itself
+
+
+def test_json_logs_use_ecs_fields():
+    port = free_port()
+    env = {**os.environ, "PORT": str(port), "LOG_FORMAT": "json", "REDIS_HOST": ""}
+    proc = subprocess.Popen([sys.executable, str(APP)], env=env, stdout=subprocess.PIPE, text=True)
+    try:
+        first = json.loads(proc.stdout.readline())                 # the startup line
+        assert first["log"]["level"] == "info" and first["service"]["name"] == "demo-app"
+        get(f"http://127.0.0.1:{port}/error")
+        line = json.loads(proc.stdout.readline())
+        assert line["log"]["level"] == "error"
+        assert line["http"]["response"]["status_code"] == 500
+        assert line["url"]["path"] == "/error"
+        assert line["event"]["duration"] > 0
+        assert line["@timestamp"].endswith("Z")
+    finally:
+        proc.terminate()
+        proc.wait(timeout=5)

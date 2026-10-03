@@ -1,0 +1,53 @@
+# demo-app in namespace "demo", ready to be monitored. The Service port NAME is what the ServiceMonitor refers to.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+  namespace: demo
+  labels: {app: demo-app}
+spec:
+  replicas: 2
+  selector:
+    matchLabels: {app: demo-app}
+  template:
+    metadata:
+      labels: {app: demo-app}
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: app
+          image: demo-app:1.0.0             # kind load docker-image demo-app:1.0.0 (Phase 5)
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+          readinessProbe:
+            httpGet: {path: /health, port: http}
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {memory: 128Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-app
+  namespace: demo
+  labels: {app: demo-app}                   # the ServiceMonitor selects Services by these labels
+spec:
+  selector: {app: demo-app}
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

@@ -1,0 +1,47 @@
+# Module 04 — instrumented app + exporters for things we don't own
+name: mon04
+
+services:
+  app:
+    build:
+      context: ../../../4-docker/app
+      dockerfile_inline: |
+        FROM python:3.12-slim
+        COPY app.py /app/app.py
+        USER 10001
+        CMD ["python3", "/app/app.py"]
+    environment:
+      REDIS_HOST: redis
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on: [redis]
+
+  redis:
+    image: redis:7-alpine
+
+  redis-exporter:                       # translates Redis INFO into Prometheus metrics
+    image: oliver006/redis_exporter:v1.93.0
+    environment:
+      REDIS_ADDR: redis://redis:6379
+
+  blackbox:                             # probes URLs/ports and reports success + timing
+    image: prom/blackbox-exporter:v0.28.0
+    command: [--config.file=/etc/blackbox/blackbox.yml]
+    volumes: ["./blackbox.yml:/etc/blackbox/blackbox.yml:ro"]
+
+  node-exporter:
+    image: prom/node-exporter:v1.12.1
+    command:
+      - --path.rootfs=/host
+      - --collector.textfile.directory=/textfile      # serves the .prom files batch jobs write
+    pid: host
+    volumes:
+      - /:/host:ro
+      - ./textfile:/textfile:ro
+
+  prometheus:
+    image: prom/prometheus:v3.15.0
+    command: [--config.file=/etc/prometheus/prometheus.yml]
+    volumes: ["./prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    ports: ["127.0.0.1:9090:9090"]
+    extra_hosts:
+      - host.docker.internal:host-gateway             # reach backup_exporter.py running on your laptop

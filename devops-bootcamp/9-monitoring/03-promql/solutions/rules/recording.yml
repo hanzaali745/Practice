@@ -1,0 +1,20 @@
+# Lab 4 — recording rules: pre-compute expensive queries, so dashboards and alerts are fast and consistent.
+# Naming convention:  level:metric:operations
+groups:
+  - name: demo-app-red
+    interval: 30s
+    rules:
+      # R — requests per second, per job
+      - record: job:http_requests:rate5m
+        expr: sum by (job) (rate(http_requests_total[5m]))
+
+      # E — fraction of requests that failed with a 5xx (0.02 = 2%)
+      - record: job:http_requests_errors:ratio_rate5m
+        expr: |
+          sum by (job) (rate(http_requests_total{code=~"5.."}[5m]))
+          /
+          sum by (job) (rate(http_requests_total[5m]))
+
+      # D — 95th percentile latency in seconds
+      - record: job:http_request_duration_seconds:p95_5m
+        expr: histogram_quantile(0.95, sum by (job, le) (rate(http_request_duration_seconds_bucket[5m])))

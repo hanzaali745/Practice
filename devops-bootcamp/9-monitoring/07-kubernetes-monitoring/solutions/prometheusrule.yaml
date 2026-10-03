@@ -1,0 +1,51 @@
+# The Module 06 recording + alerting rules as a Kubernetes object; the operator loads it into Prometheus
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: demo-app
+  namespace: demo
+spec:
+  groups:
+  - name: demo-app-red
+    interval: 15s
+    rules:
+    - record: job:http_requests:rate5m
+      expr: sum by (job) (rate(http_requests_total[5m]))
+    - record: job:http_requests_errors:ratio_rate5m
+      expr: 'sum by (job) (rate(http_requests_total{code=~"5.."}[5m]))
+
+        /
+
+        sum by (job) (rate(http_requests_total[5m]))
+
+        '
+    - record: job:http_request_duration_seconds:p95_5m
+      expr: histogram_quantile(0.95, sum by (job, le) (rate(http_request_duration_seconds_bucket[5m])))
+  - name: demo-app
+    rules:
+    - alert: DemoAppDown
+      expr: up{job="demo-app"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: demo-app instance {{ $labels.instance }} is down
+        description: Prometheus could not scrape {{ $labels.instance }} for more than 1 minute.
+        runbook_url: https://github.com/YOUR-USER/runbooks/blob/main/demo-app.md#demoappdown
+    - alert: DemoAppHighErrorRate
+      expr: job:http_requests_errors:ratio_rate5m{job="demo-app"} > 0.05
+      for: 2m
+      labels:
+        severity: warning
+      annotations:
+        summary: demo-app error ratio is {{ $value | humanizePercentage }}
+        description: More than 5% of requests failed with a 5xx for 2 minutes.
+        runbook_url: https://github.com/YOUR-USER/runbooks/blob/main/demo-app.md#demoapphigherrorrate
+    - alert: DemoAppHighLatency
+      expr: job:http_request_duration_seconds:p95_5m{job="demo-app"} > 0.5
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: demo-app p95 latency is {{ $value | humanizeDuration }}
+        runbook_url: https://github.com/YOUR-USER/runbooks/blob/main/demo-app.md#demoapphighlatency

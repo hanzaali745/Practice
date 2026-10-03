@@ -1,0 +1,40 @@
+# Lab 4 — unit tests for the recording rules:   promtool test rules tests/recording_test.yml
+rule_files: [../rules/recording.yml]
+evaluation_interval: 30s
+
+tests:
+  - interval: 1m
+    # 2 instances; each serves 60 requests per minute, of which 6 are errors → 2 req/s total, 10% errors
+    input_series:
+      - series: 'http_requests_total{job="demo-app",instance="a",code="200"}'
+        values: '0+54x10'
+      - series: 'http_requests_total{job="demo-app",instance="a",code="500"}'
+        values: '0+6x10'
+      - series: 'http_requests_total{job="demo-app",instance="b",code="200"}'
+        values: '0+54x10'
+      - series: 'http_requests_total{job="demo-app",instance="b",code="500"}'
+        values: '0+6x10'
+      # latency: 100 requests/min, 90 of them under 0.1 s and all under 0.5 s
+      - series: 'http_request_duration_seconds_bucket{job="demo-app",le="0.1"}'
+        values: '0+90x10'
+      - series: 'http_request_duration_seconds_bucket{job="demo-app",le="0.5"}'
+        values: '0+100x10'
+      - series: 'http_request_duration_seconds_bucket{job="demo-app",le="+Inf"}'
+        values: '0+100x10'
+    promql_expr_test:
+      - expr: job:http_requests:rate5m
+        eval_time: 10m
+        exp_samples:
+          - labels: 'job:http_requests:rate5m{job="demo-app"}'
+            value: 2
+      - expr: job:http_requests_errors:ratio_rate5m
+        eval_time: 10m
+        exp_samples:
+          - labels: 'job:http_requests_errors:ratio_rate5m{job="demo-app"}'
+            value: 0.1
+      - expr: round(job:http_request_duration_seconds:p95_5m, 0.001)   # round: floats aren't exact
+        eval_time: 10m
+        exp_samples:
+          # p95 falls in the 0.1-0.5 bucket: 0.1 + (95-90)/(100-90) * 0.4 = 0.3 (linear interpolation)
+          - labels: '{job="demo-app"}'                                  # functions drop the metric name
+            value: 0.3
