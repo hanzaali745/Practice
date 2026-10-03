@@ -1,0 +1,24 @@
+# Lab 5 — copy to .github/dependabot.yml: weekly PRs that update pinned actions, pip and Docker base images
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7                   # wait a week before adopting a brand-new release (supply-chain safety)
+    groups:
+      actions:
+        patterns: ["*"]                 # one PR for all action updates
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7                   # wait a week before adopting a brand-new release (supply-chain safety)
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 7                   # wait a week before adopting a brand-new release (supply-chain safety)

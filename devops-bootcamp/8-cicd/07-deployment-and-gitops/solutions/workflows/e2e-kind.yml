@@ -1,0 +1,48 @@
+# Lab 1 — end-to-end test: deploy the freshly built image to a throwaway Kubernetes cluster INSIDE the CI job
+name: e2e-kind
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Create a kind cluster
+        uses: helm/kind-action@v1
+        with:
+          cluster_name: e2e
+
+      - name: Build the image and load it into kind (no registry needed)
+        run: |
+          docker build -t demo-app:e2e --build-arg VERSION="e2e-${GITHUB_SHA::7}" .
+          kind load docker-image demo-app:e2e --name e2e
+
+      - name: Deploy with the real manifests, pointed at the test image
+        run: |
+          cd deploy/k8s
+          kustomize edit set image demo-app=demo-app:e2e
+          kubectl apply -k .
+          kubectl rollout status deployment/demo-app --timeout=120s
+
+      - name: Smoke test through the Service
+        run: |
+          kubectl port-forward service/demo-app 8080:80 > /dev/null 2>&1 &
+          scripts/smoke_test.sh http://127.0.0.1:8080 "e2e-${GITHUB_SHA::7}"
+
+      - name: Debug info on failure
+        if: failure()
+        run: |
+          kubectl get all -o wide
+          kubectl describe pods -l app=demo-app
+          kubectl logs -l app=demo-app --tail=50 --all-containers

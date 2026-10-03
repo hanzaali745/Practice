@@ -1,0 +1,45 @@
+# Lab 1 — events, filters, manual inputs, schedules and concurrency
+name: triggers
+
+on:
+  push:
+    branches: [main, "release/**"]
+    paths:                                 # only when these files change
+      - "app/**"
+      - "tests/**"
+      - ".github/workflows/triggers.yml"
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: "17 3 * * 1"                   # Mondays 03:17 UTC (avoid :00 — everyone uses it)
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Where to pretend-deploy
+        type: choice
+        options: [staging, production]
+        default: staging
+      dry_run:
+        description: Only print what would happen
+        type: boolean
+        default: true
+
+# One run per branch at a time; a newer push cancels the older run
+concurrency:
+  group: triggers-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  show:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5                     # never let a stuck job burn 6 hours
+    steps:
+      - name: What started me?
+        env:
+          EVENT: ${{ github.event_name }}
+          REF: ${{ github.ref_name }}
+          TARGET: ${{ inputs.environment || 'n/a' }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          echo "event=$EVENT ref=$REF"
+          echo "manual inputs: environment=$TARGET dry_run=$DRY_RUN"

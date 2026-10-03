@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: demo-prod
+resources:
+  - ../../base
+replicas:
+  - name: demo-app
+    count: 3
+# delivery.yml rewrites newName/newTag here — the ONLY thing that changes between releases
+images:
+  - name: demo-app
+    newName: demo-app
+    newTag: dev

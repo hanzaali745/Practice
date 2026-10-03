@@ -1,0 +1,18 @@
+# Lab 4 — ✅ the fix: untrusted text goes through an environment variable and is QUOTED
+name: injection-fixed
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Greet the PR
+        env:
+          TITLE: ${{ github.event.pull_request.title }}   # data, never code
+        run: |
+          echo "Thanks for: $TITLE"

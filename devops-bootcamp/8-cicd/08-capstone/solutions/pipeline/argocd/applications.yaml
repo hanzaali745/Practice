@@ -1,0 +1,36 @@
+# One Argo CD Application per environment, each following its own overlay on main
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-staging
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/YOUR-USER/cicd-lab.git
+    targetRevision: main
+    path: deploy/overlays/staging
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo-staging
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-production
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/YOUR-USER/cicd-lab.git
+    targetRevision: main
+    path: deploy/overlays/production
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: demo-prod
+  syncPolicy:
+    automated: {prune: true, selfHeal: true}
+    syncOptions: [CreateNamespace=true]

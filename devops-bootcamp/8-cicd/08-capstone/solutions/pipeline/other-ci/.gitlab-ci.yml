@@ -1,0 +1,86 @@
+# Project 2 — the same CI + delivery pipeline in GitLab CI (put this file at the repo root on GitLab)
+# Concepts map 1:1: stages ≈ needs graph, rules ≈ on/if, services ≈ services, environments ≈ environments.
+stages: [lint, test, build, deploy]
+
+default:
+  image: python:3.12-slim
+  interruptible: true                      # ≈ concurrency cancel-in-progress
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  IMAGE: "$CI_REGISTRY_IMAGE"              # GitLab's built-in container registry
+
+.python: &python
+  cache:
+    key:
+      files: [requirements-dev.txt]
+    paths: [.cache/pip]
+  before_script:
+    - pip install -r requirements-dev.txt
+
+lint:
+  stage: lint
+  <<: *python
+  script:
+    - ruff check .
+
+unit:
+  stage: test
+  <<: *python
+  script:
+    - python3 -m pytest -q tests/test_app.py --junitxml=reports/unit.xml
+  artifacts:
+    when: always
+    reports:
+      junit: reports/unit.xml              # GitLab shows test results in the merge request
+
+integration:
+  stage: test
+  <<: *python
+  services:
+    - name: redis:7-alpine
+      alias: redis
+  variables:
+    REDIS_HOST: redis                      # services are reachable by alias
+  script:
+    - python3 -m pytest -q tests/test_integration.py
+
+image:
+  stage: build
+  image: docker:28
+  services: [docker:28-dind]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - docker build -t "$IMAGE:sha-$CI_COMMIT_SHORT_SHA" --build-arg VERSION="sha-$CI_COMMIT_SHORT_SHA" .
+    - docker push "$IMAGE:sha-$CI_COMMIT_SHORT_SHA"
+
+deploy_staging:
+  stage: deploy
+  image: alpine/git:2.47.2
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  environment:
+    name: staging
+  script:
+    - apk add --no-cache bash
+    - scripts/bump_image.sh deploy/overlays/staging/kustomization.yaml "$IMAGE" "sha-$CI_COMMIT_SHORT_SHA"
+    - git commit -am "deploy(staging): sha-$CI_COMMIT_SHORT_SHA"
+    - git push "https://gitlab-ci-token:${DEPLOY_PUSH_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:main
+
+deploy_production:
+  stage: deploy
+  image: alpine/git:2.47.2
+  needs: [deploy_staging]
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual                         # ≈ required reviewers: someone clicks "play"
+  environment:
+    name: production
+  script:
+    - apk add --no-cache bash
+    - git pull --ff-only origin main
+    - scripts/bump_image.sh deploy/overlays/production/kustomization.yaml "$IMAGE" "sha-$CI_COMMIT_SHORT_SHA"
+    - git commit -am "deploy(production): sha-$CI_COMMIT_SHORT_SHA"
+    - git push "https://gitlab-ci-token:${DEPLOY_PUSH_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" HEAD:main

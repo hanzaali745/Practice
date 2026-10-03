@@ -1,0 +1,22 @@
+# Lab 3 — log in to AWS WITHOUT stored keys, using OpenID Connect (used again in Phase 11)
+# One-time AWS setup: see aws-oidc-trust-policy.json and the README.
+name: aws-oidc
+
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write                      # allow the job to request a GitHub OIDC token
+  contents: read
+
+jobs:
+  whoami:
+    runs-on: ubuntu-latest
+    environment: production            # the trust policy only accepts this environment
+    steps:
+      - uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}      # e.g. arn:aws:iam::123456789012:role/github-cicd-lab
+          aws-region: ${{ vars.AWS_REGION }}
+      - name: Who am I in AWS?
+        run: aws sts get-caller-identity               # short-lived credentials, expire in 1 hour
