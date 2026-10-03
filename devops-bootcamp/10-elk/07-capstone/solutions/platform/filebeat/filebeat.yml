@@ -1,0 +1,21 @@
+# Filebeat: read every container's log file on this host, add Docker metadata, keep ours, send to Logstash
+filebeat.inputs:
+  - type: filestream
+    id: docker-containers
+    paths: ["/var/lib/docker/containers/*/*.log"]
+    parsers:
+      - container: ~                       # unwrap Docker's json-file format → message, stream, time
+
+processors:
+  - add_docker_metadata: ~                 # container.name, image, compose labels (needs the Docker socket)
+  - drop_event:                            # only ship the services of THIS lab
+      when:
+        not:
+          or:
+            - equals: {container.labels.com_docker_compose_service: app}
+            - equals: {container.labels.com_docker_compose_service: nginx}
+
+output.logstash:
+  hosts: ["logstash:5044"]
+
+logging.level: warning                     # Filebeat's OWN logs: keep them quiet

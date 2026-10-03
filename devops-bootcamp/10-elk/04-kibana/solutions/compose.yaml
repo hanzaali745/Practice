@@ -11,7 +11,7 @@ services:
       cluster.routing.allocation.disk.watermark.low: 2gb
       cluster.routing.allocation.disk.watermark.high: 1gb
       cluster.routing.allocation.disk.watermark.flood_stage: 500mb
-    mem_limit: 1g
+    mem_limit: 1536m                                # heap 512m + off-heap; 1 GB is too tight once Kibana is busy
     volumes: ["es-data:/usr/share/elasticsearch/data"]
     ports: ["127.0.0.1:9200:9200"]
     healthcheck:
