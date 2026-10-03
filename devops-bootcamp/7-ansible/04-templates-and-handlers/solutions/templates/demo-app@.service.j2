@@ -1,0 +1,20 @@
+# {{ ansible_managed }}
+[Unit]
+Description=demo-app instance on port %i
+After=network.target
+
+[Service]
+User=demoapp
+Group=demoapp
+Environment=PORT=%i
+EnvironmentFile=/etc/demo-app/demo-app.env
+ExecStart=/usr/bin/python3 /opt/demo-app/app.py
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

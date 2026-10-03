@@ -1,0 +1,17 @@
+# Copy to .github/workflows/k8s-validate.yml — validates manifests on every pull request
+name: k8s-validate
+on: [pull_request, push]
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install kubeconform
+        run: |
+          curl -sSL https://github.com/yannh/kubeconform/releases/download/v0.6.7/kubeconform-linux-amd64.tar.gz \
+            | sudo tar -xz -C /usr/local/bin kubeconform
+      - name: Render and validate overlays
+        run: |
+          for env in dev prod; do
+            kubectl kustomize "overlays/$env" | kubeconform -strict -summary -kubernetes-version 1.31.0 -
+          done

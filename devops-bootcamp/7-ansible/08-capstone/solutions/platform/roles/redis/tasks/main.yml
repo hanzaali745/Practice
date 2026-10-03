@@ -1,0 +1,45 @@
+---
+- name: Refuse to run without a real password
+  ansible.builtin.assert:
+    that: redis_password | length >= 16
+    fail_msg: "redis_password must be set (from Ansible Vault) and at least 16 characters"
+    quiet: true
+  no_log: true
+
+- name: Install Redis
+  ansible.builtin.apt:
+    name: redis-server
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Write the Redis configuration
+  ansible.builtin.template:
+    src: redis.conf.j2
+    dest: /etc/redis/redis.conf
+    owner: redis
+    group: redis
+    mode: "0640"
+  diff: false                      # the file contains the password
+  no_log: true                     # ...and so would the task result
+  notify: Restart redis
+
+- name: Make sure Redis is running
+  ansible.builtin.service:
+    name: redis-server
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
+
+- name: Apply a pending restart now, before we test
+  ansible.builtin.meta: flush_handlers
+
+- name: Redis answers with the password
+  ansible.builtin.command: redis-cli -p {{ redis_port }} ping
+  environment:
+    REDISCLI_AUTH: "{{ redis_password }}"   # env, not -a: the password never shows in `ps`
+  register: ping
+  changed_when: false
+  failed_when: ping.stdout != "PONG"
+  when: not ansible_check_mode
+  no_log: true

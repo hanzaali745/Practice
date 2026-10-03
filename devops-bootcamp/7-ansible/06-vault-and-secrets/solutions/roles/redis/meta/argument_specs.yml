@@ -1,0 +1,15 @@
+---
+argument_specs:
+  main:
+    short_description: Redis server protected by a password
+    options:
+      redis_bind:
+        type: str
+      redis_port:
+        type: int
+      redis_password:
+        type: str
+        required: true
+        no_log: true
+      redis_maxmemory:
+        type: str

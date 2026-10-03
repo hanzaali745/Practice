@@ -1,0 +1,8 @@
+---
+# Install with:  ansible-galaxy install -r requirements.yml
+# (the `ansible` package from requirements-devops.txt already ships these — pinning documents what we rely on)
+collections:
+  - name: ansible.posix
+    version: ">=1.5.0,<2.0.0"
+  - name: community.general
+    version: ">=9.0.0,<10.0.0"

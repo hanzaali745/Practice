@@ -1,0 +1,44 @@
+# Lab 4 — backup storage + a nightly backup CronJob for Redis
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-backups
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: redis-backup
+spec:
+  schedule: "*/5 * * * *"          # every 5 minutes for the lab; nightly would be "0 2 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: backup
+              image: redis:7-alpine
+              command:
+                - sh
+                - -c
+                - |
+                  file=/backup/dump-$(date +%Y%m%d-%H%M%S).rdb
+                  redis-cli -h redis --rdb "$file"
+                  # keep the 10 newest backups
+                  ls -1t /backup/dump-*.rdb | tail -n +11 | xargs -r rm -f
+                  ls -l /backup
+              volumeMounts:
+                - name: backup
+                  mountPath: /backup
+          volumes:
+            - name: backup
+              persistentVolumeClaim:
+                claimName: redis-backups

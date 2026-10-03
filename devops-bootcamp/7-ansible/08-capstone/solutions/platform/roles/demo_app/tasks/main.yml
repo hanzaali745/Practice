@@ -1,0 +1,59 @@
+---
+- name: Create the app system user
+  ansible.builtin.user:
+    name: "{{ demo_app_user }}"
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+
+- name: Create the app folders
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "{{ demo_app_dir }}"
+    - /etc/demo-app
+
+- name: Deploy the application code
+  ansible.builtin.copy:
+    src: app.py                          # roles look in roles/demo_app/files/ automatically
+    dest: "{{ demo_app_dir }}/app.py"
+    mode: "0644"
+  notify: Restart demo-app
+
+- name: Write the app environment file
+  ansible.builtin.template:
+    src: demo-app.env.j2
+    dest: /etc/demo-app/demo-app.env
+    owner: root
+    group: "{{ demo_app_user }}"
+    mode: "0640"                         # it may hold a password: not world-readable
+  diff: false                            # never print it in --diff output
+  notify: Restart demo-app
+
+- name: Install the systemd template unit
+  ansible.builtin.template:
+    src: demo-app@.service.j2
+    dest: /etc/systemd/system/demo-app@.service
+    mode: "0644"
+  notify: Restart demo-app
+
+- name: Start one instance per port
+  ansible.builtin.systemd_service:
+    name: "demo-app@{{ item }}"
+    state: started
+    enabled: true
+    daemon_reload: true
+  loop: "{{ demo_app_ports }}"
+  ignore_errors: "{{ ansible_check_mode }}"   # a first dry run has no unit file yet
+
+- name: Wait until every instance answers
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ item }}/health"
+  register: health
+  until: health.status == 200
+  retries: 15
+  delay: 1
+  loop: "{{ demo_app_ports }}"
+  when: not ansible_check_mode

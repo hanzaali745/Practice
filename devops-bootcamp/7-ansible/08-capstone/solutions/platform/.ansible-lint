@@ -1,0 +1,8 @@
+---
+# ansible-lint settings for the course projects
+profile: production          # the strictest profile: FQCN, names, no risky shells, prefixed role vars...
+offline: true                # don't try to install collections while linting
+exclude_paths:
+  - .ansible/
+  - "**/molecule/"
+skip_list: []                # resist adding rules here — fix the code or add a `# noqa: rule -- reason` comment

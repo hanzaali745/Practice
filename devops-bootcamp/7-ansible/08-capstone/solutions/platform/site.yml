@@ -1,0 +1,38 @@
+---
+# The whole platform, from a fresh server to a running service:
+#   all hosts → common baseline · db → Redis (vaulted password) · web → demo-app instances + nginx
+- name: Baseline for every server
+  hosts: fleet
+  become: true
+  roles:
+    - role: common
+      tags: [common]
+
+- name: Database tier
+  hosts: db
+  become: true
+  roles:
+    - role: redis
+      tags: [redis]
+
+- name: Web tier
+  hosts: web
+  become: true
+  roles:
+    - role: demo_app
+      tags: [app]
+    - role: nginx_proxy
+      tags: [nginx]
+
+  post_tasks:
+    - name: Smoke test through nginx
+      ansible.builtin.uri:
+        url: http://localhost/visits
+        return_content: true
+      register: smoke
+      until: smoke.status == 200
+      retries: 10
+      delay: 1
+      failed_when: smoke.json.backend != "redis"
+      when: not ansible_check_mode
+      tags: [always]

@@ -1,0 +1,25 @@
+---
+argument_specs:
+  main:
+    short_description: Deploy demo-app as systemd services
+    options:
+      demo_app_ports:
+        type: list
+        elements: int
+        required: true
+        description: One instance per port
+      demo_app_message:
+        type: str
+      demo_app_version:
+        type: str
+      demo_app_user:
+        type: str
+      demo_app_dir:
+        type: path
+      demo_app_redis_host:
+        type: str
+      demo_app_redis_port:
+        type: int
+      demo_app_redis_password:
+        type: str
+        no_log: true

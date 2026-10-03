@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+PermitRootLogin {{ common_ssh_root_login }}
+PasswordAuthentication {{ 'yes' if common_ssh_password_auth else 'no' }}
+KbdInteractiveAuthentication no
+X11Forwarding no
+MaxAuthTries 3

@@ -1,0 +1,10 @@
+---
+galaxy_info:
+  author: devops-bootcamp
+  description: demo-app as systemd template-unit instances (one per port)
+  license: MIT
+  min_ansible_version: "2.15"
+  platforms:
+    - name: Ubuntu
+      versions: [noble]
+dependencies: []

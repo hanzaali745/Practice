@@ -1,0 +1,65 @@
+# Example GitHub Actions pipeline for an Ansible repo.
+# To use it in a real project: copy to .github/workflows/ansible.yml at the repo root.
+name: ansible
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install tools
+        run: pip install -r requirements-devops.txt
+      - name: yamllint
+        run: yamllint -c .yamllint .
+      - name: ansible-lint
+        run: ansible-lint -c .ansible-lint
+      - name: Syntax check
+        run: ansible-playbook --syntax-check site.yml
+      - name: No plain-text vault files
+        run: ./check_vault_files.sh
+
+  molecule:
+    needs: lint
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        role: [demo_app]           # one scenario per role
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install tools
+        run: pip install -r requirements-devops.txt
+      - name: Build the systemd test image
+        run: docker build -t ansible-lab-node:24.04 lab-fleet/
+      - name: Molecule
+        run: molecule test -s ${{ matrix.role }}
+
+  # Deploying from CI: the vault password comes from a CI secret, written to a file only for this job.
+  # deploy:
+  #   needs: molecule
+  #   if: github.ref == 'refs/heads/main'
+  #   environment: production         # requires a manual approval in GitHub
+  #   runs-on: ubuntu-24.04
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: pip install -r requirements-devops.txt
+  #     - run: |
+  #         printf '%s\n' "$VAULT_PASSWORD" > .vault-pass && chmod 600 .vault-pass
+  #         ansible-playbook -i inventories/prod site.yml --vault-password-file .vault-pass
+  #       env:
+  #         VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}

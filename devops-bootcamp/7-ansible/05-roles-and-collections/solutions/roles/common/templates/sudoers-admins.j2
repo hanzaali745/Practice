@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for user in common_admin_users %}
+{{ user.name }} ALL=(ALL) NOPASSWD:ALL
+{% endfor %}

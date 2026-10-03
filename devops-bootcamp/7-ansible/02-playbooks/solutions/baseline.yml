@@ -1,0 +1,33 @@
+---
+# Lab 1 — baseline for every server
+- name: Baseline configuration
+  hosts: fleet
+  become: true
+
+  tasks:
+    - name: Install basic tools
+      ansible.builtin.apt:
+        name: [curl, vim, htop, tree]
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Create the deploy user
+      ansible.builtin.user:
+        name: deploy
+        shell: /bin/bash
+        create_home: true
+
+    - name: Create the apps directory
+      ansible.builtin.file:
+        path: /opt/apps
+        state: directory
+        owner: deploy
+        group: deploy
+        mode: "0755"
+
+    - name: Write the message of the day
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "Managed by Ansible — changes will be overwritten\n"
+        mode: "0644"

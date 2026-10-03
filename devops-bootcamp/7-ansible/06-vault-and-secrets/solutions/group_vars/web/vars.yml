@@ -1,0 +1,6 @@
+---
+demo_app_ports: [8001, 8002]
+demo_app_message: "Hello from demo-app with a Redis backend"
+demo_app_version: "1.2.0"
+demo_app_redis_host: db1           # the fleet's Docker network resolves node names
+demo_app_redis_password: "{{ redis_password }}"

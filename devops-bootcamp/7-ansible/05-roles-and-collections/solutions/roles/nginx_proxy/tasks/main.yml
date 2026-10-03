@@ -1,0 +1,21 @@
+---
+- name: Install nginx
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Configure the site
+  ansible.builtin.template:
+    src: site.conf.j2
+    dest: /etc/nginx/sites-available/default
+    mode: "0644"
+  notify: Reload nginx
+
+- name: Make sure nginx is running
+  ansible.builtin.service:
+    name: nginx
+    state: started
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"   # not installed yet during a first dry run

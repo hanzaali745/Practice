@@ -1,0 +1,64 @@
+---
+# Lab 4 — skip hosts in maintenance; deploy with block/rescue/always
+# Normal:          ansible-playbook maintenance.yml -e deploy_version=1.2.0
+# Failure path:    ansible-playbook maintenance.yml -e deploy_version=broken
+# Maintenance:     ansible web1 -b -m file -a "path=/etc/maintenance state=touch"
+- name: Safe deploy
+  hosts: fleet
+  become: true
+  vars:
+    deploy_version: "1.0.0"
+    version_file: /opt/apps/VERSION
+
+  tasks:
+    - name: Check for a maintenance flag
+      ansible.builtin.stat:
+        path: /etc/maintenance
+      register: maint
+
+    - name: Skip hosts in maintenance
+      ansible.builtin.meta: end_host
+      when: maint.stat.exists
+
+    - name: Read the current version (if any)
+      ansible.builtin.slurp:
+        src: "{{ version_file }}"
+      register: current
+      failed_when: false
+
+    - name: Deploy
+      block:
+        - name: Ensure the apps folder exists
+          ansible.builtin.file:
+            path: /opt/apps
+            state: directory
+            mode: "0755"
+
+        - name: Write the new version
+          ansible.builtin.copy:
+            dest: "{{ version_file }}"
+            content: "{{ deploy_version }}\n"
+            mode: "0644"
+
+        - name: Validate the version looks like X.Y.Z
+          ansible.builtin.command: grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$' {{ version_file }}
+          changed_when: false
+
+      rescue:
+        - name: Restore the previous version
+          ansible.builtin.copy:
+            dest: "{{ version_file }}"
+            content: "{{ current.content | b64decode if current.content is defined else '0.0.0' + '\n' }}"
+            mode: "0644"
+
+        - name: Remember that this deploy failed
+          ansible.builtin.set_fact:
+            deploy_result: "FAILED — rolled back"
+
+      always:
+        - name: Record the result
+          ansible.builtin.lineinfile:
+            path: /var/log/deploys.log
+            line: "{{ deploy_version }} {{ deploy_result | default('OK') }}"
+            create: true
+            mode: "0644"

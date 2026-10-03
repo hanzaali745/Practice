@@ -1,0 +1,17 @@
+# Production-like settings. Use with:
+#   docker compose -f compose.yaml -f compose.prod.yaml up -d
+services:
+  redis:
+    restart: unless-stopped
+  app:
+    restart: unless-stopped
+    environment:
+      APP_MESSAGE: "Hello from PROD"
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 128M
+  proxy:
+    restart: unless-stopped

@@ -1,0 +1,14 @@
+# {{ ansible_managed }}
+bind {{ redis_bind }}
+protected-mode yes
+port {{ redis_port }}
+requirepass "{{ redis_password }}"
+dir /var/lib/redis
+logfile /var/log/redis/redis-server.log
+pidfile /run/redis/redis-server.pid
+maxmemory {{ redis_maxmemory }}
+maxmemory-policy allkeys-lru
+appendonly yes
+# dangerous commands are renamed away
+rename-command FLUSHALL ""
+rename-command CONFIG ""

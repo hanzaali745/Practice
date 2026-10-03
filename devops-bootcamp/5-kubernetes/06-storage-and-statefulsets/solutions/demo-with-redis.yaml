@@ -1,0 +1,37 @@
+# Lab 3 — demo-app storing visits in the Redis StatefulSet
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  labels:
+    app: demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+        - name: app
+          image: demo-app:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: REDIS_HOST
+              value: redis
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo
+spec:
+  selector:
+    app: demo
+  ports:
+    - port: 80
+      targetPort: 8000

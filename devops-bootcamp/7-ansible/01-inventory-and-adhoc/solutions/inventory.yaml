@@ -1,0 +1,20 @@
+# Lab 4 — the fleet as a YAML inventory, plus a "prod" group with its own variable
+all:
+  vars:
+    ansible_host: 127.0.0.1
+    ansible_user: devops
+    ansible_ssh_private_key_file: "{{ inventory_dir }}/../../lab-fleet/.ssh/id_ed25519"
+  children:
+    web:
+      hosts:
+        web1: { ansible_port: 2221 }
+        web2: { ansible_port: 2222 }
+    db:
+      hosts:
+        db1: { ansible_port: 2223 }
+    prod:
+      hosts:
+        web2:
+        db1:
+      vars:
+        env: prod

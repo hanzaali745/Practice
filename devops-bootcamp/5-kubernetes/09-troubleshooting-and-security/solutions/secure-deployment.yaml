@@ -1,0 +1,43 @@
+# Lab 3 — passes the "restricted" Pod Security Standard
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: secure
+  labels:
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/warn: restricted
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  namespace: secure
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: demo }
+  template:
+    metadata:
+      labels: { app: demo }
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: app
+          image: demo-app:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { memory: 128Mi }

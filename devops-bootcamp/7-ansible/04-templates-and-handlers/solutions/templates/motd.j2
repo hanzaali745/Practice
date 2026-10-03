@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+==========================================================
+  {{ inventory_hostname | upper }}  —  {{ ansible_facts['distribution'] }} {{ ansible_facts['distribution_version'] }}
+  RAM: {{ ansible_facts['memtotal_mb'] }} MB   vCPUs: {{ ansible_facts['processor_vcpus'] }}
+  Groups: {{ group_names | join(', ') }}
+{% if 'db' in group_names %}
+  ⚠️  DATABASE SERVER — changes need a ticket and a backup first!
+{% endif %}
+==========================================================

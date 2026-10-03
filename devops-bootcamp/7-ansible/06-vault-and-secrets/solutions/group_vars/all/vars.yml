@@ -1,0 +1,4 @@
+---
+# Plain variables point at vault_* variables. Anyone can grep for `redis_password` and see WHERE it comes from;
+# only people with the vault password can see the value.
+redis_password: "{{ vault_redis_password }}"

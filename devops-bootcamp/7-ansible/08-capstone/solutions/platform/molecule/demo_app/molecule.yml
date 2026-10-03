@@ -1,0 +1,42 @@
+---
+# Molecule scenario for the demo_app role.
+# Run from the platform folder:   molecule test -s demo_app
+dependency:
+  name: galaxy
+  enabled: false                 # collections come from the `ansible` package
+driver:
+  name: docker
+platforms:
+  - name: molecule-demo-app
+    image: ansible-lab-node:24.04          # the lab-fleet image: Ubuntu 24.04 + systemd (build it with lab-fleet/fleet.sh up)
+    pre_build_image: true
+    privileged: true                       # systemd needs it (test containers only!)
+    cgroupns_mode: host
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    tmpfs:
+      - /run
+      - /run/lock
+      - /tmp
+    command: /sbin/init
+provisioner:
+  name: ansible
+  env:
+    ANSIBLE_ROLES_PATH: ${MOLECULE_PROJECT_DIRECTORY}/roles
+  inventory:
+    host_vars:
+      molecule-demo-app:
+        demo_app_ports: [8001, 8002]
+        demo_app_message: "tested by molecule"
+verifier:
+  name: ansible
+scenario:
+  # the default sequence minus lint/side_effect: create → converge → idempotence → verify → destroy
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - converge
+    - idempotence
+    - verify
+    - destroy

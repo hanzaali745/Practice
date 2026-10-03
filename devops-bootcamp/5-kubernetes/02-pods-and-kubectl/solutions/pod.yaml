@@ -1,0 +1,18 @@
+# Lab 1 — demo-app in a single pod
+apiVersion: v1
+kind: Pod
+metadata:
+  name: demo
+  labels:
+    app: demo
+    tier: backend
+spec:
+  containers:
+    - name: app
+      image: demo-app:1.0.0
+      imagePullPolicy: IfNotPresent
+      ports:
+        - containerPort: 8000
+      env:
+        - name: APP_MESSAGE
+          value: "Hello from a Kubernetes pod"

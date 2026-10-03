@@ -1,0 +1,11 @@
+# Lab 1, step 1 — the COUNT version (copy to main.tf to try it)
+variable "users" {
+  type    = list(string)
+  default = ["alice", "bob", "carol"]
+}
+
+resource "local_file" "user" {
+  count    = length(var.users)
+  filename = "${path.module}/users/${var.users[count.index]}.txt"
+  content  = "user ${var.users[count.index]}\n"
+}

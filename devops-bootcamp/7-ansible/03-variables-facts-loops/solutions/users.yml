@@ -1,0 +1,43 @@
+---
+# Lab 2 — packages, users and folders driven by group_vars
+- name: Users and packages
+  hosts: fleet
+  become: true
+
+  tasks:
+    - name: Install common packages
+      ansible.builtin.apt:
+        name: "{{ common_packages }}"
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install web packages (web group only)
+      ansible.builtin.apt:
+        name: "{{ web_packages }}"
+        state: present
+      when: "'web' in group_names"
+
+    - name: Create admin users
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        shell: "{{ item.shell }}"
+        groups: [sudo]
+        append: true
+      loop: "{{ admin_users }}"
+      loop_control:
+        label: "{{ item.name }}"
+
+    - name: Remove users that should no longer exist
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: absent
+        remove: true
+      loop: "{{ removed_users }}"
+
+    - name: Create app folders
+      ansible.builtin.file:
+        path: "/opt/apps/{{ item }}"
+        state: directory
+        mode: "0755"
+      loop: "{{ apps }}"

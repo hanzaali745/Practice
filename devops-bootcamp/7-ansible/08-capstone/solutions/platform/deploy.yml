@@ -1,0 +1,85 @@
+---
+# Zero-downtime release of demo-app: one web server at a time, verify, roll back on failure.
+#
+#   ansible-playbook deploy.yml -e release_version=2.1.0
+#   ansible-playbook deploy.yml -e release_version=2.2.0 -e '{"release_extra_env": {"FEATURE_NEW_UI": "on"}}'
+#
+# A failed host is rolled back to its previous config, and serial + max_fail_percentage stop the rollout
+# there — the other web servers keep running the old, working release.
+- name: Rolling release of demo-app
+  hosts: web
+  become: true
+  serial: 1                    # one host at a time (also: 2, "30%", or [1, "50%"])
+  max_fail_percentage: 0       # any failure stops the whole rollout
+
+  pre_tasks:
+    - name: A release version is required
+      ansible.builtin.assert:
+        that: release_version is defined and release_version is regex('^\d+\.\d+\.\d+$')
+        fail_msg: "usage: ansible-playbook deploy.yml -e release_version=X.Y.Z"
+        quiet: true
+      run_once: true  # noqa: run-once[task] -- default linear strategy
+
+    - name: Keep a copy of the current config for rollback
+      ansible.builtin.copy:
+        src: /etc/demo-app/demo-app.env
+        dest: /etc/demo-app/demo-app.env.previous
+        remote_src: true
+        owner: root
+        group: "{{ demo_app_user | default('demoapp') }}"
+        mode: "0640"
+      diff: false
+
+  tasks:
+    - name: Release, verify — or roll back
+      block:
+        - name: Deploy the new release
+          ansible.builtin.include_role:
+            name: demo_app
+          vars:
+            demo_app_version: "{{ release_version }}"
+            demo_app_extra_env: "{{ release_extra_env | default({}) }}"
+
+        - name: Restart now if the release changed anything
+          ansible.builtin.meta: flush_handlers
+
+        - name: Every instance reports the new version
+          ansible.builtin.uri:
+            url: "http://127.0.0.1:{{ item }}/"
+            return_content: true
+          register: page
+          until: page.status == 200 and page.json.version == release_version
+          retries: 10
+          delay: 1
+          loop: "{{ demo_app_ports }}"
+
+      rescue:
+        - name: Restore the previous config
+          ansible.builtin.copy:
+            src: /etc/demo-app/demo-app.env.previous
+            dest: /etc/demo-app/demo-app.env
+            remote_src: true
+            owner: root
+            group: "{{ demo_app_user | default('demoapp') }}"
+            mode: "0640"
+          diff: false
+
+        - name: Restart the instances on the previous config
+          ansible.builtin.systemd_service:
+            name: "demo-app@{{ item }}"
+            state: restarted
+          loop: "{{ demo_app_ports }}"
+          changed_when: true
+
+        - name: The previous release is healthy again
+          ansible.builtin.uri:
+            url: "http://127.0.0.1:{{ item }}/health"
+          register: health
+          until: health.status == 200
+          retries: 15
+          delay: 1
+          loop: "{{ demo_app_ports }}"
+
+        - name: Stop the rollout
+          ansible.builtin.fail:
+            msg: "release {{ release_version }} failed on {{ inventory_hostname }} — rolled back; rollout stopped"

@@ -1,0 +1,49 @@
+---
+- name: Install the common packages
+  ansible.builtin.apt:
+    name: "{{ common_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Create the admin users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    shell: /bin/bash
+    groups: [sudo]
+    append: true
+  loop: "{{ common_admin_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Authorize each admin's SSH key
+  ansible.posix.authorized_key:          # a module from the ansible.posix COLLECTION
+    user: "{{ item.name }}"
+    key: "{{ lookup('ansible.builtin.file', item.pubkey_file) }}"
+    exclusive: true                      # remove keys we don't manage
+    path: "/home/{{ item.name }}/.ssh/authorized_keys"   # explicit path: lets --check work before the user exists
+  loop: "{{ common_admin_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Passwordless sudo for admins
+  ansible.builtin.template:
+    src: sudoers-admins.j2
+    dest: /etc/sudoers.d/90-admins
+    mode: "0440"
+    validate: /usr/sbin/visudo -cf %s    # a broken sudoers file = nobody can sudo
+  when: common_admin_users | length > 0
+
+- name: Harden SSH
+  ansible.builtin.template:
+    src: sshd-hardening.conf.j2
+    dest: /etc/ssh/sshd_config.d/50-hardening.conf
+    mode: "0644"
+    validate: /usr/sbin/sshd -t -f %s
+  notify: Reload ssh
+
+- name: Message of the day
+  ansible.builtin.template:
+    src: motd.j2
+    dest: /etc/motd
+    mode: "0644"

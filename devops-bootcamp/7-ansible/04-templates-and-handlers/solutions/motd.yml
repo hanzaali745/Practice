@@ -1,0 +1,11 @@
+---
+# Lab 1 — templated message of the day
+- name: Message of the day
+  hosts: fleet
+  become: true
+  tasks:
+    - name: Write /etc/motd from a template
+      ansible.builtin.template:
+        src: motd.j2
+        dest: /etc/motd
+        mode: "0644"

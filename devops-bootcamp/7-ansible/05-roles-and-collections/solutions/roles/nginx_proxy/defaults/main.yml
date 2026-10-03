@@ -1,0 +1,4 @@
+---
+nginx_proxy_upstream_ports: [8001]
+nginx_proxy_server_name: "{{ inventory_hostname }}"
+nginx_proxy_status_page: false
