@@ -89,7 +89,7 @@ You can now:
 - ✅ Choose the right tool for each job
 
 **Next on my team: the platform tools.** Install them first with
-[Setup part 2](../../00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md) (Day 97), then:
+[Setup part 2](../../00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md) (Day 124), then:
 1. [Phase 4 — Docker](../../4-docker/README.md)
 2. [Phase 5 — Kubernetes](../../5-kubernetes/README.md)
 3. [Phase 6 — Terraform](../../6-terraform/README.md)

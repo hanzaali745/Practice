@@ -1,4 +1,4 @@
-# 🚀 DevOps Bootcamp: Python → Shell → Bash → Docker → Kubernetes → Terraform → Ansible → CI/CD → Monitoring → ELK → AWS → Job-ready
+# 🚀 DevOps Bootcamp: Python → Shell → Linux → Bash → Docker → Kubernetes → Terraform → Ansible → CI/CD → Monitoring → ELK → AWS → Job-ready
 
 > **From your CEO / Senior DevOps Engineer:**
 > Welcome to the team. In DevOps we automate *everything*: servers, deployments, backups,
@@ -7,6 +7,9 @@
 > - **Python** — powerful automation, APIs, cloud, data
 > - **Shell scripting (POSIX `sh`)** — the universal language of every Linux/Unix system and Docker image
 > - **Bash** — the most popular shell, with extra power for serious server automation
+>
+> In between, **Linux administration**: users, permissions, packages, services, disks, the kernel, networking and
+> security — running real servers, not just typing commands on them.
 >
 > Then the four platform tools every DevOps job asks for:
 >
@@ -35,7 +38,7 @@
 
 ## 📅 Learn every day: the Daily Plan
 
-The whole course is laid out as **296 days** (about 10 months) of 60–90 minutes, in [**DAILY-PLAN.md**](DAILY-PLAN.md).
+The whole course is laid out as **323 days** (about 11 months) of 60–90 minutes, in [**DAILY-PLAN.md**](DAILY-PLAN.md).
 Every day = 🔁 10-min warm-up on older material + 📖 lessons + 🧪 labs + 💾 commit.
 Every 7th day is a review day. Your terminal tells you what to do today:
 
@@ -49,38 +52,39 @@ sh today.sh status   # progress bar
 ## 🗺️ The Roadmap — follow it in order
 
 ```
- STEP 0           PHASE 1              PHASE 2                  PHASE 3
- ┌─────────┐      ┌──────────────┐     ┌──────────────────┐     ┌──────────────┐
- │ Ubuntu  │ ───► │   PYTHON     │ ──► │ SHELL SCRIPTING  │ ──► │    BASH      │
- │ setup   │      │ 15 modules   │     │ (POSIX sh)       │     │  8 modules   │
- │ Day 1   │      │ Days 2–44    │     │ 10 modules       │     │ Days 71–96   │
- └─────────┘      └──────────────┘     │ Days 45–70       │     └──────┬───────┘
-                                       └──────────────────┘            │
-        ┌──────────────────────────────────────────────────────────────┘
-        ▼
- PHASE 4            PHASE 5              PHASE 6              PHASE 7
- ┌──────────────┐   ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
- │   DOCKER     │─► │  KUBERNETES  │ ──► │  TERRAFORM   │ ──► │   ANSIBLE    │
- │  7 modules   │   │ 10 modules   │     │ 10 modules   │     │  8 modules   │
- │ Days 97–115  │   │ Days 116–137 │     │ Days 138–159 │     │ Days 160–180 │
- └──────────────┘   └──────────────┘     └──────────────┘     └──────┬───────┘
-   (Day 97: setup part 2 — install the DevOps tools)                 │
+ STEP 0              PHASE 1             PHASE 2             PHASE 2B
+ ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+ │ UBUNTU SETUP │─►  │    PYTHON    │─►  │SHELL (POSIX) │─►  │ LINUX ADMIN  │
+ │              │    │  15 modules  │    │  10 modules  │    │  9 modules   │
+ │    Day 1     │    │  Days 2–44   │    │  Days 45–70  │    │  Days 71–96  │
+ └──────────────┘    └──────────────┘    └──────────────┘    └───────┬──────┘
         ┌────────────────────────────────────────────────────────────┘
         ▼
- PHASE 8            PHASE 9              PHASE 10             PHASE 11
- ┌──────────────┐   ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
- │    CI/CD     │─► │  MONITORING  │ ──► │ ELK LOGGING  │ ──► │     AWS      │
- │  8 modules   │   │  8 modules   │     │  7 modules   │     │  8 modules   │
- │ Days 181–201 │   │ Days 202–222 │     │ Days 223–239 │     │ Days 240–260 │
- └──────────────┘   └──────────────┘     └──────────────┘     └──────┬───────┘
-   (Day 181: setup part 3 — install the platform tools)              │
+ PHASE 3             PHASE 4             PHASE 5             PHASE 6
+ ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+ │     BASH     │─►  │    DOCKER    │─►  │  KUBERNETES  │─►  │  TERRAFORM   │
+ │  8 modules   │    │  7 modules   │    │  10 modules  │    │  10 modules  │
+ │ Days 97–123  │    │ Days 124–142 │    │ Days 143–164 │    │ Days 165–186 │
+ └──────────────┘    └──────────────┘    └──────────────┘    └───────┬──────┘
+   (Day 124: setup part 2 — install the DevOps tools)                │
         ┌────────────────────────────────────────────────────────────┘
         ▼
- PHASE 12
- ┌────────────────────────────────────────────────────────────────────────────┐
- │  JOB-READY: Linux & network troubleshooting · Git for teams · incidents ·  │
- │  interview prep — 5 modules · Days 261–296                                 │
- └────────────────────────────────────────────────────────────────────────────┘
+ PHASE 7             PHASE 8             PHASE 9             PHASE 10
+ ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+ │   ANSIBLE    │─►  │    CI/CD     │─►  │  MONITORING  │─►  │ ELK LOGGING  │
+ │  8 modules   │    │  8 modules   │    │  8 modules   │    │  7 modules   │
+ │ Days 187–207 │    │ Days 208–228 │    │ Days 229–249 │    │ Days 250–266 │
+ └──────────────┘    └──────────────┘    └──────────────┘    └───────┬──────┘
+   (Day 208: setup part 3 — install the platform tools)              │
+        ┌────────────────────────────────────────────────────────────┘
+        ▼
+ PHASE 11            PHASE 12
+ ┌──────────────┐    ┌──────────────┐
+ │     AWS      │─►  │  JOB-READY   │
+ │  8 modules   │    │  5 modules   │
+ │ Days 267–287 │    │ Days 288–323 │
+ └──────────────┘    └──────────────┘
+   Phase 12: Linux & network troubleshooting · Git for teams · incidents · interview prep
 ```
 
 One app — **demo-app** — travels through Phases 4–11: you containerise it, run it on Kubernetes, describe its
@@ -92,6 +96,7 @@ and ELK watch it, and finally it runs on AWS — the same service, all the way t
 | **0** | [🐧 Ubuntu Setup](00-ubuntu-setup/README.md) | Install tools, Python venv, editor, Git, check script — [part 2](00-ubuntu-setup/PART-2-DEVOPS-TOOLS.md) (Docker, kubectl, kind, Helm, Terraform, Ansible) and [part 3](00-ubuntu-setup/PART-3-PLATFORM-TOOLS.md) (gh, act, actionlint, AWS CLI) |
 | **1** | [🐍 Python](1-python/README.md) | 15 modules: basics → automation → APIs/cloud → testing → advanced → capstone |
 | **2** | [🐚 Shell Scripting (POSIX sh)](2-shell-scripting/README.md) | 10 modules: terminal → scripts → loops → grep/sed/awk → errors → cron → capstone |
+| **2B** | [🐧 Linux Administration](2b-linux-admin/README.md) | 9 modules: filesystem → users & sudo → permissions → packages → services & boot → storage & LVM → kernel → networking & hardening → capstone |
 | **3** | [💪 Bash](3-bash/README.md) | 8 modules: Bash features → arrays → strict mode → SSH & fleets → real DevOps scripts → pro → capstone |
 | **4** | [🐳 Docker](4-docker/README.md) | 7 modules: containers → images → Dockerfiles → volumes & networks → Compose → production images → capstone |
 | **5** | [☸️ Kubernetes](5-kubernetes/README.md) | 10 modules: kind cluster → pods → deployments → services & ingress → config → storage → autoscaling → Helm → security → capstone |
@@ -150,6 +155,20 @@ are portable and which aren't — that's a senior-engineer skill.
 | 08 | [Exit Codes & Errors](2-shell-scripting/08-exit-codes-and-errors/README.md) | 🟡 |
 | 09 | [Processes & Scheduling](2-shell-scripting/09-processes-and-scheduling/README.md) | 🔴 |
 | 10 | [Shell Capstone](2-shell-scripting/10-capstone/README.md) | 🏆 |
+
+## 🐧 Phase 2B — Linux Administration → [`2b-linux-admin/`](2b-linux-admin/README.md)
+
+| # | Module | Level |
+|---|--------|-------|
+| 01 | [The Filesystem & Files](2b-linux-admin/01-filesystem-and-files/README.md) | 🟢 |
+| 02 | [Users, Groups & sudo](2b-linux-admin/02-users-groups-sudo/README.md) | 🟢 |
+| 03 | [Permissions in Depth](2b-linux-admin/03-permissions-in-depth/README.md) | 🟡 |
+| 04 | [Packages & Software](2b-linux-admin/04-packages/README.md) | 🟡 |
+| 05 | [Services, Boot & Time](2b-linux-admin/05-services-boot-time/README.md) | 🟡 |
+| 06 | [Storage: Disks, File Systems & LVM](2b-linux-admin/06-storage/README.md) | 🔴 |
+| 07 | [Processes, Resources & the Kernel](2b-linux-admin/07-processes-and-kernel/README.md) | 🔴 |
+| 08 | [Networking & Server Hardening](2b-linux-admin/08-networking-and-hardening/README.md) | 🔴 |
+| 09 | [Capstone: Build a Server](2b-linux-admin/09-capstone/README.md) | 🏆 |
 
 ## 💪 Phase 3 — Bash → [`3-bash/`](3-bash/README.md)
 
@@ -311,6 +330,7 @@ Missed a day? Continue where you stopped — never skip ahead.
 
 **Expert checklists** (your final exams): [Python](1-python/README.md#-python-expert-checklist) ·
 [Shell](2-shell-scripting/README.md#-shell-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes) ·
+[Linux](2b-linux-admin/README.md#-linux-expert-checklist) ·
 [Bash](3-bash/README.md#-bash-expert-checklist-youre-expert-when-you-can-do-all-of-these-without-notes) ·
 [Docker](4-docker/README.md#-docker-expert-checklist) ·
 [Kubernetes](5-kubernetes/README.md#-kubernetes-expert-checklist) ·

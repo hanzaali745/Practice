@@ -1,0 +1,9 @@
+Package: hello-lab
+Version: TODO
+Section: utils
+Priority: optional
+Architecture: all
+Maintainer: Your Name <you@example.com>
+Description: says hello — your first Debian package
+ A tiny script, packaged so that apt and dpkg can install it, track every file
+ it owns, upgrade it and remove it cleanly.

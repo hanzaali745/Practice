@@ -1,0 +1,10 @@
+#!/bin/sh
+# lab-disks — attach every /var/lib/lab-disks/*.img as a loop device (if not attached yet), then activate LVM.
+# Installed as /usr/local/sbin/lab-disks and run at boot by lab-disks.service.
+for img in /var/lib/lab-disks/*.img; do
+    [ -f "$img" ] || continue
+    [ -n "$(losetup -j "$img")" ] || losetup --find --partscan "$img"
+done
+udevadm settle 2> /dev/null || true
+command -v vgchange > /dev/null && vgchange -ay labvg > /dev/null 2>&1
+exit 0
